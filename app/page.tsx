@@ -531,7 +531,146 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          SECTION 5 — THE OFFER (split layout)
+          SECTION 5 — GUARANTEE
+      ============================================================ */}
+      <section style={{ background: "#FAFAF8", paddingTop: "8rem", paddingBottom: "8rem" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div
+              style={{
+                border: "1.5px solid #1A5C3A",
+                borderRadius: "1.5rem",
+                padding: "clamp(2rem, 5vw, 4rem)",
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: "2.5rem",
+              }}
+              className="lg:grid-cols-[1fr_auto]"
+            >
+              {/* Left — text */}
+              <div>
+                <p
+                  style={{
+                    fontSize: "11px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    fontWeight: 600,
+                    color: "#1A5C3A",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Our Commitment
+                </p>
+                <h2
+                  style={{
+                    fontFamily: "var(--font-cabinet), Outfit, sans-serif",
+                    fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
+                    fontWeight: 900,
+                    color: "#0D0D0B",
+                    letterSpacing: "-0.03em",
+                    lineHeight: 1.1,
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  If your Google Maps visibility doesn&apos;t
+                  measurably improve in 60 days —
+                  your next month is free.
+                </h2>
+                <p
+                  style={{
+                    fontSize: "0.975rem",
+                    color: "#6B6B68",
+                    lineHeight: 1.7,
+                    maxWidth: "36rem",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  We back every engagement with this commitment. If we don&apos;t deliver
+                  measurable improvement in your Google Business Profile and local citation
+                  coverage within 60 days, your following month is on us — no questions asked.
+                  We work until the results are real.
+                </p>
+                {/* What we measure */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {[
+                    { label: "Profile score", detail: "minimum 15-point improvement" },
+                    { label: "Citations built", detail: "50+ Australian directories" },
+                    { label: "Timeframe", detail: "60 days from start" },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      style={{
+                        padding: "0.875rem 1.25rem",
+                        background: "rgba(26,92,58,0.06)",
+                        borderRadius: "0.75rem",
+                        minWidth: "10rem",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "0.7rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.12em",
+                          fontWeight: 600,
+                          color: "#1A5C3A",
+                          marginBottom: "0.2rem",
+                        }}
+                      >
+                        {item.label}
+                      </p>
+                      <p style={{ fontSize: "0.8rem", color: "#6B6B68" }}>{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right — badge */}
+              <div
+                className="flex items-center justify-center lg:justify-end"
+                style={{ minWidth: "10rem" }}
+              >
+                <div
+                  style={{
+                    width: "140px",
+                    height: "140px",
+                    borderRadius: "50%",
+                    background: "#1A5C3A",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    padding: "1rem",
+                    flexShrink: 0,
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "var(--font-cabinet), Outfit, sans-serif",
+                      fontSize: "2.25rem",
+                      fontWeight: 900,
+                      color: "#fff",
+                      lineHeight: 1,
+                      marginBottom: "0.15rem",
+                    }}
+                  >
+                    60
+                  </p>
+                  <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>
+                    Day
+                  </p>
+                  <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>
+                    Guarantee
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 6 — THE OFFER (split layout)
       ============================================================ */}
       <section
         style={{
