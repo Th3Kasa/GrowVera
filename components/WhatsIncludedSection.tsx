@@ -27,7 +27,7 @@ const items = [
     ),
     title: 'Marketing Channel Audit',
     description:
-      'Review of your paid, organic, and social channels to find what's working and where budget is being wasted.',
+      "Review of your paid, organic, and social channels to find what's working and where budget is being wasted.",
   },
   {
     icon: (
@@ -67,7 +67,7 @@ export default function WhatsIncludedSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-            What's Included
+            What&apos;s Included
           </h2>
           <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto">
             A comprehensive audit covering every lever of growth for your business.
