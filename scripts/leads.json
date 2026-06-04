@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://parramattadental.net/",
+    "hostname": "parramattadental.net",
+    "title": "Parramatta Dental Clinic",
+    "suburb": "Parramatta",
+    "niche": "dentist",
+    "rating": "4.4",
+    "reviewCount": "422",
+    "inMapPack": true,
+    "hasPhotos": true,
+    "competitorRatings": [4.8, 4.9, 4.7, 4.8]
+  },
+  {
+    "url": "https://www.parramattadentist.sydney/",
+    "hostname": "parramattadentist.sydney",
+    "title": "Parramatta Dentistry",
+    "suburb": "Parramatta",
+    "niche": "dentist",
+    "rating": "5.0",
+    "reviewCount": "321",
+    "inMapPack": true,
+    "hasPhotos": true,
+    "competitorRatings": [4.4, 4.8, 4.7, 4.8]
+  },
+  {
+    "url": "https://www.parramattadental.com.au/",
+    "hostname": "parramattadental.com.au",
+    "title": "Parramatta Dental Surgery",
+    "suburb": "Parramatta",
+    "niche": "dentist",
+    "rating": "4.1",
+    "reviewCount": "138",
+    "inMapPack": true,
+    "hasPhotos": true,
+    "competitorRatings": [4.4, 4.8, 4.9, 4.8]
+  },
+  {
+    "url": "https://www.curedental.com.au/",
+    "hostname": "curedental.com.au",
+    "title": "Cure Dental Parramatta",
+    "suburb": "Parramatta",
+    "niche": "dentist",
+    "rating": "4.5",
+    "reviewCount": "132",
+    "inMapPack": true,
+    "hasPhotos": true,
+    "competitorRatings": [4.4, 4.8, 4.9, 5.0]
+  }
+]

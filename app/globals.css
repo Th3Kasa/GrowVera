@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
+/* ================================================================
+   BRAND TOKEN SHEET — GrowVera (LOCKED — do not deviate)
+================================================================ */
+
+/* Self-hosted fonts — Cabinet Grotesk & Satoshi from fontshare.com
+   Production: swap woff2 files into /public/fonts/
+   Substitute: Outfit (Cabinet Grotesk) + DM Sans (Satoshi) via Google Fonts
+   are loaded in layout.tsx under --font-cabinet and --font-satoshi. */
+/* @font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+} */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand color tokens */
+  --color-bg:            #FAFAF8;
+  --color-bg-section:    #F4F3EF;
+  --color-bg-subtle:     #EEECEA;
+  --color-text:          #0D0D0B;
+  --color-text-muted:    #6B6B68;
+  --color-text-faint:    #9E9E9A;
+  --color-accent:        #1A5C3A;
+  --color-accent-hover:  #143F28;
+  --color-accent-light:  #E8F2EC;
+  --color-border:        #E2E1DC;
+  --color-border-strong: #C8C7C1;
+
+  /* Legacy aliases (kept so existing inline styles still resolve) */
+  --background:    var(--color-bg);
+  --foreground:    var(--color-text);
+  --accent:        var(--color-accent);
+  --accent-light:  var(--color-accent-light);
+  --muted:         var(--color-text-muted);
+  --border:        var(--color-border);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ================================================================
+   Tailwind v4 theme extension — gv-* utility classes
+================================================================ */
+@theme {
+  --color-gv-bg:           #FAFAF8;
+  --color-gv-bg-section:   #F4F3EF;
+  --color-gv-bg-subtle:    #EEECEA;
+  --color-gv-text:         #0D0D0B;
+  --color-gv-muted:        #6B6B68;
+  --color-gv-faint:        #9E9E9A;
+  --color-gv-accent:       #1A5C3A;
+  --color-gv-accent-hover: #143F28;
+  --color-gv-accent-light: #E8F2EC;
+  --color-gv-border:       #E2E1DC;
+  --color-gv-border-strong:#C8C7C1;
+
+  /* Font family tokens */
+  --font-family-cabinet: var(--font-cabinet), Outfit, sans-serif;
+  --font-family-satoshi:  var(--font-satoshi), 'DM Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ================================================================
+   Font utility classes
+================================================================ */
+.font-cabinet {
+  font-family: var(--font-cabinet), Outfit, sans-serif;
+}
+.font-satoshi {
+  font-family: var(--font-satoshi), 'DM Sans', sans-serif;
+}
+
+/* ================================================================
+   Global base styles
+================================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  /* Satoshi (self-hosted) with DM Sans as Google Fonts fallback */
+  font-family: var(--font-satoshi), 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* Cabinet Grotesk (self-hosted) with Outfit as Google Fonts fallback */
+  font-family: var(--font-cabinet), Outfit, system-ui, sans-serif;
+}
+
+/* ================================================================
+   Grain overlay — fixed, non-interactive
+================================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* ================================================================
+   Marquee animation
+================================================================ */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-container:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* ================================================================
+   Scrollbar
+================================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 13, 11, 0.15);
+  border-radius: 3px;
+}
+
+/* ================================================================
+   Focus & selection
+================================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+/* ================================================================
+   Footer link helper
+================================================================ */
+.footer-link {
+  color: var(--color-text-faint);
+  text-decoration: none;
+}
+.footer-link:hover {
+  color: #ffffff;
 }
