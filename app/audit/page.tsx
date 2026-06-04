@@ -1,81 +1,152 @@
-import type { Metadata } from 'next'
-import AuditForm from '@/components/AuditForm'
+import type { Metadata } from "next";
+import { CheckCircle, Clock, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import AuditForm from "@/components/AuditForm";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: 'Free Google Audit – GrowVera',
-  description: "Get your free Google Business Profile audit. We'll show you exactly where you stand and the top 3 things to fix.",
-}
+  title: "GrowVera — Free Google Audit",
+  description:
+    "Get a free Google Business Profile audit for your Sydney business. We'll identify exactly what's stopping you from ranking #1 in Google Maps — and how to fix it.",
+};
+
+const trustPoints = [
+  {
+    icon: Clock,
+    title: "Ready within 24 hours",
+    body: "We manually review your Google presence — not a generic automated report.",
+  },
+  {
+    icon: CheckCircle,
+    title: "No obligation",
+    body: "The audit is yours to keep, whether you work with us or not.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "No spam, ever",
+    body: "We comply with the Australian Spam Act 2003. One email with your audit. That's it.",
+  },
+];
 
 export default function AuditPage() {
   return (
-    <main style={{ background: '#FAFAF8', minHeight: '100vh' }}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
-        style={{ paddingTop: 'clamp(6rem, 12vw, 9rem)', paddingBottom: 'clamp(3rem, 7vw, 6rem)' }}>
-
-        <div style={{ textAlign: 'center', marginBottom: '52px' }}>
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '6px',
-            background: 'rgba(26,92,58,0.06)', border: '1px solid rgba(26,92,58,0.14)',
-            borderRadius: '100px', padding: '6px 14px', marginBottom: '20px',
-          }}>
-            <span style={{ color: '#1A5C3A', fontSize: '13px', fontWeight: 600 }}>Zero cost · Zero commitment</span>
-          </div>
-          <h1 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(2rem, 6vw, 3.25rem)', letterSpacing: '-0.035em', color: '#0D0D0B', marginBottom: '14px' }}>
-            Get your free Google audit.
-          </h1>
-          <p style={{ color: '#6B6B68', fontSize: '1rem', lineHeight: 1.7, maxWidth: '420px', margin: '0 auto' }}>
-            Takes 60 seconds. We&apos;ll send you a clear breakdown of how your business appears on Google — and what to fix first.
-          </p>
+    <div style={{ background: "#FAFAF8" }}>
+      {/* Hero */}
+      <section className="pt-40 pb-16" style={{ background: "#F4F3EF" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="mb-4">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: "#1A5C3A" }}>
+                Zero cost · Zero commitment
+              </span>
+            </div>
+            <h1
+              className="font-bold tracking-tight leading-[1.0] mb-4"
+              style={{
+                fontFamily: "var(--font-cabinet), Outfit, sans-serif",
+                color: "#0D0D0B",
+                fontSize: "clamp(2.2rem, 5vw, 4rem)",
+              }}
+            >
+              Get your free Google audit.
+              <br />
+              <span style={{ color: "#1A5C3A" }}>Takes 60 seconds.</span>
+            </h1>
+            <p className="text-lg leading-relaxed max-w-xl" style={{ color: "#6B6B68" }}>
+              Tell us about your business and we&apos;ll send you a personalised
+              audit of your Google Business Profile, local rankings, and review
+              strategy — within 24 hours.
+            </p>
+          </ScrollReveal>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
-          <div className="lg:col-span-3"
-            style={{ background: '#fff', border: '1px solid #E2E1DC', borderRadius: '20px', padding: 'clamp(24px, 4vw, 40px)' }}>
-            <AuditForm />
-          </div>
-
-          <div className="lg:col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ border: '1px solid #E2E1DC', borderRadius: '16px', padding: '28px', background: '#fff' }}>
-              <h3 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 700, fontSize: '15px', color: '#0D0D0B', letterSpacing: '-0.02em', marginBottom: '18px' }}>
-                What&apos;s in your audit
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {['Google Maps ranking', 'GBP score out of 100', 'Review velocity vs competitors', 'Citation consistency', 'Top 3 actions to take now'].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#1A5C3A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                        <path d="M1 3.5L3 5.5L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                    <span style={{ color: '#0D0D0B', fontSize: '14px' }}>{item}</span>
-                  </div>
-                ))}
+      {/* Form + trust section */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-12 items-start">
+            {/* Form */}
+            <ScrollReveal>
+              <div
+                className="rounded-3xl p-8 md:p-10"
+                style={{
+                  background: "#fff",
+                  border: "1px solid rgba(13,13,11,0.07)",
+                  boxShadow: "0 4px 32px rgba(0,0,0,0.06)",
+                }}
+              >
+                <h2
+                  className="text-xl font-bold mb-1"
+                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: "#0D0D0B" }}
+                >
+                  Request your audit
+                </h2>
+                <p className="text-sm mb-7" style={{ color: "#6B6B68" }}>
+                  Fill in the details below — we&apos;ll do the rest.
+                </p>
+                <AuditForm />
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div style={{ border: '1px solid #E2E1DC', borderRadius: '16px', padding: '24px', background: '#fff' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {[
-                  { icon: '🔒', text: 'Your details are never sold or shared' },
-                  { icon: '📋', text: 'No lock-in contracts — ever' },
-                  { icon: '⚡', text: 'Delivered in 1–2 business days' },
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                    <span style={{ fontSize: '16px', flexShrink: 0 }}>{item.icon}</span>
-                    <span style={{ color: '#6B6B68', fontSize: '14px', lineHeight: 1.6 }}>{item.text}</span>
+            {/* Trust sidebar */}
+            <div className="space-y-6">
+              <ScrollReveal delay={0.1}>
+                <div
+                  className="rounded-3xl p-7"
+                  style={{ background: "#E8F2EC", border: "1px solid rgba(26,92,58,0.12)" }}
+                >
+                  <h3
+                    className="text-base font-bold mb-4"
+                    style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: "#0D0D0B" }}
+                  >
+                    What&apos;s in your audit
+                  </h3>
+                  <ul className="space-y-3">
+                    {[
+                      "Your current Google Maps ranking for your core keywords",
+                      "GBP optimisation score (out of 100) with key gaps identified",
+                      "Review velocity benchmarked against your top 3 competitors",
+                      "Citation consistency check across major AU directories",
+                      "Top 3 actions to improve your ranking this month",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2.5">
+                        <CheckCircle size={15} weight="fill" style={{ color: "#1A5C3A", flexShrink: 0, marginTop: "2px" }} />
+                        <span className="text-sm leading-relaxed" style={{ color: "#0D0D0B" }}>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </ScrollReveal>
+
+              {trustPoints.map((point, i) => (
+                <ScrollReveal key={point.title} delay={0.12 + i * 0.06}>
+                  <div
+                    className="flex items-start gap-4 px-5 py-4 rounded-2xl"
+                    style={{ background: "#fff", border: "1px solid rgba(13,13,11,0.07)" }}
+                  >
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl flex-shrink-0" style={{ background: "#F4F3EF" }}>
+                      <point.icon size={17} weight="bold" style={{ color: "#1A5C3A" }} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold mb-0.5" style={{ color: "#0D0D0B" }}>{point.title}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: "#6B6B68" }}>{point.body}</p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                </ScrollReveal>
+              ))}
 
-            <div style={{ background: '#F4F3EF', border: '1px solid #E2E1DC', borderRadius: '16px', padding: '22px' }}>
-              <p style={{ color: '#6B6B68', fontSize: '14px', lineHeight: 1.7 }}>
-                <strong style={{ color: '#0D0D0B' }}>Sydney-based team.</strong> We know the local market, the suburbs, and what it takes to rank in Australian Google results.
-              </p>
+              <ScrollReveal delay={0.3}>
+                <div className="px-5 py-4 rounded-2xl" style={{ background: "#0D0D0B" }}>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    <strong style={{ color: "rgba(255,255,255,0.85)" }}>Sydney-based team.</strong>{" "}
+                    We understand the Sydney market — suburbs, competition,
+                    industry dynamics. We&apos;re not an offshore agency.
+                  </p>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-  )
+      </section>
+    </div>
+  );
 }

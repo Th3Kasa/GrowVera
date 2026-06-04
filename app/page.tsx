@@ -1,348 +1,361 @@
-'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Marquee from '@/components/Marquee'
+import type React from "react";
+import {
+  ArrowRight,
+  CheckCircle,
+  MapPin,
+  Star,
+  Buildings,
+  ChartBar,
+  FileText,
+  MagnifyingGlass,
+  ArrowUpRight,
+} from "@phosphor-icons/react/dist/ssr";
+import RankVisual from "@/components/RankVisual";
+import Marquee from "@/components/Marquee";
+import ScrollReveal from "@/components/ScrollReveal";
+import HeroButtons from "@/components/HeroButtons";
+import AuditScoreCard from "@/components/AuditScoreCard";
+import RotatingWord from "@/components/RotatingWord";
 
-const ROTATING_WORDS = ['client', 'patient', 'family', 'case', 'customer']
+const marqueeItems = [
+  "Dental Practices",
+  "Med Spas",
+  "NDIS Providers",
+  "Physio Clinics",
+  "Law Firms",
+  "Accounting Firms",
+  "Trades",
+  "Childcare Centres",
+  "Podiatry Clinics",
+  "Chiropractic Practices",
+];
 
-const INCLUDED = [
+const services = [
   {
-    title: 'Google Listing Setup & Maintenance',
-    desc: 'We fully optimise your Google Business Profile — categories, services, photos, hours, Q&A, and ongoing updates so Google always sees an active, authoritative business.',
+    number: "01",
+    icon: MapPin,
+    title: "Google Listing Setup & Maintenance",
+    descriptor: "We set up and maintain your Google business listing so it ranks",
+    description: "We set up your Google business listing properly and keep it updated — the right photos, the right details, in the right places — so Google ranks you above your competitors.",
   },
   {
-    title: 'Getting You More 5-Star Reviews',
-    desc: 'We set up automated review request flows via SMS and email, respond to existing reviews, and help you build a steady stream of genuine 5-star feedback.',
+    number: "02",
+    icon: Star,
+    title: "Getting You More 5-Star Reviews",
+    descriptor: "We help your happy customers leave reviews automatically",
+    description: "We set up a simple system that asks your happy customers to leave a review. More reviews means Google trusts you more — and more people call you.",
   },
   {
-    title: 'Getting Your Business Listed Everywhere',
-    desc: 'We submit and maintain your business details across 50+ Australian directories, ensuring name, address, and phone are consistent everywhere — a key local ranking signal.',
+    number: "03",
+    icon: Buildings,
+    title: "Getting Your Business Listed Everywhere",
+    descriptor: "We list your business on 50+ Australian directories",
+    description: "We list your business on 50+ Australian directories — True Local, Yellow Pages, Yelp, and more. The more places you appear, the more Google trusts you.",
   },
   {
-    title: 'Seeing What Your Competitors Are Doing',
-    desc: "We track how your top local competitors are ranking, what keywords they show up for, and where they're beating you — so we can close the gap.",
+    number: "04",
+    icon: ChartBar,
+    title: "Seeing What Your Competitors Are Doing",
+    descriptor: "We find out how your top competitors rank — then beat them",
+    description: "We look at exactly how the businesses showing up above you are doing it — then we do it better for you.",
   },
   {
-    title: 'Plain-English Monthly Updates',
-    desc: "No confusing dashboards or vanity metrics. Just a clear monthly summary of what moved, what we did, and what we're doing next.",
+    number: "05",
+    icon: FileText,
+    title: "Plain-English Monthly Updates",
+    descriptor: "Every month we show you what's working, in plain language",
+    description: "Every month we send you a simple report — how many people found you, how many called, and what we did. No jargon. No confusing graphs.",
   },
   {
-    title: 'Showing Up in Google Search & Maps',
-    desc: 'Everything we do is aimed at one outcome: your business appearing when local customers search for what you offer on Google Search and Maps.',
+    number: "06",
+    icon: MagnifyingGlass,
+    title: "Showing Up in Google Search & Maps",
+    descriptor: "Maps and search results — we get you in both",
+    description: "When someone searches for your service nearby, we make sure your business shows up — in Google Maps and in the regular search results below it.",
   },
-]
-
-function RotatingWord() {
-  const [idx, setIdx] = useState(0)
-  const [fade, setFade] = useState(true)
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setFade(false)
-      setTimeout(() => {
-        setIdx(i => (i + 1) % ROTATING_WORDS.length)
-        setFade(true)
-      }, 250)
-    }, 2500)
-    return () => clearInterval(t)
-  }, [])
-
-  return (
-    <span style={{
-      color: '#1A5C3A',
-      display: 'inline-block',
-      opacity: fade ? 1 : 0,
-      transform: fade ? 'translateY(0)' : 'translateY(6px)',
-      transition: 'opacity 0.25s ease, transform 0.25s ease',
-    }}>
-      {ROTATING_WORDS[idx]}
-    </span>
-  )
-}
-
-function WhatsIncluded() {
-  const [open, setOpen] = useState<number | null>(null)
-  return (
-    <div style={{ border: '1px solid #E2E1DC', borderRadius: '16px', overflow: 'hidden', background: '#fff' }}>
-      {INCLUDED.map((item, i) => (
-        <div key={i} style={{ borderBottom: i < INCLUDED.length - 1 ? '1px solid #E2E1DC' : 'none' }}>
-          <button
-            onClick={() => setOpen(open === i ? null : i)}
-            style={{
-              width: '100%', display: 'flex', alignItems: 'center',
-              justifyContent: 'space-between', padding: '20px 24px',
-              background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '16px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{
-                width: '20px', height: '20px', borderRadius: '50%', background: '#1A5C3A',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              }}>
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                  <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-              <span style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 600, fontSize: '15px', color: '#0D0D0B', letterSpacing: '-0.01em' }}>
-                {item.title}
-              </span>
-            </div>
-            <span style={{ color: '#9E9E9A', fontSize: '20px', flexShrink: 0, fontWeight: 300, lineHeight: 1 }}>
-              {open === i ? '−' : '+'}
-            </span>
-          </button>
-          <div style={{
-            maxHeight: open === i ? '200px' : '0',
-            overflow: 'hidden',
-            transition: 'max-height 0.3s ease',
-          }}>
-            <p style={{ padding: '0 24px 20px 56px', color: '#6B6B68', fontSize: '14px', lineHeight: 1.75 }}>
-              {item.desc}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
+];
 
 export default function HomePage() {
   return (
-    <main>
-
-      {/* Hero — Fix #2: clamp() padding instead of fixed large values */}
-      <section style={{ background: '#FAFAF8' }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
-          style={{ paddingTop: 'clamp(6rem, 14vw, 9rem)', paddingBottom: 'clamp(3rem, 7vw, 5rem)' }}>
-
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: 'rgba(26,92,58,0.06)', border: '1px solid rgba(26,92,58,0.14)',
-            borderRadius: '100px', padding: '6px 14px', marginBottom: '28px',
-          }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#1A5C3A', display: 'inline-block' }}/>
-            <span style={{ color: '#1A5C3A', fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em' }}>
-              SYDNEY · LOCAL GROWTH AGENCY
-            </span>
-          </div>
-
-          <h1 style={{
-            fontFamily: 'var(--font-cabinet)',
-            fontWeight: 800,
-            fontSize: 'clamp(2.6rem, 9vw, 5rem)',
-            lineHeight: 1.05,
-            letterSpacing: '-0.035em',
-            color: '#0D0D0B',
-            maxWidth: '700px',
-          }}>
-            Your next <RotatingWord /> is{' '}
-            <span style={{
-              color: '#1A5C3A',
-              textDecoration: 'underline',
-              textDecorationColor: 'rgba(26,92,58,0.35)',
-              textUnderlineOffset: '6px',
-            }}>
-              searching
-            </span>{' '}
-            Google.
-          </h1>
-
-          <p style={{ marginTop: '24px', color: '#6B6B68', fontSize: '1.0625rem', lineHeight: 1.7, maxWidth: '480px' }}>
-            We help Sydney businesses show up when it matters most — on Google Maps and local search. No lock-in. Results in 30–60 days.
-          </p>
-
-          <div style={{ marginTop: '40px', display: 'flex', gap: '32px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+    <div style={{ background: "#FAFAF8" }}>
+      {/* SECTION 1 — HERO */}
+      <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-32 pt-40">
+          <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-20 items-center">
+            {/* LEFT */}
             <div>
-              <div style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: '2rem', color: '#0D0D0B', letterSpacing: '-0.04em', lineHeight: 1 }}>#1</div>
-              <div style={{ color: '#9E9E9A', fontSize: '13px', marginTop: '4px', maxWidth: '130px', lineHeight: 1.4 }}>our goal — get your business to the top of local search</div>
-            </div>
-            <div style={{ width: '1px', height: '44px', background: '#E2E1DC', marginTop: '2px' }}/>
-            <div>
-              <div style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: '2rem', color: '#0D0D0B', letterSpacing: '-0.04em', lineHeight: 1 }}>50+</div>
-              <div style={{ color: '#9E9E9A', fontSize: '13px', marginTop: '4px', maxWidth: '130px', lineHeight: 1.4 }}>Australian directories where we list your business</div>
-            </div>
-          </div>
-
-          <div style={{ marginTop: '40px', display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-            <Link href="/audit" style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: '#1A5C3A', color: '#fff', fontWeight: 700, fontSize: '15px',
-              padding: '14px 28px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '-0.01em',
-            }}>
-              Get your free audit →
-            </Link>
-            <Link href="/#how-it-works" style={{
-              display: 'inline-flex', alignItems: 'center',
-              color: '#6B6B68', fontWeight: 500, fontSize: '14px', textDecoration: 'none',
-              padding: '14px 20px', borderRadius: '100px',
-              border: '1px solid #E2E1DC', background: '#fff',
-            }}>
-              See how it works
-            </Link>
-          </div>
-
-          {/* Google Maps mockup */}
-          <div style={{ marginTop: '52px', borderRadius: '16px', overflow: 'hidden', border: '1px solid #D4E4D7', height: '180px', position: 'relative', background: '#C8DCC9' }}>
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #d4e8d7 0%, #bcd8c0 50%, #a8c9ad 100%)' }}/>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.25 }}>
-              {[20, 40, 60, 80].map(pct => (
-                <div key={pct} style={{ position: 'absolute', left: 0, right: 0, top: `${pct}%`, height: '1px', background: '#2D6B42' }}/>
-              ))}
-              {[16, 33, 50, 66, 83].map(pct => (
-                <div key={pct} style={{ position: 'absolute', top: 0, bottom: 0, left: `${pct}%`, width: '1px', background: '#2D6B42' }}/>
-              ))}
-            </div>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -60%)' }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '50%',
-                background: '#1A5C3A', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 4px 16px rgba(26,92,58,0.45)',
-              }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-              </div>
-            </div>
-            <div style={{
-              position: 'absolute', top: '14px', right: '14px',
-              background: '#1A5C3A', color: '#fff',
-              fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em',
-              padding: '6px 12px', borderRadius: '100px',
-            }}>
-              #1 LOCAL PACK
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dark stats + marquee */}
-      <section style={{ background: '#0D0D0B' }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" style={{ paddingTop: '3.5rem', paddingBottom: '2.5rem' }}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {[
-              { stat: '30–60 days', label: 'Get found faster' },
-              { stat: '50+', label: 'Australian directories' },
-              { stat: '2 mo', label: 'Average to results' },
-              { stat: 'Free', label: 'Audit, no obligation' },
-            ].map((item, i) => (
-              <div key={i}>
-                <div style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(1.4rem, 4vw, 1.875rem)', color: '#fff', letterSpacing: '-0.03em' }}>
-                  {item.stat}
+              <ScrollReveal delay={0}>
+                <p style={{ color: "#1A5C3A", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: "1.5rem" }}>
+                  Sydney · Local Growth Agency
+                </p>
+              </ScrollReveal>
+              <ScrollReveal delay={0.08}>
+                <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(3.5rem, 7vw, 6.5rem)", fontWeight: 900, lineHeight: 0.9, letterSpacing: "-0.04em", marginBottom: "2rem" }}>
+                  <span style={{ display: "block", color: "#0D0D0B" }}>Your next</span>
+                  <span style={{ display: "block", color: "#0D0D0B" }}>
+                    <RotatingWord words={["client", "patient", "family", "case", "customer"]} />{" "}is
+                  </span>
+                  <span style={{ display: "block", WebkitTextStroke: "2px #1A5C3A", color: "transparent" }}>searching</span>
+                  <span style={{ display: "block", color: "#0D0D0B" }}>Google.</span>
+                </h1>
+              </ScrollReveal>
+              <ScrollReveal delay={0.14}>
+                <div style={{ height: "1px", background: "#E2E1DC", marginBottom: "1.5rem" }} />
+                <div className="grid grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#0D0D0B", lineHeight: 1, marginBottom: "0.25rem" }}>#1</p>
+                    <p style={{ fontSize: "0.75rem", color: "#9E9E9A", lineHeight: 1.4 }}>our goal — get your business<br />to the top of local search</p>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#0D0D0B", lineHeight: 1, marginBottom: "0.25rem" }}>50+</p>
+                    <p style={{ fontSize: "0.75rem", color: "#9E9E9A", lineHeight: 1.4 }}>Australian directories<br />where we list your business</p>
+                  </div>
                 </div>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', marginTop: '6px' }}>{item.label}</div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}><HeroButtons /></ScrollReveal>
+            </div>
+
+            {/* RIGHT */}
+            <ScrollReveal delay={0.12} className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[380px]">
+                <div aria-hidden="true" style={{ position: "absolute", inset: "-32px", backgroundImage: "radial-gradient(circle, rgba(26,92,58,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px", pointerEvents: "none", borderRadius: "2rem" }} />
+                <div style={{ background: "#0D0D0B", borderRadius: "2rem", padding: "12px", boxShadow: "0 0 0 1px rgba(255,255,255,0.10), 0 32px 80px rgba(0,0,0,0.25)", position: "relative", zIndex: 1 }}>
+                  <RankVisual />
+                </div>
               </div>
-            ))}
+            </ScrollReveal>
           </div>
-        </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: '18px 0' }}>
-          <Marquee />
         </div>
       </section>
 
-      {/* How It Works — Fix #2: clamp() padding */}
-      <section id="how-it-works" style={{ background: '#F4F3EF' }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
-          style={{ paddingTop: 'clamp(3rem, 7vw, 5.5rem)', paddingBottom: 'clamp(3rem, 7vw, 5.5rem)' }}>
-          <div style={{ marginBottom: '48px' }}>
-            <div style={{ color: '#9E9E9A', fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>The process</div>
-            <h2 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(1.75rem, 5vw, 3rem)', letterSpacing: '-0.03em', color: '#0D0D0B', maxWidth: '440px' }}>
-              Three steps. Zero stress.
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      {/* SECTION 2 — STATS BAR */}
+      <section className="overflow-hidden" style={{ background: "#0D0D0B", paddingTop: "4rem", paddingBottom: "4rem" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "3rem" }}>
             {[
-              { n: '01', title: 'We find out why Google is ignoring you', desc: "We run a full audit of your Google Business Profile, local citations, and review profile. You get a clear report showing exactly what's holding you back." },
-              { n: '02', title: "We fix it — you don't lift a finger", desc: 'Our team handles everything: optimising your listing, building citations, setting up review flows, and tracking your competitors. No tech knowledge needed.' },
-              { n: '03', title: 'Your phone starts ringing more', desc: "Within 30–60 days you'll see your business climbing in local results. We keep working each month to push you higher and hold your position." },
-            ].map((step, i) => (
-              <div key={i} style={{ background: '#fff', borderRadius: '16px', padding: '28px', border: '1px solid #E2E1DC' }}>
-                <div style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: '13px', color: '#1A5C3A', letterSpacing: '0.04em', marginBottom: '18px' }}>{step.n}</div>
-                <h3 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 700, fontSize: '17px', color: '#0D0D0B', letterSpacing: '-0.02em', marginBottom: '10px', lineHeight: 1.3 }}>{step.title}</h3>
-                <p style={{ color: '#6B6B68', fontSize: '14px', lineHeight: 1.7 }}>{step.desc}</p>
+              { number: "30–60", line1: "days — typical window", line2: "before rankings start moving" },
+              { number: "50+", line1: "Australian directories", line2: "where we list your business" },
+              { number: "2 mo", line1: "minimum — cancel after that", line2: "no lock-in, no penalties" },
+              { number: "Free", line1: "audit — see exactly where", line2: "you stand before spending a cent" },
+            ].map((stat, i) => (
+              <div key={stat.number} style={{ padding: "0 2rem 2.5rem", borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.08)" : "none" }} className={i === 0 ? "pl-0" : ""}>
+                <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "3rem", fontWeight: 900, color: "#fff", lineHeight: 1, marginBottom: "0.5rem" }}>{stat.number}</p>
+                <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.40)", marginBottom: "0.1rem" }}>{stat.line1}</p>
+                <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>{stat.line2}</p>
               </div>
             ))}
           </div>
         </div>
+        <Marquee items={marqueeItems} className="text-white" />
       </section>
 
-      {/* What's Included — Fix #2: clamp() padding eliminates gap on mobile */}
-      <section style={{ background: '#FAFAF8' }}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
-          style={{ paddingTop: 'clamp(3rem, 7vw, 5.5rem)', paddingBottom: 'clamp(3rem, 7vw, 5.5rem)' }}>
-          <div style={{ marginBottom: '36px' }}>
-            <div style={{ color: '#9E9E9A', fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '14px' }}>What you get</div>
-            <h2 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(1.75rem, 5vw, 3rem)', letterSpacing: '-0.03em', color: '#0D0D0B' }}>Everything included.</h2>
-          </div>
-          <WhatsIncluded />
+      {/* SECTION 3 — HOW IT WORKS */}
+      <section
+        id="how-it-works"
+        style={{ background: "#FAFAF8", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.75rem" }}>The Process</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "24rem", marginBottom: "4rem" }}>
+              Three steps.<br />Real results.
+            </h2>
+          </ScrollReveal>
+
+          {[
+            {
+              step: "01",
+              title: "We find out why Google is ignoring you",
+              desc: "We look at how your business appears on Google right now — what's missing, what's wrong, and exactly why your competitors are showing up ahead of you.",
+              visual: <AuditScoreCard />,
+            },
+            {
+              step: "02",
+              title: "We fix it — you don't lift a finger",
+              desc: "We update everything Google needs to rank your business higher. Better photos, more reviews, the right information in the right places. You keep running your business. We handle the rest.",
+              visual: (
+                <div style={{ maxWidth: "20rem" }}>
+                  {["Your Google listing set up correctly", "A system to get you more 5-star reviews", "Your business listed on 50+ Australian sites", "A clear picture of how to outrank your competitors"].map((item) => (
+                    <div key={item} className="flex items-center gap-2.5" style={{ marginBottom: "0.75rem" }}>
+                      <CheckCircle size={15} weight="fill" style={{ color: "#1A5C3A", flexShrink: 0 }} />
+                      <span style={{ fontSize: "0.875rem", color: "#6B6B68" }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              ),
+            },
+            {
+              step: "03",
+              title: "Your phone starts ringing more",
+              desc: "When locals search for what you do, your business shows up first. More calls. More bookings. A monthly report shows you exactly what changed.",
+              visual: (
+                <div style={{ maxWidth: "20rem", padding: "1.25rem", borderRadius: "1rem", background: "rgba(26,92,58,0.06)" }}>
+                  <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.75rem" }}>Month 3 results</p>
+                  {[{ label: "Google ranking", value: "#1" }, { label: "New reviews", value: "+24" }, { label: "Profile views", value: "+312%" }].map((stat) => (
+                    <div key={stat.label} className="flex justify-between items-center" style={{ padding: "0.5rem 0", borderBottom: "1px solid rgba(26,92,58,0.10)" }}>
+                      <span style={{ fontSize: "0.75rem", color: "#6B6B68" }}>{stat.label}</span>
+                      <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1A5C3A" }}>{stat.value}</span>
+                    </div>
+                  ))}
+                </div>
+              ),
+            },
+          ].map((row, idx) => (
+            <ScrollReveal key={row.step} delay={idx * 0.08}>
+              <div
+                className="group"
+                style={{ borderTop: "1px solid #E2E1DC", padding: "2.5rem 0", display: "grid", gridTemplateColumns: "80px 1fr auto", gap: "2rem", alignItems: "start", transition: "background 0.2s ease", borderRadius: "0.5rem", marginLeft: "-1rem", marginRight: "-1rem", paddingLeft: "1rem", paddingRight: "1rem" }}
+              >
+                <div style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "5rem", fontWeight: 900, color: "#EEECEA", lineHeight: 1, transition: "color 0.2s ease", userSelect: "none" }} className="group-hover:text-[rgba(26,92,58,0.15)]">{row.step}</div>
+                <div style={{ maxWidth: "28rem" }}>
+                  <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.5rem", fontWeight: 700, color: "#0D0D0B", marginBottom: "0.75rem", letterSpacing: "-0.02em" }}>{row.title}</h3>
+                  <p style={{ fontSize: "0.95rem", color: "#6B6B68", lineHeight: 1.65 }}>{row.desc}</p>
+                </div>
+                <div className="hidden md:block" style={{ maxWidth: "22rem", width: "100%" }}>{row.visual}</div>
+              </div>
+            </ScrollReveal>
+          ))}
+          <div style={{ borderTop: "1px solid #E2E1DC" }} />
         </div>
       </section>
 
-      {/* Guarantee */}
-      <section style={{ background: '#F4F3EF' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-          style={{ paddingTop: 'clamp(3rem, 7vw, 5.5rem)', paddingBottom: 'clamp(3rem, 7vw, 5.5rem)' }}>
-          <div style={{
-            border: '1.5px solid #1A5C3A', borderRadius: '20px',
-            padding: 'clamp(28px, 5vw, 52px)',
-            display: 'flex', alignItems: 'flex-start', gap: '36px', flexWrap: 'wrap',
-          }}>
-            <div style={{ flex: 1, minWidth: '240px' }}>
-              <div style={{ color: '#9E9E9A', fontSize: '12px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>Our guarantee</div>
-              <h2 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(1.3rem, 4vw, 2rem)', letterSpacing: '-0.03em', color: '#0D0D0B', lineHeight: 1.25, marginBottom: '14px' }}>
-                If your Google Maps visibility doesn&apos;t measurably improve in 60 days &mdash; your next month is free.
+      {/* SECTION 4 — SERVICES */}
+      <section style={{ background: "#F4F3EF", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.75rem" }}>What&apos;s Included</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "3.5rem" }}>
+              What we do every month —<br />so you don&apos;t have to.
+            </h2>
+          </ScrollReveal>
+          <div>
+            {services.map((service, idx) => {
+              const Icon = service.icon;
+              return (
+                <ScrollReveal key={service.number} delay={idx * 0.05}>
+                  <ServiceRow service={service} Icon={Icon} />
+                </ScrollReveal>
+              );
+            })}
+            <div style={{ borderTop: "1px solid #E2E1DC" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5 — GUARANTEE */}
+      <section style={{ background: "#FAFAF8", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div
+              style={{ border: "1.5px solid #1A5C3A", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 4rem)", display: "grid", gridTemplateColumns: "1fr", gap: "2.5rem" }}
+              className="lg:grid-cols-[1fr_auto]"
+            >
+              <div>
+                <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "1rem" }}>Our Commitment</p>
+                <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)", fontWeight: 900, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.25rem" }}>
+                  If your Google Maps visibility doesn&apos;t measurably improve in 60 days — your next month is free.
+                </h2>
+                <p style={{ fontSize: "0.975rem", color: "#6B6B68", lineHeight: 1.7, maxWidth: "36rem", marginBottom: "2rem" }}>
+                  We back every engagement with this commitment. If we don&apos;t deliver measurable improvement in your Google Business Profile and local citation coverage within 60 days, your following month is on us — no questions asked. We work until the results are real.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {[
+                    { label: "Profile score", detail: "minimum 15-point improvement" },
+                    { label: "Citations built", detail: "50+ Australian directories" },
+                    { label: "Timeframe", detail: "60 days from start" },
+                  ].map((item) => (
+                    <div key={item.label} style={{ padding: "0.875rem 1.25rem", background: "rgba(26,92,58,0.06)", borderRadius: "0.75rem", minWidth: "10rem" }}>
+                      <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.2rem" }}>{item.label}</p>
+                      <p style={{ fontSize: "0.8rem", color: "#6B6B68" }}>{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center justify-center lg:justify-end" style={{ minWidth: "10rem" }}>
+                <div style={{ width: "140px", height: "140px", borderRadius: "50%", background: "#1A5C3A", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "1rem", flexShrink: 0 }}>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.25rem", fontWeight: 900, color: "#fff", lineHeight: 1, marginBottom: "0.15rem" }}>60</p>
+                  <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>Day</p>
+                  <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>Guarantee</p>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 6 — THE OFFER */}
+      <section
+        style={{
+          background: "#1A5C3A",
+          paddingTop: "clamp(4rem, 9vw, 10rem)",
+          paddingBottom: "clamp(4rem, 9vw, 10rem)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-16 items-start">
+            <ScrollReveal delay={0}>
+              <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.50)", marginBottom: "1.25rem" }}>No Obligation</p>
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.95, marginBottom: "1.5rem" }}>
+                Start with a<br />free audit.
               </h2>
-              <p style={{ color: '#6B6B68', fontSize: '14px', lineHeight: 1.75 }}>
-                We stand behind our work. If we can&apos;t move the needle within 60 days, you don&apos;t pay for the next month. No fine print.
+              <p style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, maxWidth: "28rem", marginBottom: "2.5rem" }}>
+                We&apos;ll look at how your business appears on Google right now — for free. You&apos;ll get a full report showing exactly what&apos;s holding you back and what it would take to fix it. If you want to move forward, we&apos;ll send you a custom quote and a plain-English contract. No lock-in beyond 2 months.
               </p>
-            </div>
-            <div style={{
-              width: '96px', height: '96px', borderRadius: '50%', border: '2px solid #1A5C3A',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <span style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: '28px', color: '#1A5C3A', lineHeight: 1 }}>60</span>
-              <span style={{ color: '#1A5C3A', fontSize: '11px', fontWeight: 600, letterSpacing: '0.05em' }}>DAYS</span>
-            </div>
-          </div>
-        </div>
-      </section>
+              <a
+                href="/audit"
+                className="inline-flex items-center gap-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-xl"
+                style={{ background: "#fff", color: "#1A5C3A", padding: "1rem 2rem", boxShadow: "0 4px 24px rgba(0,0,0,0.20)" }}
+              >
+                Get your free audit &rarr;
+              </a>
+            </ScrollReveal>
 
-      {/* Final CTA */}
-      <section style={{ background: '#1A5C3A' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-          style={{ paddingTop: 'clamp(3.5rem, 8vw, 6.5rem)', paddingBottom: 'clamp(3.5rem, 8vw, 6.5rem)' }}>
-          <h2 style={{ fontFamily: 'var(--font-cabinet)', fontWeight: 800, fontSize: 'clamp(2rem, 6vw, 3.5rem)', letterSpacing: '-0.03em', color: '#fff', marginBottom: '18px' }}>
-            Start with a free audit.
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1rem', lineHeight: 1.7, maxWidth: '420px', margin: '0 auto 36px' }}>
-            No sales pitch. No obligation. Just a clear picture of where your business stands — and what to do about it.
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '36px' }}>
-            {['Google Maps ranking', 'GBP health score', 'Review analysis', 'Top 3 action items'].map((item, i) => (
-              <span key={i} style={{
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.85)',
-                fontSize: '13px', fontWeight: 500, padding: '7px 14px', borderRadius: '100px',
-                border: '1px solid rgba(255,255,255,0.15)',
-              }}>
-                <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
-                  <path d="M1 4.5L3.5 7L10 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                {item}
-              </span>
-            ))}
-          </div>
-          <Link href="/audit" style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: '#fff', color: '#1A5C3A', fontWeight: 700, fontSize: '16px',
-            padding: '16px 36px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '-0.01em',
-          }}>
-            Get my free audit →
-          </Link>
-          <div style={{ marginTop: '14px', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
-            Takes 60 seconds · Zero cost · Zero commitment
+            <ScrollReveal delay={0.12}>
+              <div>
+                {[
+                  "Free audit — takes 60 seconds to request",
+                  "Custom quote — no generic packages",
+                  "Clear contract — we walk you through everything",
+                  "New agency — you get the founder's direct attention, not a junior account manager",
+                ].map((item, i) => (
+                  <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.5rem 0", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
+                    <CheckCircle size={18} weight="light" style={{ color: "rgba(255,255,255,0.50)", flexShrink: 0 }} />
+                    <span style={{ fontSize: "1rem", color: "rgba(255,255,255,0.80)", fontWeight: 500 }}>{item}</span>
+                  </div>
+                ))}
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)" }} />
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
-    </main>
-  )
+    </div>
+  );
+}
+
+function ServiceRow({
+  service,
+  Icon,
+}: {
+  service: (typeof services)[0];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: React.ComponentType<any>;
+}) {
+  return (
+    <div className="group" style={{ borderTop: "1px solid #E2E1DC", cursor: "default" }}>
+      <div
+        className="flex items-center gap-6 transition-colors duration-200 group-hover:bg-white"
+        style={{ padding: "1.25rem 1rem", borderRadius: "0.5rem", marginLeft: "-1rem", marginRight: "-1rem" }}
+      >
+        <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "0.75rem", fontWeight: 600, color: "#9E9E9A", minWidth: "2rem", flexShrink: 0 }}>{service.number}</span>
+        <Icon size={18} weight="light" style={{ color: "#1A5C3A", flexShrink: 0 }} />
+        <span className="flex-1 transition-colors duration-200 group-hover:text-[#1A5C3A]" style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.25rem", fontWeight: 700, color: "#0D0D0B" }}>{service.title}</span>
+        <span className="hidden md:block text-right" style={{ fontSize: "0.875rem", color: "#6B6B68", minWidth: "14rem" }}>{service.descriptor}</span>
+        <ArrowUpRight size={18} weight="regular" className="opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: "#1A5C3A", flexShrink: 0 }} />
+      </div>
+      <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[6rem]" style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
+        <p style={{ fontSize: "0.875rem", color: "#6B6B68", paddingBottom: "1.25rem", paddingLeft: "3.5rem", lineHeight: 1.65 }}>{service.description}</p>
+      </div>
+    </div>
+  );
 }
