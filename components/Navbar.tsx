@@ -1,132 +1,194 @@
-'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { List, X } from "@phosphor-icons/react";
+import MagneticButton from "./MagneticButton";
+import Logo from "./Logo";
+
+const navLinks = [
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Services", href: "/services" },
+];
 
 export default function Navbar() {
-  const [visible, setVisible] = useState(true)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const y = window.scrollY
-      if (y < 60) setVisible(true)
-      else if (y > lastScrollY) setVisible(false)
-      else setVisible(true)
-      setLastScrollY(y)
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
-    // Fix #1: moved from centered (top-6 left-1/2 -translate-x-1/2) to left-aligned
-    <nav
-      className="fixed top-3 left-4 md:left-6 z-50"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(-20px)',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
-        pointerEvents: visible ? 'auto' : 'none',
-      }}
-    >
-      <div
-        className="flex items-center gap-4 px-5 py-2.5 rounded-full"
+    <>
+      {/* Floating pill nav */}
+      <motion.nav
+        initial={{ y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        className="fixed top-3 left-4 md:left-6 z-50"
         style={{
-          background: 'rgba(255,255,255,0.92)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(0,0,0,0.08)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+          scale: scrolled ? 0.97 : 1,
+          transition: "scale 0.3s ease",
         }}
       >
-        <Link href="/" style={{ textDecoration: 'none' }}>
-          <span style={{
-            fontFamily: 'var(--font-cabinet), sans-serif',
-            fontWeight: 800,
-            fontSize: '17px',
-            letterSpacing: '-0.03em',
-            color: '#0D0D0B',
-            lineHeight: 1,
-          }}>
-            Grow<span style={{ color: '#1A5C3A' }}>Vera</span>
-          </span>
-        </Link>
-
-        <div className="hidden md:flex items-center gap-1">
-          <Link href="/#how-it-works"
-            style={{ color: '#6B6B68', fontSize: '14px', fontWeight: 500, textDecoration: 'none', padding: '6px 12px', borderRadius: '100px' }}>
-            How It Works
-          </Link>
-          <Link href="/services"
-            style={{ color: '#6B6B68', fontSize: '14px', fontWeight: 500, textDecoration: 'none', padding: '6px 12px', borderRadius: '100px' }}>
-            Services
-          </Link>
-        </div>
-
-        <Link href="/audit" className="hidden md:inline-flex items-center"
+        <div
+          className="flex items-center gap-6 px-6 py-3 rounded-full"
           style={{
-            background: '#1A5C3A',
-            color: '#fff',
-            fontSize: '14px',
-            fontWeight: 600,
-            padding: '8px 18px',
-            borderRadius: '100px',
-            textDecoration: 'none',
-            letterSpacing: '-0.01em',
-          }}>
-          Free Audit →
-        </Link>
-
-        <button
-          className="md:hidden"
-          onClick={() => setMobileOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center' }}
-          aria-label="Toggle menu"
+            background: scrolled
+              ? "rgba(255,255,255,0.92)"
+              : "rgba(255,255,255,0.80)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid #E2E1DC",
+            boxShadow: scrolled
+              ? "0 8px 32px rgba(0,0,0,0.10)"
+              : "0 8px 32px rgba(0,0,0,0.06)",
+            transition: "all 0.3s ease",
+          }}
         >
-          <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-            {mobileOpen ? (
-              <path d="M1 1L17 13M17 1L1 13" stroke="#0D0D0B" strokeWidth="1.75" strokeLinecap="round"/>
-            ) : (
-              <>
-                <path d="M0 1H18" stroke="#0D0D0B" strokeWidth="1.75" strokeLinecap="round"/>
-                <path d="M0 7H18" stroke="#0D0D0B" strokeWidth="1.75" strokeLinecap="round"/>
-                <path d="M0 13H18" stroke="#0D0D0B" strokeWidth="1.75" strokeLinecap="round"/>
-              </>
-            )}
-          </svg>
-        </button>
-      </div>
+          {/* Logo */}
+          <a href="/" aria-label="GrowVera home">
+            <Logo size="sm" />
+          </a>
 
-      {mobileOpen && (
-        <div className="mt-2 rounded-2xl overflow-hidden"
-          style={{
-            background: 'rgba(255,255,255,0.96)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            border: '1px solid rgba(0,0,0,0.08)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-          }}>
-          <div className="p-3 flex flex-col gap-1">
-            <Link href="/#how-it-works" onClick={() => setMobileOpen(false)}
-              style={{ color: '#0D0D0B', fontSize: '15px', fontWeight: 500, textDecoration: 'none', padding: '10px 14px', borderRadius: '12px', display: 'block' }}>
-              How It Works
-            </Link>
-            <Link href="/services" onClick={() => setMobileOpen(false)}
-              style={{ color: '#0D0D0B', fontSize: '15px', fontWeight: 500, textDecoration: 'none', padding: '10px 14px', borderRadius: '12px', display: 'block' }}>
-              Services
-            </Link>
-            <Link href="/audit" onClick={() => setMobileOpen(false)}
-              style={{
-                background: '#1A5C3A', color: '#fff', fontSize: '14px', fontWeight: 600,
-                padding: '12px 14px', borderRadius: '12px', textDecoration: 'none',
-                textAlign: 'center', display: 'block', marginTop: '4px',
-              }}>
-              Free Audit →
-            </Link>
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-5">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-sm font-medium transition-colors duration-200"
+                style={{ color: "#6B6B68" }}
+                onMouseEnter={(e) =>
+                  ((e.target as HTMLAnchorElement).style.color = "#0D0D0B")
+                }
+                onMouseLeave={(e) =>
+                  ((e.target as HTMLAnchorElement).style.color = "#6B6B68")
+                }
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
+
+          {/* CTA */}
+          <div className="hidden md:block">
+            <MagneticButton
+              as="a"
+              href="/audit"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200"
+              style={
+                {
+                  background: "#1A5C3A",
+                  color: "#fff",
+                  "--hover-bg": "#143F28",
+                } as React.CSSProperties
+              }
+            >
+              Free Audit
+            </MagneticButton>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden flex items-center justify-center w-8 h-8 rounded-full transition-colors"
+            style={{ color: "#0D0D0B" }}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {menuOpen ? (
+                <motion.span
+                  key="close"
+                  initial={{ rotate: -45, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 45, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <X size={18} weight="bold" />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="menu"
+                  initial={{ rotate: 45, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -45, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <List size={18} weight="bold" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
         </div>
-      )}
-    </nav>
-  )
+      </motion.nav>
+
+      {/* Mobile full-screen overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 md:hidden flex flex-col"
+            style={{ background: "#FAFAF8" }}
+          >
+            <div className="flex flex-col items-center justify-center flex-1 gap-2">
+              {[...navLinks, { label: "Free Audit", href: "/audit" }].map(
+                (link, i) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.05 + i * 0.07,
+                      ease: [0.32, 0.72, 0, 1],
+                    }}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-4xl font-bold py-3 px-6 rounded-2xl transition-colors"
+                    style={{
+                      fontFamily: "var(--font-cabinet), Outfit, sans-serif",
+                      color:
+                        link.label === "Free Audit" ? "#1A5C3A" : "#0D0D0B",
+                    }}
+                  >
+                    {link.label}
+                  </motion.a>
+                )
+              )}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="pb-10 text-center"
+            >
+              <p className="text-sm" style={{ color: "#6B6B68" }}>
+                admin@growvera.com.au
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }

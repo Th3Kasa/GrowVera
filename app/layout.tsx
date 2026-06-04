@@ -1,43 +1,66 @@
-import type { Metadata } from 'next'
-import { Outfit, DM_Sans } from 'next/font/google'
-import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import type { Metadata } from "next";
+import { Outfit, DM_Sans } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const outfit = Outfit({
-  variable: '--font-cabinet',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-})
+const cabinet = Outfit({
+  subsets: ["latin"],
+  variable: "--font-cabinet",
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
-const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-})
+const satoshi = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-satoshi",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
-  title: 'GrowVera — Local SEO & Google Maps for Sydney Businesses',
+  title: "GrowVera — More Local Clients for Sydney Businesses",
   description:
-    'We help Sydney businesses show up on Google Maps and local search. Free audit — no obligation, results in 30–60 days.',
-  metadataBase: new URL('https://www.growvera.com.au'),
-}
+    "GrowVera helps Sydney's local service businesses dominate Google Maps through expert Google Business Profile optimisation, review generation, and local SEO. Free audit. Custom plan. Clear contract.",
+  keywords:
+    "local SEO Sydney, Google Business Profile optimisation, review generation, local marketing Sydney, dental SEO, small business marketing",
+  metadataBase: new URL("https://growvera.com.au"),
+  openGraph: {
+    title: "GrowVera — More Local Clients for Sydney Businesses",
+    description:
+      "We put Sydney's best local businesses at the top of Google Maps — and keep them there.",
+    url: "https://growvera.com.au",
+    siteName: "GrowVera",
+    locale: "en_AU",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GrowVera — More Local Clients for Sydney Businesses",
+    description:
+      "We put Sydney's best local businesses at the top of Google Maps — and keep them there.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en-AU">
-      <body
-        className={`${outfit.variable} ${dmSans.variable}`}
-        style={{ background: '#FAFAF8', margin: 0 }}
-      >
+    <html lang="en-AU" className={`${cabinet.variable} ${satoshi.variable}`}>
+      <body>
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
-  )
+  );
 }
