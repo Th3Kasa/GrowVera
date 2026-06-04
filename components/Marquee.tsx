@@ -1,31 +1,23 @@
-'use client'
+"use client";
 
-const INDUSTRIES = [
-  'Dental Practices', 'Med Spas', 'NDIS Providers', 'Physio Clinics',
-  'Law Firms', 'Accounting Firms', 'Trades', 'Childcare Centres',
-  'Podiatry Clinics', 'Chiropractic Practices',
-]
+interface MarqueeProps {
+  items: string[];
+  className?: string;
+  separator?: string;
+}
 
-export default function Marquee() {
-  const doubled = [...INDUSTRIES, ...INDUSTRIES]
+export default function Marquee({ items, className = "", separator = "·" }: MarqueeProps) {
+  const repeated = [...items, ...items];
   return (
-    <div style={{ overflow: 'hidden' }}>
-      <div className="animate-marquee" style={{ display: 'flex', width: 'max-content' }}>
-        {doubled.map((name, i) => (
-          <span key={i} style={{
-            color: 'rgba(255,255,255,0.5)',
-            fontSize: '12px',
-            fontWeight: 500,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            whiteSpace: 'nowrap',
-            padding: '0 28px',
-          }}>
-            {name}
-            <span style={{ marginLeft: '28px', color: 'rgba(255,255,255,0.2)' }}>·</span>
+    <div className={`marquee-container overflow-hidden ${className}`} aria-hidden="true">
+      <div className="animate-marquee flex whitespace-nowrap">
+        {repeated.map((item, i) => (
+          <span key={i} className="flex items-center gap-8 px-4">
+            <span className="text-sm font-medium tracking-wide">{item}</span>
+            <span className="opacity-30 text-xs">{separator}</span>
           </span>
         ))}
       </div>
     </div>
-  )
+  );
 }
