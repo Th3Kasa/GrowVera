@@ -2,12 +2,14 @@ import type React from "react";
 import {
   CheckCircle,
   ArrowRight,
-  Robot,
 } from "@phosphor-icons/react/dist/ssr";
 import Marquee from "@/components/Marquee";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
 import RotatingWord from "@/components/RotatingWord";
+import ActiveEnginesMock from "@/components/ActiveEnginesMock";
+import LeadFlowMock from "@/components/LeadFlowMock";
+import QuotingMock from "@/components/QuotingMock";
 
 const marqueeItems = [
   "Trade Businesses", "HVAC Companies", "Auto Repair Shops", "Solar Installers",
@@ -63,43 +65,7 @@ export default function HomePage() {
                   aria-hidden="true"
                   style={{ position: "absolute", inset: "-32px", backgroundImage: "radial-gradient(circle, rgba(26,92,58,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px", pointerEvents: "none", borderRadius: "2rem" }}
                 />
-                <div style={{ background: "#0D0D0B", borderRadius: "2rem", padding: "12px", boxShadow: "0 0 0 1px rgba(255,255,255,0.10), 0 32px 80px rgba(0,0,0,0.25)", position: "relative", zIndex: 1 }}>
-                  <div style={{ padding: "1rem" }}>
-                    <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)", marginBottom: "1rem" }}>
-                      Active Engines
-                    </p>
-                    {[
-                      { label: "Speed-to-Lead Voice Agent", time: "20 sec to first call" },
-                      { label: "Internal Quoting Engine", time: "< 5 sec to quote" },
-                    ].map((engine) => (
-                      <div key={engine.label} style={{ background: "rgba(255,255,255,0.06)", borderRadius: "0.75rem", padding: "0.875rem 1rem", marginBottom: "0.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>
-                        <div>
-                          <p style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff", marginBottom: "0.15rem" }}>{engine.label}</p>
-                          <p style={{ fontSize: "0.67rem", color: "rgba(255,255,255,0.40)" }}>{engine.time}</p>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", background: "rgba(26,92,58,0.30)", borderRadius: "2rem", padding: "0.2rem 0.55rem", flexShrink: 0 }}>
-                          <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#4ADE80", display: "block" }} />
-                          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4ADE80" }}>Live</span>
-                        </div>
-                      </div>
-                    ))}
-                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "1rem", marginTop: "0.5rem" }}>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          { number: "20s", label: "First call" },
-                          { number: "100×", label: "Scalable" },
-                          { number: "< 5s", label: "Quote time" },
-                          { number: "0", label: "Errors" },
-                        ].map((stat) => (
-                          <div key={stat.label} style={{ textAlign: "center", padding: "0.5rem 0" }}>
-                            <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{stat.number}</p>
-                            <p style={{ fontSize: "0.62rem", color: "rgba(255,255,255,0.30)", marginTop: "0.1rem" }}>{stat.label}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ActiveEnginesMock />
               </div>
             </ScrollReveal>
           </div>
@@ -146,27 +112,7 @@ export default function HomePage() {
               step: "01",
               title: "A lead arrives — the engine calls them in 20 seconds",
               desc: "The moment a prospect fills out a form on your website or landing page, the voice engine triggers an outbound call via your CRM. It qualifies them, handles FAQs using your script, and books them directly into your calendar — before your competitor even knows they exist.",
-              visual: (
-                <div style={{ background: "#0D0D0B", borderRadius: "1rem", padding: "1.25rem" }}>
-                  <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 600, color: "rgba(255,255,255,0.25)", marginBottom: "1rem" }}>Lead flow — live</p>
-                  {[
-                    { t: "0:00", label: "Form submitted on your website", color: "rgba(255,255,255,0.50)" },
-                    { t: "0:08", label: "CRM receives lead data", color: "#FBBF24" },
-                    { t: "0:20", label: "Outbound call placed", color: "#4ADE80" },
-                    { t: "1:45", label: "Appointment confirmed", color: "#60A5FA" },
-                  ].map((row) => (
-                    <div key={row.t} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                      <span style={{ fontSize: "0.6rem", fontFamily: "monospace", color: "rgba(255,255,255,0.25)", minWidth: "2rem" }}>{row.t}</span>
-                      <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: "0.4rem", padding: "0.4rem 0.7rem" }}>
-                        <span style={{ fontSize: "0.75rem", color: row.color }}>{row.label}</span>
-                      </div>
-                    </div>
-                  ))}
-                  <div style={{ marginTop: "0.75rem", padding: "0.6rem 0.75rem", background: "rgba(26,92,58,0.25)", borderRadius: "0.5rem", border: "1px solid rgba(26,92,58,0.40)" }}>
-                    <p style={{ fontSize: "0.7rem", fontWeight: 600, color: "#4ADE80" }}>Zero staff involved. Deal in the calendar.</p>
-                  </div>
-                </div>
-              ),
+              visual: <LeadFlowMock compact />,
             },
             {
               step: "02",
@@ -271,31 +217,7 @@ export default function HomePage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
-              <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.5rem", padding: "1.5rem" }}>
-                <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.25)", marginBottom: "1.25rem" }}>
-                  Lead Flow — Live
-                </p>
-                {[
-                  { time: "0:00", event: "Lead submits contact form on your website", statusLabel: "trigger", color: "rgba(255,255,255,0.50)" },
-                  { time: "0:08", event: "Engine receives lead data from CRM", statusLabel: "processing", color: "#FBBF24" },
-                  { time: "0:20", event: "Outbound call placed to prospect", statusLabel: "calling", color: "#4ADE80" },
-                  { time: "1:45", event: "Prospect qualified — appointment booked", statusLabel: "booked", color: "#60A5FA" },
-                ].map((step) => (
-                  <div key={step.time} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
-                    <span style={{ fontSize: "0.65rem", fontWeight: 600, color: "rgba(255,255,255,0.25)", minWidth: "2.5rem", paddingTop: "0.65rem", fontFamily: "monospace" }}>
-                      {step.time}
-                    </span>
-                    <div style={{ flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: "0.5rem", padding: "0.625rem 0.875rem", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
-                      <span style={{ fontSize: "0.8rem", color: step.color, lineHeight: 1.4 }}>{step.event}</span>
-                      <span style={{ fontSize: "0.6rem", fontWeight: 700, color: step.color, textTransform: "uppercase", letterSpacing: "0.08em", flexShrink: 0 }}>{step.statusLabel}</span>
-                    </div>
-                  </div>
-                ))}
-                <div style={{ marginTop: "1.25rem", padding: "0.875rem", background: "rgba(26,92,58,0.2)", borderRadius: "0.75rem", border: "1px solid rgba(26,92,58,0.3)" }}>
-                  <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#4ADE80", marginBottom: "0.25rem" }}>Result: Appointment Confirmed</p>
-                  <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.40)" }}>Total elapsed: 1 min 45 sec. Zero staff involved.</p>
-                </div>
-              </div>
+              <LeadFlowMock />
             </ScrollReveal>
           </div>
         </div>
@@ -338,45 +260,7 @@ export default function HomePage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.12}>
-              <div style={{ background: "#fff", border: "1px solid #E2E1DC", borderRadius: "1.5rem", padding: "1.5rem", boxShadow: "0 8px 40px rgba(0,0,0,0.07)" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: "1px solid #E2E1DC" }}>
-                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#1A5C3A", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Robot size={16} weight="fill" style={{ color: "#fff" }} />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D0D0B", lineHeight: 1 }}>Quoting Engine</p>
-                    <p style={{ fontSize: "0.65rem", color: "#1A5C3A" }}>● Active</p>
-                  </div>
-                </div>
-                <div style={{ marginBottom: "0.75rem", display: "flex", justifyContent: "flex-end" }}>
-                  <div style={{ background: "#0D0D0B", borderRadius: "1rem 1rem 0.2rem 1rem", padding: "0.75rem 1rem", maxWidth: "80%" }}>
-                    <p style={{ fontSize: "0.8rem", color: "#fff", lineHeight: 1.5 }}>2019 Ford Ranger, snapped front CV axle, customer in Parramatta</p>
-                  </div>
-                </div>
-                <div style={{ marginBottom: "0.75rem" }}>
-                  <div style={{ background: "#F4F3EF", borderRadius: "1rem 1rem 1rem 0.2rem", padding: "1rem", maxWidth: "92%" }}>
-                    <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#0D0D0B", marginBottom: "0.6rem" }}>Quote ready — 4.2 seconds</p>
-                    {[
-                      { label: "Parts (OEM supplier — live price)", value: "$312.50" },
-                      { label: "Labour (1.5 hrs @ your rate)", value: "$187.50" },
-                      { label: "Travel surcharge (22 km)", value: "$28.00" },
-                      { label: "Margin overlay (38%)", value: "applied" },
-                    ].map((line) => (
-                      <div key={line.label} style={{ display: "flex", justifyContent: "space-between", padding: "0.3rem 0", borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
-                        <span style={{ fontSize: "0.7rem", color: "#6B6B68" }}>{line.label}</span>
-                        <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0D0D0B" }}>{line.value}</span>
-                      </div>
-                    ))}
-                    <div style={{ marginTop: "0.75rem", padding: "0.5rem 0.75rem", background: "rgba(26,92,58,0.08)", borderRadius: "0.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0D0D0B" }}>Quote to customer</span>
-                      <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#1A5C3A" }}>$734.00</span>
-                    </div>
-                  </div>
-                </div>
-                <p style={{ fontSize: "0.65rem", color: "#9E9E9A", textAlign: "center" }}>
-                  Prices pulled live from supplier API. SOPs and margins applied automatically.
-                </p>
-              </div>
+              <QuotingMock />
             </ScrollReveal>
           </div>
         </div>
