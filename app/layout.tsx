@@ -19,16 +19,16 @@ const satoshi = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "GrowVera — More Local Clients for Sydney Businesses",
+  title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
   description:
-    "GrowVera helps Sydney's local service businesses dominate Google Maps through expert Google Business Profile optimisation, review generation, and local SEO. Free audit. Custom plan. Clear contract.",
+    "GrowVera builds and installs two custom AI engines for Australian mid-market businesses: a Speed-to-Lead Voice Agent that calls prospects in 20 seconds, and an Automated Internal Quoting Engine that prices jobs in under 5 seconds. Book a free 15-minute Pipeline Audit.",
   keywords:
-    "local SEO Sydney, Google Business Profile optimisation, review generation, local marketing Sydney, dental SEO, small business marketing",
+    "AI automation Sydney, speed-to-lead voice agent, automated quoting engine, AI business automation Australia, CRM automation, lead response automation, quoting software Australia",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
-    title: "GrowVera — More Local Clients for Sydney Businesses",
+    title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
     description:
-      "We put Sydney's best local businesses at the top of Google Maps — and keep them there.",
+      "We stop your business from losing revenue to slow response times and manual admin. Two custom AI engines. Flat setup fee. Monthly retainer.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GrowVera — More Local Clients for Sydney Businesses",
+    title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
     description:
-      "We put Sydney's best local businesses at the top of Google Maps — and keep them there.",
+      "We stop your business from losing revenue to slow response times and manual admin. Two custom AI engines. Flat setup fee. Monthly retainer.",
   },
   robots: {
     index: true,

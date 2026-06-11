@@ -8,13 +8,13 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="md:col-span-1">
             <a href="/" className="inline-block mb-3" aria-label="GrowVera home"><Logo size="lg" dark /></a>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>More local clients. Less guesswork. We help Sydney&apos;s best local businesses dominate Google Maps.</p>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>We stop Australian businesses from losing revenue to slow response times and manual admin. Two AI engines. Real results.</p>
             <div className="mt-6"><a href="mailto:admin@growvera.com.au" className="footer-link text-sm font-medium transition-colors">admin@growvera.com.au</a></div>
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: "rgba(255,255,255,0.3)" }}>Navigate</p>
             <ul className="space-y-3">
-              {[{ label: "Services", href: "/services" }, { label: "How It Works", href: "/#how-it-works" }, { label: "Free Audit", href: "/audit" }].map((link) => (
+              {[{ label: "The Engines", href: "/#engine-1" }, { label: "How We Engage", href: "/#how-we-engage" }, { label: "Book Audit", href: "/audit" }].map((link) => (
                 <li key={link.label}><a href={link.href} className="footer-link text-sm transition-colors duration-200">{link.label}</a></li>
               ))}
             </ul>

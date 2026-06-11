@@ -7,8 +7,8 @@ import MagneticButton from "./MagneticButton";
 import Logo from "./Logo";
 
 const navLinks = [
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Services", href: "/services" },
+  { label: "The Engines", href: "/#engine-1" },
+  { label: "How We Engage", href: "/#how-we-engage" },
 ];
 
 export default function Navbar() {
@@ -71,7 +71,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200"
               style={{ background: "#1A5C3A", color: "#fff", "--hover-bg": "#143F28" } as React.CSSProperties}
             >
-              Free Audit
+              Book Audit
             </MagneticButton>
           </div>
 
@@ -106,7 +106,7 @@ export default function Navbar() {
             style={{ background: "#FAFAF8" }}
           >
             <div className="flex flex-col items-center justify-center flex-1 gap-2">
-              {[...navLinks, { label: "Free Audit", href: "/audit" }].map((link, i) => (
+              {[...navLinks, { label: "Book Audit", href: "/audit" }].map((link, i) => (
                 <motion.a
                   key={link.label} href={link.href}
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
