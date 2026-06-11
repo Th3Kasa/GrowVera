@@ -44,7 +44,7 @@ export default function LeadFlowMock({ compact = false }: { compact?: boolean })
     <div style={{ background: bg, border: "1px solid rgba(255,255,255,0.08)", borderRadius: radius, padding: pad }}>
       <div style={{ marginBottom: "1.1rem" }}>
         <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)" }}>
-          Lead Flow
+          Vera Reach · Lead Flow
         </p>
       </div>
 
@@ -100,6 +100,8 @@ export default function LeadFlowMock({ compact = false }: { compact?: boolean })
         );
       })}
 
+      {/* reserved height so the result card doesn't shift the layout each loop */}
+      <div style={{ minHeight: compact ? "4.9rem" : "5.1rem" }}>
       <AnimatePresence>
         {done && (
           <motion.div
@@ -117,6 +119,7 @@ export default function LeadFlowMock({ compact = false }: { compact?: boolean })
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }

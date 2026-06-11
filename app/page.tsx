@@ -84,10 +84,15 @@ export default function HomePage() {
             ].map((stat, i) => (
               <div
                 key={stat.number}
-                style={{ padding: "0 2rem 2.5rem", borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.08)" : "none" }}
-                className={i === 0 ? "pl-0" : ""}
+                className={[
+                  "pb-8 md:pb-10",
+                  i === 0 ? "pl-0 pr-4 md:pr-8" : "",
+                  i === 1 ? "border-l border-white/10 px-4 md:px-8" : "",
+                  i === 2 ? "md:border-l border-white/10 pl-0 md:pl-8 pr-4 md:pr-8 pt-8 md:pt-0" : "",
+                  i === 3 ? "border-l border-white/10 px-4 md:px-8 pt-8 md:pt-0" : "",
+                ].join(" ")}
               >
-                <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "3rem", fontWeight: 900, color: "#fff", lineHeight: 1, marginBottom: "0.5rem" }}>{stat.number}</p>
+                <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 6vw, 3rem)", fontWeight: 900, color: "#fff", lineHeight: 1, marginBottom: "0.5rem" }}>{stat.number}</p>
                 <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.40)", marginBottom: "0.1rem" }}>{stat.line1}</p>
                 <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.25)" }}>{stat.line2}</p>
               </div>
@@ -102,22 +107,27 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.75rem" }}>How the Engines Work</p>
-            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "24rem", marginBottom: "4rem" }}>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "26rem", marginBottom: "1.25rem" }}>
               Two engines.<br />Real results.
             </h2>
+            <p style={{ fontSize: "0.975rem", color: "#6B6B68", lineHeight: 1.7, maxWidth: "34rem", marginBottom: "4rem" }}>
+              We install two AI engines into your existing systems: <strong style={{ color: "#0D0D0B", fontWeight: 600 }}>Vera Reach</strong> calls every new lead within 20 seconds, and <strong style={{ color: "#0D0D0B", fontWeight: 600 }}>Vera Quote</strong> gives your staff an exact price for any job in under 5 seconds. Here&apos;s what that looks like day to day.
+            </p>
           </ScrollReveal>
 
           {[
             {
               step: "01",
-              title: "A lead arrives — the engine calls them in 20 seconds",
-              desc: "The moment a prospect fills out a form on your website or landing page, the voice engine triggers an outbound call via your CRM. It qualifies them, handles FAQs using your script, and books them directly into your calendar — before your competitor even knows they exist.",
+              engine: "Vera Reach",
+              title: "A lead arrives — Vera Reach calls them in 20 seconds",
+              desc: "The moment a prospect fills out a form on your website or landing page, Vera Reach triggers an outbound call via your CRM. It qualifies them, handles FAQs using your script, and books them directly into your calendar — before your competitor even knows they exist.",
               visual: <LeadFlowMock compact />,
             },
             {
               step: "02",
-              title: "Staff input a job — the engine returns a price in under 5 seconds",
-              desc: "Your employee types the vehicle or project type and the problem. The engine connects to your parts suppliers via API, pulls live pricing, overlays your labour rates and SOPs, applies your target margins, and returns an exact price guide before the customer finishes explaining the job.",
+              engine: "Vera Quote",
+              title: "Staff input a job — Vera Quote returns a price in under 5 seconds",
+              desc: "Your employee types the vehicle or project type and the problem. Vera Quote connects to your parts suppliers via API, pulls live pricing, overlays your labour rates and SOPs, applies your target margins, and returns an exact price guide before the customer finishes explaining the job.",
               visual: (
                 <div style={{ maxWidth: "20rem" }}>
                   {[
@@ -137,6 +147,7 @@ export default function HomePage() {
             },
             {
               step: "03",
+              engine: "Both engines",
               title: "Management reclaims 3+ hours of high-leverage time every day",
               desc: "Two things that used to bleed your schedule — chasing leads and manually pricing jobs — are handled automatically. Your team focuses on closing and delivering. You focus on building the business, not running the admin.",
               visual: (
@@ -159,17 +170,18 @@ export default function HomePage() {
           ].map((row, idx) => (
             <ScrollReveal key={row.step} delay={idx * 0.08}>
               <div
-                className="group"
-                style={{ borderTop: "1px solid #E2E1DC", padding: "2.5rem 0", display: "grid", gridTemplateColumns: "80px 1fr auto", gap: "2rem", alignItems: "start", transition: "background 0.2s ease", borderRadius: "0.5rem", marginLeft: "-1rem", marginRight: "-1rem", paddingLeft: "1rem", paddingRight: "1rem" }}
+                className="group grid grid-cols-[52px_1fr] md:grid-cols-[80px_1fr_auto] gap-5 md:gap-8"
+                style={{ borderTop: "1px solid #E2E1DC", padding: "2.5rem 0", alignItems: "start", transition: "background 0.2s ease", borderRadius: "0.5rem", marginLeft: "-1rem", marginRight: "-1rem", paddingLeft: "1rem", paddingRight: "1rem" }}
               >
                 <div
-                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "5rem", fontWeight: 900, color: "#EEECEA", lineHeight: 1, userSelect: "none" }}
+                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.75rem, 8vw, 5rem)", fontWeight: 900, color: "#EEECEA", lineHeight: 1, userSelect: "none" }}
                   className="group-hover:text-[rgba(26,92,58,0.15)]"
                 >
                   {row.step}
                 </div>
                 <div style={{ maxWidth: "28rem" }}>
-                  <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.5rem", fontWeight: 700, color: "#0D0D0B", marginBottom: "0.75rem", letterSpacing: "-0.02em" }}>{row.title}</h3>
+                  <p style={{ display: "inline-block", fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, color: "#1A5C3A", background: "rgba(26,92,58,0.08)", borderRadius: "2rem", padding: "0.25rem 0.7rem", marginBottom: "0.75rem" }}>{row.engine}</p>
+                  <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.25rem, 3vw, 1.5rem)", fontWeight: 700, color: "#0D0D0B", marginBottom: "0.75rem", letterSpacing: "-0.02em" }}>{row.title}</h3>
                   <p style={{ fontSize: "0.95rem", color: "#6B6B68", lineHeight: 1.65 }}>{row.desc}</p>
                 </div>
                 <div className="hidden md:block" style={{ maxWidth: "22rem", width: "100%" }}>{row.visual}</div>
@@ -184,15 +196,18 @@ export default function HomePage() {
       <section id="engine-1" style={{ background: "#0D0D0B", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)", marginBottom: "1.5rem" }}>Engine 01</p>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)", marginBottom: "1.5rem" }}>Engine 01 · Speed to Lead</p>
           </ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal delay={0.05}>
-              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
-                The Outbound Speed-to-Lead Voice Agent
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "0.75rem" }}>
+                Vera Reach
               </h2>
+              <p style={{ fontSize: "1.05rem", fontWeight: 600, color: "rgba(255,255,255,0.75)", lineHeight: 1.4, marginBottom: "1.25rem" }}>
+                The outbound voice agent that calls every new lead in 20 seconds.
+              </p>
               <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, marginBottom: "2.5rem" }}>
-                The moment a lead is captured on your website or landing page, this engine triggers an automated outbound call via your CRM in 20 seconds. It qualifies the prospect, handles FAQs using your exact script, and books them directly into your calendar. It never takes a day off. It never misses a lead. It scales instantly to 100 simultaneous calls.
+                The moment a lead is captured on your website or landing page, Vera Reach triggers an automated outbound call via your CRM in 20 seconds. It qualifies the prospect, handles FAQs using your exact script, and books them directly into your calendar. It never takes a day off. It never misses a lead. It scales instantly to 100 simultaneous calls.
               </p>
               <div style={{ marginBottom: "2.5rem" }}>
                 {[
@@ -227,13 +242,16 @@ export default function HomePage() {
       <section id="engine-2" style={{ background: "#F4F3EF", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "1.5rem" }}>Engine 02</p>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "1.5rem" }}>Engine 02 · Instant Quoting</p>
           </ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal delay={0.05}>
-              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
-                The Automated Internal Quoting Engine
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)", fontWeight: 900, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "0.75rem" }}>
+                Vera Quote
               </h2>
+              <p style={{ fontSize: "1.05rem", fontWeight: 600, color: "#3D3D3A", lineHeight: 1.4, marginBottom: "1.25rem" }}>
+                The internal quoting engine that prices any job in under 5 seconds.
+              </p>
               <p style={{ fontSize: "1rem", color: "#6B6B68", lineHeight: 1.75, marginBottom: "2.5rem" }}>
                 An internal, secure chat engine built exclusively for your staff. When a customer calls, your employee inputs the vehicle or project type and the problem. The engine hooks into your parts suppliers via API, pulls current pricing, overlays your exact SOPs, factors in labour rates and travel distance, and returns an error-free price guide in under 5 seconds.
               </p>

@@ -16,9 +16,9 @@ By requesting a Pipeline Audit, executing a Statement of Work, paying an invoice
     title: "2. Services",
     content: `GrowVera designs, builds, integrates, and maintains custom AI automation engines for mid-market businesses. Current service offerings include:
 
-(a) Speed-to-Lead Voice Agent — an automated outbound call engine that triggers voice calls to leads captured via your website or CRM, qualifies prospects using a client-approved script, and facilitates calendar bookings.
+(a) Speed-to-Lead Voice Agent (marketed as "Vera Reach") — an automated outbound call engine that triggers voice calls to leads captured via your website or CRM, qualifies prospects using a client-approved script, and facilitates calendar bookings.
 
-(b) Automated Internal Quoting Engine — a staff-facing AI tool that retrieves live pricing from third-party supplier APIs, applies client-provided standard operating procedures (SOPs), labour rates, and margin rules to produce internal price guides.
+(b) Automated Internal Quoting Engine (marketed as "Vera Quote") — a staff-facing AI tool that retrieves live pricing from third-party supplier APIs, applies client-provided standard operating procedures (SOPs), labour rates, and margin rules to produce internal price guides.
 
 The specific scope, deliverables, integration requirements, and fees for each engagement are set out in a separate Statement of Work ("SOW") or proposal document agreed in writing between the parties. These Terms apply to all SOWs unless otherwise expressly stated.`,
   },

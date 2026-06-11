@@ -4,16 +4,16 @@ import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "The Engines — GrowVera",
-  description: "GrowVera builds and installs two custom AI automation engines for Australian mid-market businesses: a Speed-to-Lead Voice Agent and an Automated Internal Quoting Engine.",
+  description: "GrowVera builds and installs two custom AI automation engines for Australian mid-market businesses: Vera Reach, a speed-to-lead voice agent, and Vera Quote, an automated internal quoting engine.",
 };
 
 const engines = [
   {
     number: "01",
-    title: "Speed-to-Lead Voice Agent",
+    title: "Vera Reach — Speed-to-Lead Voice Agent",
     badge: "Outbound automation",
     description:
-      "The moment a lead submits a form on your website or landing page, this engine triggers an automated outbound call via your CRM in 20 seconds. It qualifies the prospect, handles FAQs using your exact script, and books them directly into your calendar — before your competitor has even seen the notification.",
+      "The moment a lead submits a form on your website or landing page, Vera Reach triggers an automated outbound call via your CRM in 20 seconds. It qualifies the prospect, handles FAQs using your exact script, and books them directly into your calendar — before your competitor has even seen the notification.",
     items: [
       "20-second outbound trigger from CRM lead capture",
       "Prospect qualification using your exact script constraints",
@@ -26,10 +26,10 @@ const engines = [
   },
   {
     number: "02",
-    title: "Automated Internal Quoting Engine",
+    title: "Vera Quote — Internal Quoting Engine",
     badge: "Internal staff tool",
     description:
-      "A centralised, secure chat engine built exclusively for your staff. Your employee inputs the vehicle or project type and the problem. The engine connects to your parts suppliers via API, pulls live pricing, overlays your SOPs, factors in labour rates and travel distance, and returns an exact, margin-protected price guide in under 5 seconds.",
+      "A centralised, secure chat engine built exclusively for your staff. Your employee inputs the vehicle or project type and the problem. Vera Quote connects to your parts suppliers via API, pulls live pricing, overlays your SOPs, factors in labour rates and travel distance, and returns an exact, margin-protected price guide in under 5 seconds.",
     items: [
       "Secure internal dashboard — works on any device",
       "Live API synchronisation with your parts suppliers",

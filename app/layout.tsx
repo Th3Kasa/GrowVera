@@ -21,9 +21,9 @@ const satoshi = DM_Sans({
 export const metadata: Metadata = {
   title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
   description:
-    "GrowVera builds and installs two custom AI engines for Australian mid-market businesses: a Speed-to-Lead Voice Agent that calls prospects in 20 seconds, and an Automated Internal Quoting Engine that prices jobs in under 5 seconds. Book a free 15-minute Pipeline Audit.",
+    "GrowVera builds and installs two custom AI engines for Australian mid-market businesses: Vera Reach, a speed-to-lead voice agent that calls prospects in 20 seconds, and Vera Quote, an automated internal quoting engine that prices jobs in under 5 seconds. Book a free 15-minute Pipeline Audit.",
   keywords:
-    "AI automation Sydney, speed-to-lead voice agent, automated quoting engine, AI business automation Australia, CRM automation, lead response automation, quoting software Australia",
+    "AI automation Sydney, Vera Reach, Vera Quote, speed-to-lead voice agent, automated quoting engine, AI business automation Australia, CRM automation, lead response automation, quoting software Australia",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
     title: "GrowVera — AI Automation Engines for Mid-Market Businesses",

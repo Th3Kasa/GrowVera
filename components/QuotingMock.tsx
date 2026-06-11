@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Robot, CheckCircle } from "@phosphor-icons/react";
 import { useCountUp } from "./useCountUp";
 
-const QUERY = "2019 Ford Ranger, snapped front CV axle, customer in Parramatta";
+const QUERY = "2019 Ford Ranger, snapped front CV axle, customer in Parra";
 
 const LINES = [
   { label: "Parts (OEM supplier — live price)", value: "$312.50" },
@@ -37,8 +37,10 @@ export default function QuotingMock() {
     return () => { cancelled = true; timers.forEach(clearTimeout); };
   }, []);
 
+  // keep typing until the message is complete, even if the phase timeline
+  // has already advanced (timers can outpace rendering on slower phones)
   useEffect(() => {
-    if (phase !== 1 || typed >= QUERY.length) return;
+    if (phase < 1 || typed >= QUERY.length) return;
     const id = setTimeout(() => setTyped((t) => Math.min(t + 1, QUERY.length)), 34);
     return () => clearTimeout(id);
   }, [phase, typed]);
@@ -57,7 +59,7 @@ export default function QuotingMock() {
           <Robot size={16} weight="fill" style={{ color: "#fff" }} />
         </div>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D0D0B", lineHeight: 1 }}>Quoting Engine</p>
+          <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D0D0B", lineHeight: 1 }}>Vera Quote</p>
           <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.2rem" }}>
             <motion.span
               style={{ width: 5, height: 5, borderRadius: "50%", background: "#1A5C3A", display: "block" }}
@@ -69,8 +71,8 @@ export default function QuotingMock() {
         </div>
       </div>
 
-      {/* user message */}
-      <div style={{ minHeight: "2.6rem", display: "flex", justifyContent: "flex-end", marginBottom: "0.75rem" }}>
+      {/* user message — minHeight fits the wrapped bubble on narrow screens so the card doesn't jump */}
+      <div style={{ minHeight: "4.4rem", display: "flex", justifyContent: "flex-end", alignItems: "flex-start", marginBottom: "0.75rem" }}>
         <AnimatePresence>
           {showUser && (
             <motion.div
@@ -95,8 +97,8 @@ export default function QuotingMock() {
         </AnimatePresence>
       </div>
 
-      {/* engine response */}
-      <div>
+      {/* engine response — reserved height stops the layout collapsing (flickering) each loop */}
+      <div style={{ minHeight: "14.5rem" }}>
         <AnimatePresence mode="wait">
           {phase === 2 && (
             <motion.div

@@ -17,8 +17,8 @@ export default function ActiveEnginesMock() {
   const v5 = useCountUp(5, run, 1000);
 
   const engines = [
-    { label: "Speed-to-Lead Voice Agent", time: "20 sec to first call", wave: true },
-    { label: "Internal Quoting Engine", time: "< 5 sec to quote", wave: false },
+    { label: "Vera Reach — Voice Agent", time: "20 sec to first call", wave: true },
+    { label: "Vera Quote — Quoting Engine", time: "< 5 sec to quote", wave: false },
   ];
 
   const stats = [
