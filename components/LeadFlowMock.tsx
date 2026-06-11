@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "@phosphor-icons/react";
-import { LivePulse, CallWave, ProcessingDots } from "./MockBits";
+import { CallWave, ProcessingDots } from "./MockBits";
 
 const STEPS = [
   { time: "0:00", event: "Lead submits contact form on your website", status: "trigger", color: "rgba(255,255,255,0.85)", accent: "rgba(255,255,255,0.55)" },
@@ -42,11 +42,10 @@ export default function LeadFlowMock({ compact = false }: { compact?: boolean })
 
   return (
     <div style={{ background: bg, border: "1px solid rgba(255,255,255,0.08)", borderRadius: radius, padding: pad }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.1rem" }}>
+      <div style={{ marginBottom: "1.1rem" }}>
         <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)" }}>
           Lead Flow
         </p>
-        <LivePulse />
       </div>
 
       {STEPS.map((s, i) => {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useCountUp } from "./useCountUp";
-import { LivePulse, CallWave, ProcessingDots } from "./MockBits";
+import { CallWave, ProcessingDots } from "./MockBits";
 
 export default function ActiveEnginesMock() {
   const [run, setRun] = useState(false);
@@ -56,11 +56,10 @@ export default function ActiveEnginesMock() {
       />
 
       <div style={{ padding: "1rem", position: "relative" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+        <div style={{ marginBottom: "1rem" }}>
           <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)" }}>
             Active Engines
           </p>
-          <LivePulse />
         </div>
 
         {engines.map((e) => (
