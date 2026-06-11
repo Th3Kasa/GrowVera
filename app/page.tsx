@@ -36,8 +36,7 @@ export default function HomePage() {
                   <span style={{ display: "block", color: "#0D0D0B" }}>
                     <RotatingWord words={["deals", "leads", "revenue", "jobs", "margins"]} />{" "}to
                   </span>
-                  <span style={{ display: "block", WebkitTextStroke: "2px #1A5C3A", color: "transparent" }}>slow responses</span>
-                  <span style={{ display: "block", color: "#0D0D0B" }}>and manual admin.</span>
+                  <span style={{ display: "block", WebkitTextStroke: "2px #1A5C3A", color: "transparent" }}>slow responses.</span>
                 </h1>
               </ScrollReveal>
               <ScrollReveal delay={0.14}>
