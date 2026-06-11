@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ArrowRight, Spinner } from "@phosphor-icons/react";
 
-const BUSINESS_NAME_EXAMPLES = ["Sydney Smiles Dental","Bondi Med Spa","Sunrise NDIS Services","Active Physio Parramatta","Mitchell & Co. Law","Clarity Accounting Group","Rapid Plumbing Sydney","Bright Beginnings Childcare"];
+const BUSINESS_NAME_EXAMPLES = ["Rapid Plumbing Sydney","SunPower Solar NSW","AllState Roofing Co.","FastFloor Installations","Precision Auto Repairs","CleanCo Commercial","Alpine HVAC Services","ProGround Landscaping"];
 
 function useRotatingPlaceholder(items: string[], interval = 2500) {
   const [index, setIndex] = useState(0);
@@ -15,7 +15,7 @@ function useRotatingPlaceholder(items: string[], interval = 2500) {
   return items[index];
 }
 
-const BUSINESS_TYPES = ["Dental Practice","Med Spa / Aesthetics","NDIS Provider","Physiotherapy Clinic","Law Firm","Accounting Firm","Trade (Plumbing / Electrical / etc.)","Childcare","Other"];
+const BUSINESS_TYPES = ["Trade (Plumbing / Electrical / HVAC / etc.)","Auto Repair / Mechanical","Solar Installation","Roofing / Flooring / Construction","Commercial Cleaning","Logistics / Transport","Property Management","Professional Services (Law / Accounting / etc.)","Other"];
 
 interface FormData {
   businessName: string; yourName: string; email: string; phone: string; suburb: string; businessType: string; otherBusinessType: string;
@@ -38,6 +38,7 @@ export default function AuditForm() {
     if (!form.yourName.trim()) e.yourName = "Your name is required.";
     if (!form.email.trim()) { e.email = "Email is required."; }
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) { e.email = "Please enter a valid email address."; }
+    if (!form.phone.trim()) e.phone = "Phone number is required.";
     if (!form.suburb.trim()) e.suburb = "Suburb or area is required.";
     if (!form.businessType) e.businessType = "Please select your business type.";
     setErrors(e);
@@ -73,9 +74,9 @@ export default function AuditForm() {
     return (
       <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }} className="flex flex-col items-center justify-center py-20 px-8 text-center rounded-3xl" style={{ background: "#E8F2EC" }}>
         <div className="flex items-center justify-center w-16 h-16 rounded-full mb-6" style={{ background: "#1A5C3A" }}><CheckCircle size={32} weight="fill" color="#fff" /></div>
-        <h3 className="text-2xl font-bold mb-3" style={{ color: "#0D0D0B" }}>You&apos;re on the list.</h3>
-        <p className="text-base leading-relaxed max-w-sm" style={{ color: "#6B6B67" }}>We&apos;ll review your Google presence and send your audit report within 24 hours.</p>
-        <div className="mt-8 px-5 py-3 rounded-full text-sm font-medium" style={{ background: "rgba(26,92,58,0.08)", color: "#1A5C3A" }}>Free, no obligation &middot; Results in 24 hours</div>
+        <h3 className="text-2xl font-bold mb-3" style={{ color: "#0D0D0B" }}>Request received.</h3>
+        <p className="text-base leading-relaxed max-w-sm" style={{ color: "#6B6B67" }}>We&apos;ll review your details and reach out within 24 hours to book your Pipeline Audit.</p>
+        <div className="mt-8 px-5 py-3 rounded-full text-sm font-medium" style={{ background: "rgba(26,92,58,0.08)", color: "#1A5C3A" }}>Free, no obligation &middot; 15 minutes</div>
       </motion.div>
     );
   }
@@ -102,8 +103,9 @@ export default function AuditForm() {
             <FieldError message={errors.email} />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style={{ color: "#6B6B67" }}>Phone <span style={{ color: "rgba(107,107,103,0.6)" }}>(optional)</span></label>
-            <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="04xx xxx xxx" value={form.phone} onChange={handleChange} className={inputClass} style={inputStyle} onFocus={(e) => Object.assign(e.target.style, focusStyle)} onBlur={(e) => { e.target.style.borderColor = "rgba(13,13,11,0.12)"; e.target.style.boxShadow = "none"; }} />
+            <label htmlFor="phone" className="block text-xs font-semibold mb-1.5 uppercase tracking-wider" style={{ color: "#6B6B67" }}>Phone *</label>
+            <input id="phone" name="phone" type="tel" autoComplete="tel" placeholder="04xx xxx xxx" value={form.phone} onChange={handleChange} required className={inputClass} style={inputStyle} onFocus={(e) => Object.assign(e.target.style, focusStyle)} onBlur={(e) => { e.target.style.borderColor = errors.phone ? "#DC2626" : "rgba(13,13,11,0.12)"; e.target.style.boxShadow = "none"; }} />
+            <FieldError message={errors.phone} />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -140,9 +142,9 @@ export default function AuditForm() {
         </AnimatePresence>
 
         <button type="submit" disabled={status === "loading"} className="w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl text-base font-semibold transition-all duration-200" style={{ background: status === "loading" ? "#4A8A6A" : "#1A5C3A", color: "#fff", cursor: status === "loading" ? "not-allowed" : "pointer", boxShadow: status === "loading" ? "none" : "0 4px 24px rgba(26,92,58,0.28)" }}>
-          {status === "loading" ? <><Spinner size={18} className="animate-spin" /><span>Sending your request...</span></> : <><span>Get my free audit</span><ArrowRight size={18} weight="bold" /></>}
+          {status === "loading" ? <><Spinner size={18} className="animate-spin" /><span>Sending your request...</span></> : <><span>Book my Pipeline Audit</span><ArrowRight size={18} weight="bold" /></>}
         </button>
-        <p className="text-center text-xs" style={{ color: "#6B6B67" }}>We&apos;ll respond within 24 hours &middot; Free, no obligation</p>
+        <p className="text-center text-xs" style={{ color: "#6B6B67" }}>We&apos;ll reach out within 24 hours to confirm your audit time &middot; No obligation</p>
       </div>
     </form>
   );

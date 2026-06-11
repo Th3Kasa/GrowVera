@@ -13,7 +13,7 @@ export default function HeroButtons() {
           <ArrowRight size={15} weight="bold" />
         </motion.span>
       </MagneticButton>
-      <MagneticButton as="a" href="/#engine-1" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-all duration-200" style={{ background: "transparent", color: "#0D0D0B", border: "1px solid rgba(13,13,11,0.15)" } as React.CSSProperties}>
+      <MagneticButton as="a" href="#engine-1" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold transition-all duration-200" style={{ background: "transparent", color: "#0D0D0B", border: "1px solid rgba(13,13,11,0.15)" } as React.CSSProperties}>
         See the engines
       </MagneticButton>
     </div>
