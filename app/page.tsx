@@ -1,13 +1,8 @@
 import type React from "react";
 import {
   CheckCircle,
-  Lightning,
-  Phone,
-  CalendarBlank,
-  Database,
-  Sliders,
-  CurrencyDollar,
-  ArrowUpRight,
+  ArrowRight,
+  Robot,
 } from "@phosphor-icons/react/dist/ssr";
 import Marquee from "@/components/Marquee";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -20,50 +15,6 @@ const marqueeItems = [
   "Commercial Cleaners", "Logistics Operators", "Property Managers",
 ];
 
-const engineFeatures = [
-  {
-    number: "01",
-    icon: Lightning,
-    title: "20-Second Outbound Trigger",
-    descriptor: "Calls your lead before they click your competitor",
-    description: "The moment a lead submits a form, the engine triggers an outbound call in 20 seconds via your existing CRM. No staff intervention. No delay. No lost deal.",
-  },
-  {
-    number: "02",
-    icon: Phone,
-    title: "Prospect Qualification & Script Handling",
-    descriptor: "Qualifies leads using your exact constraints",
-    description: "The engine handles common FAQs using your business's exact script, filters unqualified enquiries, and only passes real opportunities through to your team.",
-  },
-  {
-    number: "03",
-    icon: CalendarBlank,
-    title: "Automated Calendar Booking",
-    descriptor: "Appointments confirmed without a single staff member",
-    description: "Qualified prospects are booked directly into your team's calendar. Zero admin. Zero back-and-forth. Just a confirmed appointment, ready to close.",
-  },
-  {
-    number: "04",
-    icon: Database,
-    title: "Live Supplier API Synchronisation",
-    descriptor: "Pulls current parts pricing the moment a job comes in",
-    description: "The quoting engine connects directly to your parts suppliers via API and extracts live pricing — so every quote reflects what you actually pay today, not last month.",
-  },
-  {
-    number: "05",
-    icon: Sliders,
-    title: "SOP & Labour Rate Overlay",
-    descriptor: "Your margins and procedures built in from day one",
-    description: "Your standard operating procedures, labour rates, and target margins are embedded into every calculation. The engine applies them automatically — no manual adjustment required.",
-  },
-  {
-    number: "06",
-    icon: CurrencyDollar,
-    title: "Error-Free Quote Generation",
-    descriptor: "An exact price guide in under 5 seconds, every time",
-    description: "Inputs go in. A precise, margin-protected quote comes out in under 5 seconds. No underquoting. No overquoting. No jobs that quietly cost you money.",
-  },
-];
 
 export default function HomePage() {
   return (
@@ -284,47 +235,150 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ENGINE FEATURES */}
-      <section style={{ background: "#F4F3EF", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+      {/* ENGINE 01: SPEED-TO-LEAD */}
+      <section id="engine-1" style={{ background: "#0D0D0B", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "0.75rem" }}>What&apos;s Included</p>
-            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "3.5rem" }}>
-              Six capabilities built into<br />every engagement.
-            </h2>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.30)", marginBottom: "1.5rem" }}>Engine 01</p>
           </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <ScrollReveal delay={0.05}>
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
+                The Outbound Speed-to-Lead Voice Agent
+              </h2>
+              <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, marginBottom: "2.5rem" }}>
+                The moment a lead is captured on your website or landing page, this engine triggers an automated outbound call via your CRM in 20 seconds. It qualifies the prospect, handles FAQs using your exact script, and books them directly into your calendar. It never takes a day off. It never misses a lead. It scales instantly to 100 simultaneous calls.
+              </p>
+              <div style={{ marginBottom: "2.5rem" }}>
+                {[
+                  "Responds in 20 seconds — before your competitor picks up the phone",
+                  "Qualifies prospects and handles FAQs using your exact script",
+                  "Books directly into your calendar with zero admin involvement",
+                  "Scales instantly to 100 simultaneous calls at no extra cost",
+                  "Replaces a full-time admin salary at a fraction of the overhead",
+                ].map((point) => (
+                  <div key={point} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                    <CheckCircle size={16} weight="fill" style={{ color: "#1A5C3A", flexShrink: 0, marginTop: "0.2rem" }} />
+                    <span style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.6 }}>{point}</span>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="/audit"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#1A5C3A", color: "#fff", padding: "0.875rem 1.75rem", borderRadius: "2rem", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none", boxShadow: "0 4px 20px rgba(26,92,58,0.40)" }}
+              >
+                Book a Pipeline Audit <ArrowRight size={15} weight="bold" />
+              </a>
+            </ScrollReveal>
 
-          <ScrollReveal>
-            <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 700, color: "#9E9E9A", marginBottom: "0.5rem", paddingLeft: "1rem" }}>
-              Engine 01 — Speed-to-Lead Voice Agent
-            </p>
-          </ScrollReveal>
-          <div>
-            {engineFeatures.slice(0, 3).map((feature, idx) => {
-              const Icon = feature.icon;
-              return (
-                <ScrollReveal key={feature.number} delay={idx * 0.05}>
-                  <ServiceRow feature={feature} Icon={Icon} />
-                </ScrollReveal>
-              );
-            })}
+            <ScrollReveal delay={0.12}>
+              <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.5rem", padding: "1.5rem" }}>
+                <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.25)", marginBottom: "1.25rem" }}>
+                  Lead Flow — Live
+                </p>
+                {[
+                  { time: "0:00", event: "Lead submits contact form on your website", statusLabel: "trigger", color: "rgba(255,255,255,0.50)" },
+                  { time: "0:08", event: "Engine receives lead data from CRM", statusLabel: "processing", color: "#FBBF24" },
+                  { time: "0:20", event: "Outbound call placed to prospect", statusLabel: "calling", color: "#4ADE80" },
+                  { time: "1:45", event: "Prospect qualified — appointment booked", statusLabel: "booked", color: "#60A5FA" },
+                ].map((step) => (
+                  <div key={step.time} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                    <span style={{ fontSize: "0.65rem", fontWeight: 600, color: "rgba(255,255,255,0.25)", minWidth: "2.5rem", paddingTop: "0.65rem", fontFamily: "monospace" }}>
+                      {step.time}
+                    </span>
+                    <div style={{ flex: 1, background: "rgba(255,255,255,0.04)", borderRadius: "0.5rem", padding: "0.625rem 0.875rem", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
+                      <span style={{ fontSize: "0.8rem", color: step.color, lineHeight: 1.4 }}>{step.event}</span>
+                      <span style={{ fontSize: "0.6rem", fontWeight: 700, color: step.color, textTransform: "uppercase", letterSpacing: "0.08em", flexShrink: 0 }}>{step.statusLabel}</span>
+                    </div>
+                  </div>
+                ))}
+                <div style={{ marginTop: "1.25rem", padding: "0.875rem", background: "rgba(26,92,58,0.2)", borderRadius: "0.75rem", border: "1px solid rgba(26,92,58,0.3)" }}>
+                  <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#4ADE80", marginBottom: "0.25rem" }}>Result: Appointment Confirmed</p>
+                  <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.40)" }}>Total elapsed: 1 min 45 sec. Zero staff involved.</p>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
+        </div>
+      </section>
 
+      {/* ENGINE 02: QUOTING ENGINE */}
+      <section id="engine-2" style={{ background: "#F4F3EF", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 700, color: "#9E9E9A", marginBottom: "0.5rem", paddingLeft: "1rem", marginTop: "2.5rem" }}>
-              Engine 02 — Automated Internal Quoting Engine
-            </p>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#1A5C3A", marginBottom: "1.5rem" }}>Engine 02</p>
           </ScrollReveal>
-          <div>
-            {engineFeatures.slice(3).map((feature, idx) => {
-              const Icon = feature.icon;
-              return (
-                <ScrollReveal key={feature.number} delay={idx * 0.05}>
-                  <ServiceRow feature={feature} Icon={Icon} />
-                </ScrollReveal>
-              );
-            })}
-            <div style={{ borderTop: "1px solid #E2E1DC" }} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <ScrollReveal delay={0.05}>
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "#0D0D0B", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
+                The Automated Internal Quoting Engine
+              </h2>
+              <p style={{ fontSize: "1rem", color: "#6B6B68", lineHeight: 1.75, marginBottom: "2.5rem" }}>
+                An internal, secure chat engine built exclusively for your staff. When a customer calls, your employee inputs the vehicle or project type and the problem. The engine hooks into your parts suppliers via API, pulls current pricing, overlays your exact SOPs, factors in labour rates and travel distance, and returns an error-free price guide in under 5 seconds.
+              </p>
+              <div style={{ marginBottom: "2.5rem" }}>
+                {[
+                  "Centralised internal dashboard — works on any device your staff already use",
+                  "Live API synchronisation with your parts suppliers — no manual lookups",
+                  "Your SOPs, margins, and labour rates built in from day one",
+                  "Turns a 15-minute pricing exercise into a 5-second workflow",
+                  "Eliminates underquoting and the jobs that cost you money",
+                ].map((point) => (
+                  <div key={point} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                    <CheckCircle size={16} weight="fill" style={{ color: "#1A5C3A", flexShrink: 0, marginTop: "0.2rem" }} />
+                    <span style={{ fontSize: "0.9rem", color: "#6B6B68", lineHeight: 1.6 }}>{point}</span>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="/audit"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#1A5C3A", color: "#fff", padding: "0.875rem 1.75rem", borderRadius: "2rem", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none", boxShadow: "0 4px 20px rgba(26,92,58,0.25)" }}
+              >
+                Book a Pipeline Audit <ArrowRight size={15} weight="bold" />
+              </a>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.12}>
+              <div style={{ background: "#fff", border: "1px solid #E2E1DC", borderRadius: "1.5rem", padding: "1.5rem", boxShadow: "0 8px 40px rgba(0,0,0,0.07)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.25rem", paddingBottom: "0.75rem", borderBottom: "1px solid #E2E1DC" }}>
+                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#1A5C3A", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Robot size={16} weight="fill" style={{ color: "#fff" }} />
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0D0D0B", lineHeight: 1 }}>Quoting Engine</p>
+                    <p style={{ fontSize: "0.65rem", color: "#1A5C3A" }}>● Active</p>
+                  </div>
+                </div>
+                <div style={{ marginBottom: "0.75rem", display: "flex", justifyContent: "flex-end" }}>
+                  <div style={{ background: "#0D0D0B", borderRadius: "1rem 1rem 0.2rem 1rem", padding: "0.75rem 1rem", maxWidth: "80%" }}>
+                    <p style={{ fontSize: "0.8rem", color: "#fff", lineHeight: 1.5 }}>2019 Ford Ranger, snapped front CV axle, customer in Parramatta</p>
+                  </div>
+                </div>
+                <div style={{ marginBottom: "0.75rem" }}>
+                  <div style={{ background: "#F4F3EF", borderRadius: "1rem 1rem 1rem 0.2rem", padding: "1rem", maxWidth: "92%" }}>
+                    <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#0D0D0B", marginBottom: "0.6rem" }}>Quote ready — 4.2 seconds</p>
+                    {[
+                      { label: "Parts (OEM supplier — live price)", value: "$312.50" },
+                      { label: "Labour (1.5 hrs @ your rate)", value: "$187.50" },
+                      { label: "Travel surcharge (22 km)", value: "$28.00" },
+                      { label: "Margin overlay (38%)", value: "applied" },
+                    ].map((line) => (
+                      <div key={line.label} style={{ display: "flex", justifyContent: "space-between", padding: "0.3rem 0", borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
+                        <span style={{ fontSize: "0.7rem", color: "#6B6B68" }}>{line.label}</span>
+                        <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0D0D0B" }}>{line.value}</span>
+                      </div>
+                    ))}
+                    <div style={{ marginTop: "0.75rem", padding: "0.5rem 0.75rem", background: "rgba(26,92,58,0.08)", borderRadius: "0.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0D0D0B" }}>Quote to customer</span>
+                      <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.1rem", fontWeight: 900, color: "#1A5C3A" }}>$734.00</span>
+                    </div>
+                  </div>
+                </div>
+                <p style={{ fontSize: "0.65rem", color: "#9E9E9A", textAlign: "center" }}>
+                  Prices pulled live from supplier API. SOPs and margins applied automatically.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -415,34 +469,3 @@ export default function HomePage() {
   );
 }
 
-function ServiceRow({
-  feature,
-  Icon,
-}: {
-  feature: (typeof engineFeatures)[0];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Icon: React.ComponentType<any>;
-}) {
-  return (
-    <div className="group" style={{ borderTop: "1px solid #E2E1DC", cursor: "default" }}>
-      <div
-        className="flex items-center gap-6 transition-colors duration-200 group-hover:bg-white"
-        style={{ padding: "1.25rem 1rem", borderRadius: "0.5rem", marginLeft: "-1rem", marginRight: "-1rem" }}
-      >
-        <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "0.75rem", fontWeight: 600, color: "#9E9E9A", minWidth: "2rem", flexShrink: 0 }}>{feature.number}</span>
-        <Icon size={18} weight="light" style={{ color: "#1A5C3A", flexShrink: 0 }} />
-        <span
-          className="flex-1 transition-colors duration-200 group-hover:text-[#1A5C3A]"
-          style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.25rem", fontWeight: 700, color: "#0D0D0B" }}
-        >
-          {feature.title}
-        </span>
-        <span className="hidden md:block text-right" style={{ fontSize: "0.875rem", color: "#6B6B68", minWidth: "14rem" }}>{feature.descriptor}</span>
-        <ArrowUpRight size={18} weight="regular" className="opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: "#1A5C3A", flexShrink: 0 }} />
-      </div>
-      <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[6rem]" style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
-        <p style={{ fontSize: "0.875rem", color: "#6B6B68", paddingBottom: "1.25rem", paddingLeft: "3.5rem", lineHeight: 1.65 }}>{feature.description}</p>
-      </div>
-    </div>
-  );
-}
