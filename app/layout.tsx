@@ -19,16 +19,16 @@ const satoshi = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
+  title: "GrowVera — An entire web agency. Fully autonomous.",
   description:
-    "GrowVera builds and installs two custom AI engines for Australian mid-market businesses: Vera Reach, a speed-to-lead voice agent that calls prospects in 20 seconds, and Vera Quote, an automated internal quoting engine that prices jobs in under 5 seconds. Book a free 15-minute Pipeline Audit.",
+    "GrowVera is an autonomous web agency that runs while you sleep. It finds local businesses with no website, builds each one a bespoke, designer-quality site, deploys it live, reviews it on desktop and mobile, and sends you the URL plus a ready-to-send pitch — with a built-in CRM and follow-up sequence. Plans from AUD $99/mo.",
   keywords:
-    "AI automation Sydney, Vera Reach, Vera Quote, speed-to-lead voice agent, automated quoting engine, AI business automation Australia, CRM automation, lead response automation, quoting software Australia",
+    "autonomous website agency, AI website builder Australia, find businesses without websites, automated web agency, Claude AI website generator, lead generation websites, AI cold outreach, web design automation Australia, GrowVera",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
-    title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
+    title: "GrowVera — An entire web agency. Fully autonomous.",
     description:
-      "We stop your business from losing revenue to slow response times and manual admin. Two custom AI engines. Flat setup fee. Monthly retainer.",
+      "Finds businesses with no website, builds them a bespoke site, deploys it, and pitches them — on its own. Built-in CRM and follow-ups. Plans from AUD $99/mo.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GrowVera — AI Automation Engines for Mid-Market Businesses",
+    title: "GrowVera — An entire web agency. Fully autonomous.",
     description:
-      "We stop your business from losing revenue to slow response times and manual admin. Two custom AI engines. Flat setup fee. Monthly retainer.",
+      "Finds businesses with no website, builds them a bespoke site, deploys it, and pitches them — on its own. Plans from AUD $99/mo.",
   },
   robots: {
     index: true,
