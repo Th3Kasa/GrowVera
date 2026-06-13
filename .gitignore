@@ -24,6 +24,11 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+
+# pipeline artifacts
+/pipeline/output/
+/pipeline/.crm.json
 
 # vercel
 .vercel
