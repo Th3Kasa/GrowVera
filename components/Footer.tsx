@@ -3,18 +3,18 @@ import Logo from "./Logo";
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative" style={{ background: "#0D0D0B", color: "#fff" }}>
+    <footer className="relative" style={{ background: "#050506", color: "#fff", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="md:col-span-1">
-            <a href="/" className="inline-block mb-3" aria-label="GrowVera home"><Logo size="lg" dark /></a>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>We stop Australian businesses from losing revenue to slow response times and manual admin. Two AI engines. Real results.</p>
+            <a href="/" className="inline-block mb-3" aria-label="GrowVera home"><Logo size="lg" /></a>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>The autonomous web agency. GrowVera finds local businesses with no website, builds them a bespoke site, and pitches them — on its own, around the clock.</p>
             <div className="mt-6"><a href="mailto:admin@growvera.com.au" className="footer-link text-sm font-medium transition-colors">admin@growvera.com.au</a></div>
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: "rgba(255,255,255,0.3)" }}>Navigate</p>
             <ul className="space-y-3">
-              {[{ label: "The Engines", href: "/#engine-1" }, { label: "How We Engage", href: "/#how-we-engage" }, { label: "Book Audit", href: "/audit" }].map((link) => (
+              {[{ label: "How it works", href: "/#how-it-works" }, { label: "The system", href: "/#system" }, { label: "Pricing", href: "/#pricing" }, { label: "Book a call", href: "/audit" }].map((link) => (
                 <li key={link.label}><a href={link.href} className="footer-link text-sm transition-colors duration-200">{link.label}</a></li>
               ))}
             </ul>
