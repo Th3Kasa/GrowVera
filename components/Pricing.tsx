@@ -89,7 +89,7 @@ export default function Pricing() {
                   <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>/month</span>
                 </div>
                 <p style={{ fontSize: "0.78rem", color: "#A2A2A0", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-                  + {formatAud(tier.setupFee)} one-off onboarding &amp; build
+                  + {formatAud(tier.setupFee)}{" "}one-off onboarding &amp; build
                 </p>
 
                 <button
@@ -130,7 +130,7 @@ export default function Pricing() {
         )}
 
         <p style={{ textAlign: "center", marginTop: "2.5rem", fontSize: "0.85rem", color: "#6E6E72" }}>
-          Want it done for you instead? <a href="/audit" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Book a strategy call →</a>
+          Not sure which plan fits? <a href="/audit" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Book a free strategy call →</a>
         </p>
       </div>
     </section>
