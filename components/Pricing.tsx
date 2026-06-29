@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, ArrowRight } from "@phosphor-icons/react";
-import { TIERS, TRIAL_DAYS, formatAud, type TierId } from "@/lib/tiers";
+import { TIERS, formatAud, type TierId } from "@/lib/tiers";
 
 /**
  * Phase 1: if a hosted Stripe Payment Link is configured for the tier, the
@@ -58,7 +58,7 @@ export default function Pricing() {
             One subscription. <span style={{ color: "#34D399" }}>The whole agency.</span>
           </h2>
           <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "0.5rem" }}>
-            Month to month, cancel anytime. Start with a {TRIAL_DAYS}-day free trial — no card charged until it ends. Prices in AUD, GST inclusive.
+            A one-off onboarding &amp; build, then a simple monthly retainer. Cancel anytime. Prices in AUD, GST inclusive.
           </p>
         </div>
 
@@ -84,10 +84,15 @@ export default function Pricing() {
                 )}
                 <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "#F4F4F1", marginBottom: "0.2rem" }}>{tier.name}</p>
                 <p style={{ fontSize: "0.82rem", color: "#A2A2A0", marginBottom: "1.25rem" }}>{tier.tagline}</p>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.35rem", marginBottom: "1.25rem" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.35rem", marginBottom: "0.4rem" }}>
                   <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.75rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, letterSpacing: "-0.03em" }}>{formatAud(tier.priceMonthly)}</span>
                   <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>/month</span>
                 </div>
+                <p style={{ fontSize: "0.78rem", color: "#A2A2A0", lineHeight: 1.5, marginBottom: "1.25rem" }}>
+                  + {formatAud(tier.setupFee)} one-off setup
+                  <br />
+                  <span style={{ color: "#6E6E72" }}>{tier.setupWaiverNote}</span>
+                </p>
 
                 <button
                   onClick={() => subscribe(tier.id)}
@@ -106,7 +111,7 @@ export default function Pricing() {
                     marginBottom: "1.5rem",
                   }}
                 >
-                  {loading === tier.id ? "Starting…" : <>Start {TRIAL_DAYS}-day trial <ArrowRight size={15} weight="bold" /></>}
+                  {loading === tier.id ? "Starting…" : <>Get started <ArrowRight size={15} weight="bold" /></>}
                 </button>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>

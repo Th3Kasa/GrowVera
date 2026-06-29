@@ -45,7 +45,8 @@ export async function POST(request: NextRequest) {
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       subscription_data: {
-        trial_period_days: TRIAL_DAYS,
+        // No free trial on done-for-you retainers; only applied if TRIAL_DAYS > 0.
+        ...(TRIAL_DAYS > 0 ? { trial_period_days: TRIAL_DAYS } : {}),
         metadata: { tier: t.id },
       },
       metadata: { tier: t.id },

@@ -35,7 +35,9 @@ export interface Tier {
   features: string[];
 }
 
-export const TRIAL_DAYS = 7;
+/** Free-trial days for self-serve checkout (Phase 2). 0 = no trial, which is
+ * the model for done-for-you retainers (setup fee instead). */
+export const TRIAL_DAYS = 0;
 
 export const TIERS: Tier[] = [
   {
