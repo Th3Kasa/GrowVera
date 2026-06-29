@@ -7,9 +7,9 @@ import MagneticButton from "./MagneticButton";
 import Logo from "./Logo";
 
 const navLinks = [
-  { label: "How it works", href: "/#how-it-works" },
-  { label: "The system", href: "/#system" },
+  { label: "Services", href: "/services" },
   { label: "Pricing", href: "/#pricing" },
+  { label: "Book a call", href: "/audit" },
 ];
 
 export default function Navbar() {
@@ -68,11 +68,11 @@ export default function Navbar() {
 
           <div className="hidden md:block">
             <MagneticButton
-              as="a" href="/#pricing"
+              as="a" href="/audit"
               className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200"
               style={{ background: "#34D399", color: "#06180F", "--hover-bg": "#10B981" } as React.CSSProperties}
             >
-              Start free
+              Book a call
             </MagneticButton>
           </div>
 
@@ -107,14 +107,14 @@ export default function Navbar() {
             style={{ background: "#08080A" }}
           >
             <div className="flex flex-col items-center justify-center flex-1 gap-2">
-              {[...navLinks, { label: "Start free", href: "/#pricing" }].map((link, i) => (
+              {[...navLinks, { label: "Book a call", href: "/audit" }].map((link, i) => (
                 <motion.a
                   key={link.label} href={link.href}
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 + i * 0.07, ease: [0.32, 0.72, 0, 1] }}
                   onClick={() => setMenuOpen(false)}
                   className="text-4xl font-bold py-3 px-6 rounded-2xl transition-colors"
-                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: link.label === "Start free" ? "#34D399" : "#F4F4F1" }}
+                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: link.label === "Book a call" ? "#34D399" : "#F4F4F1" }}
                 >{link.label}</motion.a>
               ))}
             </div>

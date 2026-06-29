@@ -19,16 +19,16 @@ const satoshi = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "GrowVera — An entire web agency. Fully autonomous.",
+  title: "GrowVera — Your AI growth team. Sydney.",
   description:
-    "GrowVera is an autonomous web agency that runs while you sleep. It finds local businesses with no website, builds each one a bespoke, designer-quality site, deploys it live, reviews it on desktop and mobile, and sends you the URL plus a ready-to-send pitch — with a built-in CRM and follow-up sequence. Plans from AUD $99/mo.",
+    "GrowVera is a done-for-you AI growth agency in Sydney. We build and run websites, content and ads for local businesses and creators — agency-quality work at a fraction of the price. Retainers from $890/mo AUD.",
   keywords:
-    "autonomous website agency, AI website builder Australia, find businesses without websites, automated web agency, Claude AI website generator, lead generation websites, AI cold outreach, web design automation Australia, GrowVera",
+    "AI digital agency Sydney, done-for-you web design Sydney, social media management Sydney, AI content creation Australia, managed paid ads Sydney, small business marketing Sydney, GrowVera",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
-    title: "GrowVera — An entire web agency. Fully autonomous.",
+    title: "GrowVera — Your AI growth team. Sydney.",
     description:
-      "Finds businesses with no website, builds them a bespoke site, deploys it, and pitches them — on its own. Built-in CRM and follow-ups. Plans from AUD $99/mo.",
+      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $890/mo AUD.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GrowVera — An entire web agency. Fully autonomous.",
+    title: "GrowVera — Your AI growth team. Sydney.",
     description:
-      "Finds businesses with no website, builds them a bespoke site, deploys it, and pitches them — on its own. Plans from AUD $99/mo.",
+      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $890/mo AUD.",
   },
   robots: {
     index: true,
