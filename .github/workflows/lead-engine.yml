@@ -1,0 +1,63 @@
+name: Lead Engine
+
+on:
+  schedule:
+    # Every 6 hours — finds a fresh Sydney suburb × trade, builds demos, queues outreach.
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "Sydney suburb (e.g. Penrith NSW) — leave blank for auto-rotation"
+        required: false
+        default: ""
+      category:
+        description: "Trade/service (e.g. Plumber) — leave blank for auto-rotation"
+        required: false
+        default: ""
+      limit:
+        description: "Max leads per run"
+        required: false
+        default: "5"
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # --- Airtable CRM ---
+      AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+      AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+      CRM_BACKEND: airtable
+      # --- LLM (OpenRouter — cheapest-first open models) ---
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      # --- Prospecting ---
+      GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+      # --- Demo hosting (stores HTML in Airtable, served by /demo/[id]) ---
+      DEPLOY_TARGET: hosted
+      NEXT_PUBLIC_SITE_URL: https://growvera.com.au
+      # --- Outreach ---
+      OUTREACH_ENABLED: ${{ secrets.OUTREACH_ENABLED }}
+      DAILY_OUTREACH_CAP: ${{ secrets.DAILY_OUTREACH_CAP }}
+      ZOHO_SMTP_PASS: ${{ secrets.ZOHO_SMTP_PASS }}
+      NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
+      # --- Runtime target override (optional; blank = auto-rotate from targets.json) ---
+      REGION: ${{ inputs.region }}
+      CATEGORY: ${{ inputs.category }}
+      LIMIT: ${{ inputs.limit || '5' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run pipeline
+        run: npm run pipeline

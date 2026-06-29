@@ -22,6 +22,8 @@ import { review } from "./reviewer";
 import { pitch } from "./pitcher";
 import { scoutSignals } from "./signalScout";
 import { runOutreach } from "./outreach";
+import { getTargetIndex, setTargetIndex } from "../lib/settings";
+import targets from "./targets.json";
 import type { Business } from "./types";
 
 function arg(name: string, def: string): string {
@@ -34,14 +36,27 @@ function siteBase(): string {
 }
 
 async function main() {
-  const region = arg("region", process.env.REGION ?? "*");
-  const category = arg("category", process.env.CATEGORY ?? "*");
-  const limit = parseInt(arg("limit", "3"), 10);
+  let region = arg("region", process.env.REGION ?? "*");
+  let category = arg("category", process.env.CATEGORY ?? "*");
+  const limit = parseInt(arg("limit", process.env.LIMIT ?? "5"), 10);
+
+  // Auto-pick a target suburb × trade from the rotation list when no explicit
+  // region/category is provided. Advances the index in Airtable Settings so each
+  // scheduled run covers a fresh area.
+  if (region === "*" || category === "*") {
+    const idx = await getTargetIndex();
+    const target = targets[idx % targets.length] as { region: string; category: string };
+    region = target.region;
+    category = target.category;
+    await setTargetIndex(idx + 1);
+    console.log(`   auto-target [${idx % targets.length}/${targets.length - 1}]: ${region} · ${category}`);
+  }
 
   console.log("\n🌱 GrowVera autonomous pipeline");
   console.log(`   region=${region} · category=${category} · limit=${limit}`);
   const engine = hasLLM() ? PROVIDER.toUpperCase() : "OFF (template mode)";
-  console.log(`   engine: ${engine} · Places ${hasGooglePlaces() ? "ON" : "OFF (sample data)"}\n`);
+  const deployMode = process.env.DEPLOY_TARGET ?? "local";
+  console.log(`   engine: ${engine} · Places ${hasGooglePlaces() ? "ON" : "OFF (sample data)"} · deploy: ${deployMode}\n`);
 
   const crm = createCrm();
   await crm.init();
@@ -75,7 +90,11 @@ async function main() {
     let artifact = await buildSite(business);
     let dep = await deploy({ ...artifact });
     artifact = { ...artifact, ...dep };
-    crm.update(business.id, { site: { slug: artifact.slug, path: dep.path, url: dep.url } });
+    // In hosted mode, store the HTML so /demo/[id] can serve it from Airtable.
+    crm.update(business.id, {
+      site: { slug: artifact.slug, path: dep.path, url: dep.url },
+      ...(dep.html ? { demoHtml: dep.html } : {}),
+    });
     console.log(`   ② built (${artifact.generatedBy}) → ${dep.url}`);
 
     // Review (vision QA) — one revision if it fails
@@ -87,7 +106,10 @@ async function main() {
       artifact = await buildSite(business, verdict.issues.join("\n"));
       dep = await deploy(artifact);
       artifact = { ...artifact, ...dep };
-      crm.update(business.id, { site: { slug: artifact.slug, path: dep.path, url: dep.url } });
+      crm.update(business.id, {
+        site: { slug: artifact.slug, path: dep.path, url: dep.url },
+        ...(dep.html ? { demoHtml: dep.html } : {}),
+      });
       verdict = await review(artifact, business);
       console.log(`      re-review: ${verdict.passed ? "PASS" : "still flagged"} (score ${verdict.score})`);
     }

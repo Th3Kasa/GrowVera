@@ -43,3 +43,14 @@ export async function isOutreachEnabled(): Promise<boolean> {
 export async function setOutreachEnabled(on: boolean): Promise<void> {
   await writeFlag(OUTREACH_KEY, on ? "true" : "false");
 }
+
+const TARGET_INDEX_KEY = "target_index";
+
+export async function getTargetIndex(): Promise<number> {
+  const val = await readFlag(TARGET_INDEX_KEY);
+  return val ? parseInt(val, 10) || 0 : 0;
+}
+
+export async function setTargetIndex(index: number): Promise<void> {
+  await writeFlag(TARGET_INDEX_KEY, String(index));
+}

@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   if (!process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: "Admin not configured. Set ADMIN_PASSWORD." }, { status: 500 });
   }
-  if (!passwordOk(password)) {
+  if (!(await passwordOk(password))) {
     return NextResponse.json({ error: "Wrong password." }, { status: 401 });
   }
 

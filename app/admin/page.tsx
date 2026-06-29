@@ -29,6 +29,28 @@ function Card({ label, value, sub }: { label: string; value: string; sub?: strin
 }
 
 interface RecentLead { name: string; status: string; region?: string; demo?: boolean; created?: string }
+interface ActionLead { id: string; name: string; phone: string; region?: string; offerUrl?: string; pitch?: string }
+
+async function actionQueue(): Promise<ActionLead[]> {
+  if (!isConfigured()) return [];
+  const recs = await listRecords<Record<string, unknown>>(AIRTABLE.tables.leads(), {
+    filterByFormula: `AND({Status} = 'ready', {Phone} != '', {Email} = '')`,
+    maxRecords: 20,
+    sort: [{ field: "Score", direction: "desc" }],
+    fields: ["LeadId", "Business", "Name", "Phone", "Region", "OfferUrl", "Pitch"],
+  });
+  return recs.map((r) => {
+    const f = r.fields;
+    return {
+      id: (typeof f.LeadId === "string" ? f.LeadId : r.id),
+      name: (typeof f.Business === "string" && f.Business) || (typeof f.Name === "string" ? f.Name : "—"),
+      phone: typeof f.Phone === "string" ? f.Phone : "",
+      region: typeof f.Region === "string" ? f.Region : undefined,
+      offerUrl: typeof f.OfferUrl === "string" ? f.OfferUrl : undefined,
+      pitch: typeof f.Pitch === "string" ? f.Pitch : undefined,
+    };
+  });
+}
 
 async function recentLeads(): Promise<RecentLead[]> {
   if (!isConfigured()) return [];
@@ -49,7 +71,7 @@ async function recentLeads(): Promise<RecentLead[]> {
 }
 
 export default async function AdminDashboard() {
-  const [s, leads] = await Promise.all([getSummary(), recentLeads()]);
+  const [s, leads, queue] = await Promise.all([getSummary(), recentLeads(), actionQueue()]);
 
   const rank = (st: string) => {
     const i = STAGE_ORDER.indexOf(st);
@@ -101,6 +123,36 @@ export default async function AdminDashboard() {
             </div>
           )}
         </div>
+
+        {/* Action queue — phone-only leads ready for founder outreach */}
+        {queue.length > 0 && (
+          <div style={{ background: "#131318", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.25rem" }}>
+            <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#34D399", marginBottom: "0.4rem" }}>Action queue — your 10-min daily list</p>
+            <p style={{ fontSize: "0.78rem", color: "#8A9A92", marginBottom: "1rem" }}>These leads have no email — send them a quick DM or call using the pitch below.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {queue.map((l) => (
+                <div key={l.id} style={{ background: "#0E0E11", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.75rem", padding: "1rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.6rem" }}>
+                    <div>
+                      <span style={{ fontSize: "0.92rem", color: "#F4F4F1", fontWeight: 700 }}>{l.name}</span>
+                      {l.region && <span style={{ fontSize: "0.78rem", color: "#6E6E72", marginLeft: "0.5rem" }}>{l.region}</span>}
+                    </div>
+                    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                      <a href={`tel:${l.phone}`} style={{ fontSize: "0.78rem", color: "#34D399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none", fontWeight: 600 }}>{l.phone}</a>
+                      {l.offerUrl && <a href={l.offerUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.78rem", color: "#A2A2A0", background: "rgba(255,255,255,0.05)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none" }}>View offer page →</a>}
+                    </div>
+                  </div>
+                  {l.pitch && (
+                    <details style={{ marginTop: "0.4rem" }}>
+                      <summary style={{ fontSize: "0.78rem", color: "#6E6E72", cursor: "pointer", userSelect: "none" }}>Show pitch</summary>
+                      <pre style={{ fontSize: "0.78rem", color: "#C4C4BE", whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: "0.5rem", background: "#131318", padding: "0.75rem", borderRadius: "0.5rem", lineHeight: 1.5 }}>{l.pitch}</pre>
+                    </details>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Recent leads */}
         <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.25rem" }}>

@@ -58,6 +58,8 @@ export interface Lead {
   signal?: string;
   /** Public /offer/[id] page URL shown to the prospect (demo + prices + book). */
   offerUrl?: string;
+  /** Full HTML of the generated demo site, stored for hosted serving at /demo/[id]. */
+  demoHtml?: string;
   /** Channel the outreach was sent on, and which template variant. */
   channel?: Channel;
   variant?: string;

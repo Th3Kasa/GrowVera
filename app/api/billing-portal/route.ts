@@ -1,18 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, siteUrl } from "@/lib/stripe";
+import { ADMIN_COOKIE, tokenValid } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 export const runtime = "nodejs";
 
 /**
- * Opens the Stripe Customer Portal so a subscriber can upgrade, downgrade,
- * update their card, or cancel — self-serve. Pass the Stripe customer id
- * (cus_...), which the success page captures from the completed Checkout Session.
+ * Opens the Stripe Customer Portal so a subscriber can manage their plan.
+ * Requires a valid admin session — the customerId must come from the server,
+ * never from untrusted client input, to prevent portal hijacking.
  */
 export async function POST(request: NextRequest) {
+  // Auth gate — only the admin dashboard can call this.
+  const jar = await cookies();
+  const token = jar.get(ADMIN_COOKIE)?.value;
+  if (!(await tokenValid(token))) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
   try {
     const { customerId } = (await request.json()) as { customerId?: string };
-    if (!customerId) {
-      return NextResponse.json({ error: "Missing customer id." }, { status: 400 });
+    if (!customerId || !customerId.startsWith("cus_")) {
+      return NextResponse.json({ error: "Missing or invalid customer id." }, { status: 400 });
     }
 
     const stripe = getStripe();

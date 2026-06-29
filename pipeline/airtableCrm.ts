@@ -44,6 +44,7 @@ function toFields(lead: Lead): LeadFields {
   if (lead.signal) f.Signal = lead.signal;
   if (lead.site?.url) f.DemoUrl = lead.site.url;
   if (lead.site?.slug) f.DemoSlug = lead.site.slug;
+  if (lead.demoHtml) f.DemoHtml = lead.demoHtml;
   if (lead.offerUrl) f.OfferUrl = lead.offerUrl;
   if (lead.pitch) f.Pitch = lead.pitch;
   if (lead.channel) f.Channel = lead.channel;
@@ -77,6 +78,7 @@ function fromRecord(rec: AirtableRecord): Lead {
     business,
     status: (str("Status") as LeadStatus) || "found",
     site: str("DemoUrl") ? { slug: str("DemoSlug") || "", url: str("DemoUrl") } : undefined,
+    demoHtml: str("DemoHtml"),
     offerUrl: str("OfferUrl"),
     pitch: str("Pitch"),
     signal: str("Signal"),
