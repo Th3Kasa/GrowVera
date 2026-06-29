@@ -1,5 +1,5 @@
 import { pathToFileURL } from "node:url";
-import { MODELS, hasAnthropic } from "./config";
+import { MODELS, hasLLM } from "./config";
 import { complete, extractJson, type ImageInput } from "./llm";
 import type { Business, ReviewResult, SiteArtifact } from "./types";
 
@@ -35,11 +35,11 @@ async function screenshots(filePath: string): Promise<{ desktop: string; mobile:
   }
 }
 
-/** Vision QA pass with Opus 4.8 on desktop + mobile screenshots. Skips
- * gracefully (passing) if Claude or a browser isn't available. */
+/** Vision QA pass on desktop + mobile screenshots (vision model via the active
+ * provider). Skips gracefully (passing) if no LLM or browser is available. */
 export async function review(artifact: SiteArtifact, business: Business): Promise<ReviewResult> {
-  if (!hasAnthropic() || !artifact.path) {
-    return { passed: true, score: 0, issues: [], summary: "Review skipped (no Claude key).", reviewedBy: "skipped" };
+  if (!hasLLM() || !artifact.path) {
+    return { passed: true, score: 0, issues: [], summary: "Review skipped (no model configured).", reviewedBy: "skipped" };
   }
 
   const shots = await screenshots(artifact.path);
@@ -63,7 +63,7 @@ export async function review(artifact: SiteArtifact, business: Business): Promis
 
   const parsed = extractJson<{ passed: boolean; score: number; issues: string[]; summary: string }>(text);
   if (!parsed) {
-    return { passed: true, score: 70, issues: [], summary: "Review returned unparseable output; passed by default.", reviewedBy: "claude" };
+    return { passed: true, score: 70, issues: [], summary: "Review returned unparseable output; passed by default.", reviewedBy: "ai" };
   }
 
   return {
@@ -71,6 +71,6 @@ export async function review(artifact: SiteArtifact, business: Business): Promis
     score: parsed.score ?? 0,
     issues: parsed.issues ?? [],
     summary: parsed.summary ?? "",
-    reviewedBy: "claude",
+    reviewedBy: "ai",
   };
 }

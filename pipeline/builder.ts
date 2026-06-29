@@ -1,4 +1,4 @@
-import { MODELS, hasAnthropic } from "./config";
+import { MODELS, hasLLM } from "./config";
 import { complete } from "./llm";
 import { slugify } from "./util";
 import type { Business, SiteArtifact } from "./types";
@@ -101,7 +101,7 @@ ${b.photos.length ? `<section><h2>Recent work</h2><div class="gallery">${gallery
 export async function buildSite(business: Business, feedback?: string): Promise<SiteArtifact> {
   const slug = slugify(business.name);
 
-  if (!hasAnthropic()) {
+  if (!hasLLM()) {
     return { businessId: business.id, slug, html: renderTemplate(business), generatedBy: "template" };
   }
 
@@ -131,9 +131,9 @@ export async function buildSite(business: Business, feedback?: string): Promise<
     if (!/<html[\s>]/i.test(html)) {
       return { businessId: business.id, slug, html: renderTemplate(business), generatedBy: "template" };
     }
-    return { businessId: business.id, slug, html, generatedBy: "claude" };
+    return { businessId: business.id, slug, html, generatedBy: "ai" };
   } catch (err) {
-    console.warn(`  [builder] Claude build failed (${(err as Error).message}); using template.`);
+    console.warn(`  [builder] AI build failed (${(err as Error).message}); using template.`);
     return { businessId: business.id, slug, html: renderTemplate(business), generatedBy: "template" };
   }
 }

@@ -20,7 +20,7 @@ export interface SiteArtifact {
   html: string;
   path?: string; // local deploy path
   url?: string; // live/preview URL
-  generatedBy: "claude" | "template";
+  generatedBy: "ai" | "template";
 }
 
 export interface ReviewResult {
@@ -28,7 +28,7 @@ export interface ReviewResult {
   score: number; // 0–100
   issues: string[];
   summary: string;
-  reviewedBy: "claude" | "skipped";
+  reviewedBy: "ai" | "skipped";
 }
 
 export type LeadStatus =

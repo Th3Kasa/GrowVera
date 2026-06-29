@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { RATES, USD_TO_AUD, type ModelId } from "./config";
+import { RATES, FALLBACK_RATE, USD_TO_AUD, PROVIDER, type ModelId } from "./config";
 
 let client: Anthropic | null = null;
 function getClient(): Anthropic {
@@ -16,12 +16,12 @@ interface Usage {
 
 const totals: Record<string, Usage> = {};
 
-function track(model: string, u: Anthropic.Usage) {
+function track(model: string, u: Usage) {
   const t = (totals[model] ??= { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 });
-  t.input += u.input_tokens ?? 0;
-  t.output += u.output_tokens ?? 0;
-  t.cacheRead += u.cache_read_input_tokens ?? 0;
-  t.cacheWrite += u.cache_creation_input_tokens ?? 0;
+  t.input += u.input;
+  t.output += u.output;
+  t.cacheRead += u.cacheRead;
+  t.cacheWrite += u.cacheWrite;
 }
 
 export interface ImageInput {
@@ -29,19 +29,79 @@ export interface ImageInput {
   base64: string;
 }
 
-/**
- * Single Claude call with optional cached system prefix (the design system /
- * rubric) and optional images. Caching the stable prefix bills repeat input at
- * ~0.1x — the biggest per-site saving across many builds.
- */
-export async function complete(opts: {
+export interface CompleteOpts {
   model: ModelId;
   system: string;
   prompt: string;
   images?: ImageInput[];
   maxTokens?: number;
   cacheSystem?: boolean;
-}): Promise<string> {
+}
+
+/**
+ * One completion through the active provider (cheapest-first). OpenRouter (open
+ * models) by default; Anthropic only as the frontier opt-in. Same interface for
+ * both so callers never care which model answered.
+ */
+export async function complete(opts: CompleteOpts): Promise<string> {
+  return PROVIDER === "anthropic" ? anthropicComplete(opts) : openrouterComplete(opts);
+}
+
+/** OpenRouter — OpenAI-compatible chat completions. No SDK needed; one key
+ * reaches every open model. Images go as data-URI image_url parts. */
+async function openrouterComplete(opts: CompleteOpts): Promise<string> {
+  const { model, system, prompt, images, maxTokens = 8000 } = opts;
+
+  const userContent: Record<string, unknown>[] = [{ type: "text", text: prompt }];
+  for (const img of images ?? []) {
+    userContent.push({
+      type: "image_url",
+      image_url: { url: `data:${img.mediaType};base64,${img.base64}` },
+    });
+  }
+
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY ?? ""}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "https://growvera.com.au",
+      "X-Title": "GrowVera Pipeline",
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: maxTokens,
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: userContent },
+      ],
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`OpenRouter ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  }
+
+  const data = (await res.json()) as {
+    choices?: { message?: { content?: string } }[];
+    usage?: { prompt_tokens?: number; completion_tokens?: number };
+  };
+  const u = data.usage ?? {};
+  track(model, {
+    input: u.prompt_tokens ?? 0,
+    output: u.completion_tokens ?? 0,
+    cacheRead: 0,
+    cacheWrite: 0,
+  });
+
+  return data.choices?.[0]?.message?.content ?? "";
+}
+
+/**
+ * Anthropic frontier path (opt-in). Caches the stable system prefix (design
+ * system / rubric) so repeat builds bill that prefix at ~0.1x input.
+ */
+async function anthropicComplete(opts: CompleteOpts): Promise<string> {
   const { model, system, prompt, images, maxTokens = 8000, cacheSystem = true } = opts;
 
   const content: Anthropic.ContentBlockParam[] = [];
@@ -63,7 +123,12 @@ export async function complete(opts: {
     messages: [{ role: "user", content }],
   });
 
-  track(model, res.usage);
+  track(model, {
+    input: res.usage.input_tokens ?? 0,
+    output: res.usage.output_tokens ?? 0,
+    cacheRead: res.usage.cache_read_input_tokens ?? 0,
+    cacheWrite: res.usage.cache_creation_input_tokens ?? 0,
+  });
 
   return res.content
     .filter((b): b is Anthropic.TextBlock => b.type === "text")
@@ -90,7 +155,7 @@ export function costReport(): { usd: number; aud: number; lines: string[] } {
   let usd = 0;
   const lines: string[] = [];
   for (const [model, u] of Object.entries(totals)) {
-    const rate = RATES[model] ?? { in: 0, out: 0 };
+    const rate = RATES[model] ?? FALLBACK_RATE;
     const c =
       (u.input * rate.in +
         u.cacheWrite * rate.in * 1.25 +

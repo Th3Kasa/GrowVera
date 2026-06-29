@@ -1,9 +1,14 @@
 /**
- * Subscription tiers for the GrowVera autonomous web-agency product.
+ * Retainer tiers for GrowVera — the done-for-you AI growth agency. Clients pay
+ * monthly for websites, content and ads delivered for them.
  *
  * Pricing is monthly recurring (MRR) in AUD, GST-inclusive. To change a price,
  * update `priceMonthly` here and point `stripePriceIdEnv` / `paymentLinkEnv` at
  * the matching Stripe Price / Payment Link via environment variables.
+ *
+ * Tier IDs (starter/pro/agency) are kept stable as the internal billing keys so
+ * the Stripe Price-ID / Payment-Link env wiring and entitlement store don't move;
+ * the client-facing names are Presence / Engine / Growth Partner.
  *
  * Phase 1 (ship now): set NEXT_PUBLIC_STRIPE_PAYMENT_LINK_<TIER> to a hosted
  *   Stripe Payment Link (subscription mode) and the Subscribe button links out.
@@ -31,52 +36,52 @@ export const TRIAL_DAYS = 7;
 export const TIERS: Tier[] = [
   {
     id: "starter",
-    name: "Starter",
-    tagline: "Prove the model in one region.",
-    priceMonthly: 99,
+    name: "Presence",
+    tagline: "Get found, look the part, stay current.",
+    priceMonthly: 890,
     stripePriceIdEnv: "STRIPE_PRICE_ID_STARTER",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_STARTER",
     features: [
-      "Up to 30 prospect sites built per month",
-      "1 target region",
-      "Bespoke, deployed-live websites",
-      "Personalised pitch drafted for each",
-      "Built-in CRM — no duplicate outreach",
-      "Email support",
+      "Bespoke AI website, designed + hosted for you",
+      "Unlimited site edits via your client portal",
+      "8 social content pieces / month (carousels + clips)",
+      "Google Business Profile kept sharp",
+      "Monthly performance report",
+      "Email + chat support",
     ],
   },
   {
     id: "pro",
-    name: "Pro",
-    tagline: "Run it like a real agency.",
-    priceMonthly: 199,
+    name: "Engine",
+    tagline: "A full content + lead engine, run for you.",
+    priceMonthly: 1990,
     stripePriceIdEnv: "STRIPE_PRICE_ID_PRO",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_PRO",
     highlight: true,
     features: [
-      "Up to 150 prospect sites built per month",
-      "3 target regions",
-      "AI self-review on desktop + mobile before send",
-      "5-touch follow-up sequence + reply sorting",
-      "Lapsed-lead detection",
-      "Remembers your design + tone preferences",
-      "Priority support",
+      "Everything in Presence",
+      "16–20 content pieces / month + 4 short videos",
+      "AI spokesperson (talking-head) series",
+      "Lead-gen landing pages",
+      "Competitor-tracking content dashboard",
+      "5-touch email nurture for new leads",
+      "Priority delivery + monthly strategy call",
     ],
   },
   {
     id: "agency",
-    name: "Agency",
-    tagline: "Scale across markets.",
-    priceMonthly: 399,
+    name: "Growth Partner",
+    tagline: "We run your paid growth end to end.",
+    priceMonthly: 3900,
     stripePriceIdEnv: "STRIPE_PRICE_ID_AGENCY",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_AGENCY",
     features: [
-      "Unlimited prospect sites",
-      "Unlimited regions",
-      "Everything in Pro",
-      "Custom branding on generated sites",
-      "Dedicated onboarding + strategy call",
-      "Priority build queue",
+      "Everything in Engine",
+      "Managed Meta / Instagram ads (ad spend separate)",
+      "UGC ad creative, validated before we spend",
+      "Multi-location / multi-brand",
+      "Dedicated strategist + weekly reporting",
+      "Quarterly growth roadmap",
     ],
   },
 ];

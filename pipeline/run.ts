@@ -5,11 +5,12 @@
  *
  * Runs the full loop: Prospect → Gather → Build → Deploy → Review → Pitch,
  * writing every prospect and its state into the CRM. Runs fully offline with
- * bundled sample data + a template builder; set ANTHROPIC_API_KEY (and optionally
- * GOOGLE_PLACES_API_KEY) to switch on the real Claude build + vision review and
- * live prospecting.
+ * bundled sample data + a template builder. Set OPENROUTER_API_KEY for the cheap
+ * open-model build + vision review (default, ~35x cheaper, off the metered Claude
+ * pool), or ANTHROPIC_API_KEY for the frontier path. Add GOOGLE_PLACES_API_KEY
+ * for live prospecting.
  */
-import { hasAnthropic, hasGooglePlaces, OUTPUT_DIR } from "./config";
+import { PROVIDER, hasLLM, hasGooglePlaces, OUTPUT_DIR } from "./config";
 import { costReport } from "./llm";
 import { Crm } from "./crm";
 import { prospect } from "./prospector";
@@ -31,7 +32,8 @@ async function main() {
 
   console.log("\n🌱 GrowVera autonomous pipeline");
   console.log(`   region=${region} · category=${category} · limit=${limit}`);
-  console.log(`   engine: Claude ${hasAnthropic() ? "ON" : "OFF (template mode)"} · Places ${hasGooglePlaces() ? "ON" : "OFF (sample data)"}\n`);
+  const engine = hasLLM() ? PROVIDER.toUpperCase() : "OFF (template mode)";
+  console.log(`   engine: ${engine} · Places ${hasGooglePlaces() ? "ON" : "OFF (sample data)"}\n`);
 
   const crm = new Crm();
   await crm.init();
@@ -63,7 +65,7 @@ async function main() {
     crm.setStatus(business.id, "reviewing");
     let verdict = await review(artifact, business);
     console.log(`   ③ review: ${verdict.reviewedBy === "skipped" ? "skipped" : `${verdict.passed ? "PASS" : "REVISE"} (score ${verdict.score})`}`);
-    if (verdict.reviewedBy === "claude" && !verdict.passed && verdict.issues.length) {
+    if (verdict.reviewedBy === "ai" && !verdict.passed && verdict.issues.length) {
       console.log(`      ↻ revising: ${verdict.issues.slice(0, 3).join("; ")}`);
       artifact = await buildSite(business, verdict.issues.join("\n"));
       dep = await deploy(artifact);

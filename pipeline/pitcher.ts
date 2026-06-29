@@ -1,4 +1,4 @@
-import { MODELS, hasAnthropic } from "./config";
+import { MODELS, hasLLM } from "./config";
 import { complete } from "./llm";
 import type { Business } from "./types";
 
@@ -9,7 +9,7 @@ Rules: 70–120 words. Plain text only (no markdown). Structure: greeting using 
 /** Draft a personalised outreach email referencing the live site. Uses Claude
  * when configured, otherwise a solid template. */
 export async function pitch(business: Business, siteUrl: string): Promise<string> {
-  if (!hasAnthropic()) {
+  if (!hasLLM()) {
     return `Hi ${business.name},\n\nWe noticed your business doesn't have a website yet — so we went ahead and built you one. You can see it live here:\n${siteUrl}\n\nIf you'd like it as your own, just reply and we'll point it at your domain.\n\nThe GrowVera team`;
   }
   return complete({
