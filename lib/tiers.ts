@@ -25,7 +25,8 @@ export interface Tier {
   priceMonthly: number; // AUD, GST-inclusive — recurring retainer
   /** One-off onboarding & build fee (AUD), charged on the first invoice. */
   setupFee: number;
-  /** How the setup fee can be waived (shown as fine print under the price). */
+  /** Internal sales-playbook note: how the setup fee can be waived on the
+   * discovery call (a closing lever — deliberately NOT shown on the site). */
   setupWaiverNote: string;
   /** env var holding the Stripe Price ID (price_...) for Checkout Sessions */
   stripePriceIdEnv: string;

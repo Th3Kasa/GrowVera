@@ -89,9 +89,7 @@ export default function Pricing() {
                   <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>/month</span>
                 </div>
                 <p style={{ fontSize: "0.78rem", color: "#A2A2A0", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-                  + {formatAud(tier.setupFee)} one-off setup
-                  <br />
-                  <span style={{ color: "#6E6E72" }}>{tier.setupWaiverNote}</span>
+                  + {formatAud(tier.setupFee)} one-off onboarding &amp; build
                 </p>
 
                 <button
