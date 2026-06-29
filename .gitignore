@@ -29,6 +29,10 @@ yarn-error.log*
 # pipeline artifacts
 /pipeline/output/
 /pipeline/.crm.json
+# research outputs may contain real lead data — keep the .example only
+/pipeline/research/signals.json
+/pipeline/research/last30days.md
+/pipeline/research/optimizer-report.md
 
 # vercel
 .vercel

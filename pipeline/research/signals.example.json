@@ -1,0 +1,20 @@
+[
+  {
+    "business": null,
+    "category": "Plumber",
+    "region": "Penrith NSW",
+    "quote": "Anyone know a good plumber out west? The ones I find online have no website and never call back.",
+    "url": "https://www.reddit.com/r/sydney/example-thread",
+    "phone": null,
+    "website": null
+  },
+  {
+    "business": "Example Roofing Co",
+    "category": "Roofer",
+    "region": "Parramatta NSW",
+    "quote": "Our website is ancient and we're not getting enquiries — need to sort our online presence.",
+    "url": "https://www.facebook.com/groups/example-post",
+    "phone": null,
+    "website": "https://old-example-roofing.com.au"
+  }
+]

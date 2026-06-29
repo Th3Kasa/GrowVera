@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "pipeline": "tsx pipeline/run.ts"
+    "pipeline": "tsx pipeline/run.ts",
+    "pipeline:signals": "tsx pipeline/signals.ts",
+    "pipeline:optimize": "tsx pipeline/optimizer.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",

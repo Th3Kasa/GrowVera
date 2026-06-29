@@ -2,7 +2,24 @@
 
 import Script from "next/script";
 
-export default function CalEmbed() {
+interface CalEmbedProps {
+  /** Cal.com link slug. Defaults to the main GrowVera calendar. */
+  calLink?: string;
+  /** Prefill the booking form. */
+  prefill?: { name?: string; email?: string };
+  /** Metadata stored on the booking — used to map a booking back to a lead in
+   * the Cal webhook (e.g. { leadId }). */
+  metadata?: Record<string, string>;
+}
+
+export default function CalEmbed({ calLink = "growvera", prefill, metadata }: CalEmbedProps) {
+  const config = JSON.stringify({
+    layout: "month_view",
+    ...(prefill?.name ? { name: prefill.name } : {}),
+    ...(prefill?.email ? { email: prefill.email } : {}),
+    ...(metadata ? { metadata } : {}),
+  });
+
   return (
     <>
       <div
@@ -40,8 +57,8 @@ export default function CalEmbed() {
             Cal("init", { origin: "https://cal.com" });
             Cal("inline", {
               elementOrSelector: "#cal-inline",
-              config: { layout: "month_view" },
-              calLink: "growvera",
+              config: ${config},
+              calLink: ${JSON.stringify(calLink)},
             });
             Cal("ui", {
               hideEventTypeDetails: false,
