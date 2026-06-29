@@ -10,6 +10,7 @@
  * pool), or ANTHROPIC_API_KEY for the frontier path. Add GOOGLE_PLACES_API_KEY
  * for live prospecting.
  */
+import "./env"; // must be first — loads .env before config reads process.env
 import { PROVIDER, hasLLM, hasGooglePlaces, OUTPUT_DIR } from "./config";
 import { costReport } from "./llm";
 import { Crm } from "./crm";
