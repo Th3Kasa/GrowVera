@@ -9,10 +9,12 @@ import {
   Star,
   Buildings,
 } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import Marquee from "@/components/Marquee";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
 import Pricing from "@/components/Pricing";
+import { TIERS, formatAud } from "@/lib/tiers";
 
 const marqueeItems = [
   "Plumbers", "Electricians", "Solar Installers", "Landscapers", "Builders",
@@ -43,26 +45,11 @@ const steps = [
   },
 ];
 
-const pillars = [
-  {
-    icon: Globe,
-    title: "Websites",
-    desc: "A bespoke, cinematic AI website — built around your real photos and brand, hosted, and kept current. Unlimited edits via your client portal.",
-    items: ["Bespoke design, not a template", "Hosted + maintained for you", "Unlimited edits, same-day turnaround", "Mobile-first, fast-loading"],
-  },
-  {
-    icon: Megaphone,
-    title: "Content",
-    desc: "We write, design, and post your social content every week across every platform. Carousels, short-form video, and long-form — all done for you.",
-    items: ["8–20 assets per month", "Carousels, clips, motion graphics", "Cross-posted to 9 platforms", "Competitor-tracked and data-driven"],
-  },
-  {
-    icon: ChartLineUp,
-    title: "Ads",
-    desc: "We run your Meta and Instagram paid ads end to end — creative, targeting, validation, and optimisation. We only spend on creative that's already proven to work.",
-    items: ["Managed Meta / Instagram campaigns", "UGC ad creative produced for you", "Trial Reel validation before spend", "Weekly ROAS reporting"],
-  },
-];
+const pillarIcons: Record<string, typeof Globe> = {
+  presence: Globe,
+  engine: Megaphone,
+  "growth-partner": ChartLineUp,
+};
 
 export default function HomePage() {
   return (
@@ -173,30 +160,32 @@ export default function HomePage() {
               The whole growth stack,<br />done for you.
             </h2>
             <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "36rem" }}>
-              Most agencies do one thing — websites, or content, or ads. We do all three, coordinated, for one monthly retainer.
+              Three simple packages. Pick the one that matches what you need most right now — each builds on the last.
             </p>
           </ScrollReveal>
 
           <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))" }}>
-            {pillars.map((p, i) => {
-              const Icon = p.icon;
+            {TIERS.map((tier, i) => {
+              const Icon = pillarIcons[tier.slug] ?? Globe;
+              const featured = !!tier.highlight;
               return (
-                <ScrollReveal key={p.title} delay={i * 0.07}>
-                  <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.25rem", padding: "2rem", height: "100%" }}>
-                    <div style={{ width: 44, height: 44, background: "rgba(52,211,153,0.10)", borderRadius: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
-                      <Icon size={22} weight="bold" style={{ color: "#34D399" }} />
+                <ScrollReveal key={tier.id} delay={i * 0.07}>
+                  <Link href={`/${tier.slug}`} style={{ display: "block", height: "100%", textDecoration: "none" }}>
+                    <div style={{ background: featured ? "linear-gradient(180deg, #15211B 0%, #121218 100%)" : "#131318", border: featured ? "1px solid rgba(52,211,153,0.40)" : "1px solid rgba(255,255,255,0.08)", borderRadius: "1.25rem", padding: "2rem", height: "100%", display: "flex", flexDirection: "column" }}>
+                      <div style={{ width: 44, height: 44, background: "rgba(52,211,153,0.10)", borderRadius: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
+                        <Icon size={22} weight="bold" style={{ color: "#34D399" }} />
+                      </div>
+                      <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.25rem", fontWeight: 800, color: "#F4F4F1", marginBottom: "0.5rem", letterSpacing: "-0.02em" }}>{tier.name}</h3>
+                      <p style={{ fontSize: "0.95rem", color: "#E4E4E1", lineHeight: 1.5, fontWeight: 600, marginBottom: "0.75rem" }}>{tier.outcome}</p>
+                      <p style={{ fontSize: "0.85rem", color: "#A2A2A0", lineHeight: 1.6, marginBottom: "1.4rem" }}>
+                        <span style={{ color: "#34D399", fontWeight: 600 }}>Pick this if:</span> {tier.pickThisIf}
+                      </p>
+                      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>from <span style={{ color: "#F4F4F1", fontWeight: 700 }}>{formatAud(tier.priceMonthly)}</span>/mo</span>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "#34D399", fontSize: "0.82rem", fontWeight: 600 }}>See {tier.name} <ArrowRight size={13} weight="bold" /></span>
+                      </div>
                     </div>
-                    <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.25rem", fontWeight: 800, color: "#F4F4F1", marginBottom: "0.6rem", letterSpacing: "-0.02em" }}>{p.title}</h3>
-                    <p style={{ fontSize: "0.875rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "1.4rem" }}>{p.desc}</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
-                      {p.items.map((item) => (
-                        <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-                          <CheckCircle size={14} weight="fill" style={{ color: "#34D399", flexShrink: 0, marginTop: "0.2rem" }} />
-                          <span style={{ fontSize: "0.82rem", color: "#C9C9C6", lineHeight: 1.5 }}>{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  </Link>
                 </ScrollReveal>
               );
             })}
@@ -208,7 +197,7 @@ export default function HomePage() {
                 href="/services"
                 style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: "#34D399", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}
               >
-                See everything we do <ArrowRight size={14} weight="bold" />
+                Compare all packages <ArrowRight size={14} weight="bold" />
               </a>
             </div>
           </ScrollReveal>

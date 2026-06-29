@@ -14,7 +14,7 @@ export default function Footer() {
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: "rgba(255,255,255,0.3)" }}>Navigate</p>
             <ul className="space-y-3">
-              {[{ label: "Services", href: "/services" }, { label: "Pricing", href: "/#pricing" }, { label: "Book a call", href: "/audit" }, { label: "How it works", href: "/#how-it-works" }].map((link) => (
+              {[{ label: "Packages", href: "/services" }, { label: "Pricing", href: "/#pricing" }, { label: "Free sample site", href: "/free-sample" }, { label: "Book a call", href: "/audit" }].map((link) => (
                 <li key={link.label}><a href={link.href} className="footer-link text-sm transition-colors duration-200">{link.label}</a></li>
               ))}
             </ul>
