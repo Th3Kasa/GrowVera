@@ -22,7 +22,11 @@ export interface Tier {
   id: TierId;
   name: string;
   tagline: string;
-  priceMonthly: number; // AUD, GST-inclusive
+  priceMonthly: number; // AUD, GST-inclusive — recurring retainer
+  /** One-off onboarding & build fee (AUD), charged on the first invoice. */
+  setupFee: number;
+  /** How the setup fee can be waived (shown as fine print under the price). */
+  setupWaiverNote: string;
   /** env var holding the Stripe Price ID (price_...) for Checkout Sessions */
   stripePriceIdEnv: string;
   /** env var holding a hosted Stripe Payment Link URL (Phase 1) */
@@ -39,6 +43,8 @@ export const TIERS: Tier[] = [
     name: "Presence",
     tagline: "Get found, look the part, stay current.",
     priceMonthly: 890,
+    setupFee: 990,
+    setupWaiverNote: "Setup waived on 6-month prepay",
     stripePriceIdEnv: "STRIPE_PRICE_ID_STARTER",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_STARTER",
     features: [
@@ -55,6 +61,8 @@ export const TIERS: Tier[] = [
     name: "Engine",
     tagline: "A full content + lead engine, run for you.",
     priceMonthly: 1990,
+    setupFee: 1500,
+    setupWaiverNote: "Setup waived on 6-month prepay",
     stripePriceIdEnv: "STRIPE_PRICE_ID_PRO",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_PRO",
     highlight: true,
@@ -73,6 +81,8 @@ export const TIERS: Tier[] = [
     name: "Growth Partner",
     tagline: "We run your paid growth end to end.",
     priceMonthly: 3900,
+    setupFee: 2500,
+    setupWaiverNote: "Setup waived on 12-month commitment",
     stripePriceIdEnv: "STRIPE_PRICE_ID_AGENCY",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_AGENCY",
     features: [
