@@ -55,10 +55,16 @@ DESIGN DIRECTION:
  * appears on every demo regardless of the generated CSS, and positioned to
  * sit clear of the mobile bottom call bar rather than overlap it. The prominent
  * version of this message also lives on the /offer page the prospect lands on.
+ *
+ * Also injects a deterministic mobile bottom-padding safety net: the model is
+ * unreliable at reserving space for its own fixed mobile call bar (the single
+ * most recurring QA failure — the bar ends up covering the footer), so we force
+ * adequate bottom padding on small screens regardless of what the CSS did. This
+ * clears both the call bar and this disclaimer badge.
  */
 function injectPreviewDisclaimer(html: string): string {
   const badge = `<div id="gv-preview-badge">Preview concept — your full custom website is designed with you once you come on board.</div>
-<style>#gv-preview-badge{position:fixed;right:14px;bottom:14px;z-index:2147483647;max-width:300px;background:rgba(17,17,19,.93);color:#fff;font:500 12px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:9px 13px;border-radius:10px;box-shadow:0 6px 22px rgba(0,0,0,.30);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}@media(max-width:767px){#gv-preview-badge{left:14px;right:14px;bottom:84px;max-width:none;text-align:center}}</style>`;
+<style>#gv-preview-badge{position:fixed;right:14px;bottom:14px;z-index:2147483647;max-width:300px;background:rgba(17,17,19,.93);color:#fff;font:500 12px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:9px 13px;border-radius:10px;box-shadow:0 6px 22px rgba(0,0,0,.30);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}@media(max-width:767px){body{padding-bottom:148px!important}#gv-preview-badge{left:14px;right:14px;bottom:84px;max-width:none;text-align:center}}</style>`;
   return /<\/body>/i.test(html) ? html.replace(/<\/body>/i, `${badge}\n</body>`) : html + badge;
 }
 

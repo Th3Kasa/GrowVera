@@ -15,7 +15,7 @@ const HTML_RUBRIC = `You are a ruthless senior front-end designer reviewing the 
 
 Read the markup and styles and catch anything that would render broken, misaligned, cramped or cheap. Pay special attention to these common failures:
 - Hero cramped under a fixed/sticky header: if the header is position:fixed or sticky, the hero/first section MUST have enough top padding or margin to clear the header height — otherwise the headline hides behind or jams against the bar. Flag if missing.
-- Mobile bottom call bar overlapping content: if there is a fixed-bottom bar on mobile, the body or last section MUST have bottom padding at least the bar height, or the bar covers the footer/contact text. Flag if missing.
+- (Do NOT flag mobile bottom-bar spacing: adequate mobile bottom padding is enforced automatically downstream, so never raise an issue about the fixed mobile call bar overlapping the footer — it is already handled.)
 - Empty, stubby, or half-built sections: a section with a heading and almost no content, or huge empty space, reads as unfinished.
 - Inconsistent spacing/alignment: differing container widths, section padding, or grid gaps that make the page look misaligned down the column.
 - Low contrast text (light text on light bg / dark on dark), placeholder/lorem text, broken or missing image references, fabricated claims.
