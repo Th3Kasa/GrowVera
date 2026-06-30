@@ -31,7 +31,12 @@ BANNED — using any of these makes the output look like a generic AI template a
 - Stacking multiple competing scroll/hover animation styles (parallax + fade-up + tilt + count-up, all on one page). Heavy, busy motion is the current tell for "AI template" — real premium sites at this price point keep interaction restrained to one or two deliberate moments (a hover state, a single scroll reveal), nothing more.
 
 PERSONALISATION (non-negotiable — this is a bespoke site for ONE specific business, not a template with the name swapped in):
-- Everything must feel individually designed for THIS business: its exact name, trade and suburb shape the brand mark, the accent colour, the hero value proposition, the service list and the copy. If the page would look identical after swapping in a different business name, it has failed.
+- Everything must feel individually designed for THIS business: its exact name, trade, brand personality and real work shape the brand mark, the accent colour, the hero value proposition, the service list and the copy. If the page would look identical after swapping in a different business name, it has failed.
+
+COPY & LOCATION (write like a brand copywriter, not an SEO plugin):
+- Lead with the craft, the quality and the customer outcome — NOT the suburb. The hero headline must sell what they do and why they're good, not where they are. Avoid "[Trade] for [Suburb] Homes", "[Trade] in [Suburb]", or jamming the suburb into the H1 and every section heading — it reads as keyword-stuffing and boxes the business into one postcode.
+- Mention the location naturally and sparingly — once or twice total, in a subheading, the about paragraph, or the contact section — and frame the service area generously ("[Suburb] and the surrounding areas", or the wider region) rather than fixating on the single suburb, since these tradies work across a whole area, not one street.
+- Headlines should be confident and specific to the trade and brand (e.g. for a tiler: "Tiling done right, the first time" or "Bathrooms and kitchens, finished to a standard you'll notice") — concrete, human, never generic filler.
 
 BRAND MARK / LOGO (every business must have a real brand identity in the header, not plain default-font text):
 - If a "logoUrl" is provided in the brief, use it as the header brand mark via an <img> (business name as alt text), sized tastefully (~32–44px tall), never stretched or pixelated; optionally repeat smaller in the footer.

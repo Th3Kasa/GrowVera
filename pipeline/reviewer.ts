@@ -5,7 +5,7 @@ import type { Business, ReviewResult, SiteArtifact } from "./types";
 
 const RUBRIC = `You are a meticulous web QA reviewer. You are shown DESKTOP and MOBILE screenshots of a freshly built small-business website. Judge it with fresh eyes.
 
-Check: visual hierarchy and balance; readability and contrast; the hero communicates what the business does and where; images load and are well-placed; the phone/contact call-to-action is obvious; nothing is broken, overlapping, cut off, or empty; mobile layout is not squashed or overflowing; the design looks bespoke and premium, not generic.
+Check: visual hierarchy and balance; readability and contrast; the hero headline sells the craft/quality (the suburb should NOT dominate the headline — flag "[Trade] for [Suburb] Homes"-style geo-stuffing); images load and are well-placed; the phone/contact call-to-action is obvious; nothing is broken, overlapping, cut off, or empty; mobile layout is not squashed or overflowing; the design looks bespoke and premium, not generic.
 
 Respond with ONLY a JSON object, no prose:
 {"passed": boolean, "score": 0-100, "issues": ["specific, actionable fix", ...], "summary": "one sentence"}
@@ -19,6 +19,7 @@ Read the markup and styles and catch anything that would render broken, misalign
 - Empty, stubby, or half-built sections: a section with a heading and almost no content, or huge empty space, reads as unfinished.
 - Inconsistent spacing/alignment: differing container widths, section padding, or grid gaps that make the page look misaligned down the column.
 - Low contrast text (light text on light bg / dark on dark), placeholder/lorem text, broken or missing image references, fabricated claims.
+- Suburb keyword-stuffing: the hero headline built around the suburb ("[Trade] for [Suburb] Homes", "[Trade] in [Suburb]") or the suburb repeated in many section headings. The headline should sell the craft; location belongs in a subheading/about/contact, mentioned naturally once or twice.
 - Generic AI-template look: emoji used as icons, the orange/navy tradie palette, filler copy.
 - No real brand identity: the header shows the business name as plain default-font text with no designed wordmark or monogram treatment (and no logo image). A bespoke site should have a considered brand mark, not raw text.
 
