@@ -94,7 +94,7 @@ export default function AuditPage() {
                 {[
                   "Free sample site built for your business",
                   "No commitment required",
-                  "Retainers from $890/mo AUD",
+                  "Retainers from $390/mo AUD",
                 ].map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     <CheckCircle size={14} weight="fill" style={{ color: "#34D399", flexShrink: 0 }} />

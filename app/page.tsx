@@ -91,7 +91,7 @@ export default function HomePage() {
                   <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>of AU small businesses<br />have no website at all</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$890</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$390</p>
                   <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>starting retainer —<br />fraction of agency rates</p>
                 </div>
               </div>
@@ -289,7 +289,7 @@ export default function HomePage() {
                     "Free sample site built for your real business",
                     "No obligation — see the quality before you commit",
                     "Websites, content and ads under one retainer",
-                    "From $890/mo — fraction of traditional agency rates",
+                    "From $390/mo — fraction of traditional agency rates",
                     "Cancel anytime, month to month",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid rgba(255,255,255,0.20)" }}>

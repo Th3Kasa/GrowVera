@@ -41,7 +41,7 @@ names must match exactly (case-sensitive). Single-line text unless noted.
 
 1. Booking questions (so every booking is a warm, price-aware lead):
    - "Which result do you want?" — Presence / Engine / Growth Partner
-   - "Our retainers start at $890/mo + a one-off setup. Does that suit your budget?" — Yes / No
+   - "Our retainers start at $390/mo + a one-off setup. Does that suit your budget?" — Yes / No
    - Business name, suburb.
 2. Webhook → `Settings → Developer → Webhooks`:
    - URL: `https://growvera.com.au/api/cal-webhook`

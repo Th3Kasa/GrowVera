@@ -21,14 +21,14 @@ const satoshi = DM_Sans({
 export const metadata: Metadata = {
   title: "GrowVera — Your AI growth team. Sydney.",
   description:
-    "GrowVera is a done-for-you AI growth agency in Sydney. We build and run websites, content and ads for local businesses and creators — agency-quality work at a fraction of the price. Retainers from $890/mo AUD.",
+    "GrowVera is a done-for-you AI growth agency in Sydney. We build and run websites, content and ads for local businesses and creators — agency-quality work at a fraction of the price. Retainers from $390/mo AUD.",
   keywords:
     "AI digital agency Sydney, done-for-you web design Sydney, social media management Sydney, AI content creation Australia, managed paid ads Sydney, small business marketing Sydney, GrowVera",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
     title: "GrowVera — Your AI growth team. Sydney.",
     description:
-      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $890/mo AUD.",
+      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $390/mo AUD.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GrowVera — Your AI growth team. Sydney.",
     description:
-      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $890/mo AUD.",
+      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $390/mo AUD.",
   },
   robots: {
     index: true,

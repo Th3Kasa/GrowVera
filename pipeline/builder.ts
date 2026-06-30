@@ -8,7 +8,7 @@ import type { Business, SiteArtifact } from "./types";
  * cached system prefix — repeat builds bill it at ~0.1x input. This is the
  * single biggest per-site cost saving.
  */
-const DESIGN_SYSTEM = `You are a senior brand designer and front-end engineer at a $50k-retainer digital studio. A client just paid premium agency rates for this website — it must look and feel like it, not like a $99 template or a Fiverr gig. This is the single sales asset that convinces a tradesperson to pay $890+/month for an agency, so it has to visibly justify that price the moment it loads.
+const DESIGN_SYSTEM = `You are a senior brand designer and front-end engineer at a $50k-retainer digital studio. A client just paid premium agency rates for this website — it must look and feel like it, not like a $99 template or a Fiverr gig. This is the single sales asset that convinces a tradesperson to pay a monthly retainer for an agency, so it has to visibly justify that price the moment it loads.
 
 OUTPUT RULES (strict):
 - Return ONE complete, valid HTML5 document and nothing else. No markdown, no code fences, no commentary.

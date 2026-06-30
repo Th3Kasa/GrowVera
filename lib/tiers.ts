@@ -57,6 +57,11 @@ export interface Tier {
   stripePriceIdEnv: string;
   /** env var holding a hosted Stripe Payment Link URL (Phase 1) */
   paymentLinkEnv: string;
+  /** Hosted Stripe Payment Link (public URL). Source of truth in code so a
+   * missing/empty env var can never break self-serve; a consumer should prefer
+   * process.env[paymentLinkEnv] || paymentLink. Updated 2026-06-30 with the
+   * lowered-price links. */
+  paymentLink: string;
   highlight?: boolean;
   /** Detailed inclusions (used on landing pages / internal reference). */
   features: string[];
@@ -73,8 +78,8 @@ export const TIERS: Tier[] = [
     name: "Presence",
     outcome: "Look professional and get found online.",
     tagline: "Get found, look the part, stay current.",
-    priceMonthly: 890,
-    setupFee: 990,
+    priceMonthly: 390,
+    setupFee: 390,
     setupWaiverNote: "Setup waived on 6-month prepay",
     pickThisIf: "You have no website, or an old one you're embarrassed by.",
     forWho: [
@@ -82,6 +87,8 @@ export const TIERS: Tier[] = [
       "Customers can't find you on Google.",
       "You don't have time to keep anything updated.",
     ],
+    // priceMonthly/setupFee lowered 2026-06-30 per market research: the no-website
+    // sole-traders we prospect won't pay $890/mo+$990 setup. New floor 390/390.
     plainGet: [
       "A modern website, built for you and hosted — nothing to manage.",
       "Any change you want, just message us and it's done.",
@@ -105,6 +112,7 @@ export const TIERS: Tier[] = [
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_STARTER",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_STARTER",
+    paymentLink: "https://buy.stripe.com/eVqfZj5JDbQidMa8nj08g03",
     features: [
       "Bespoke website, designed + hosted for you",
       "Unlimited site edits — just message us",
@@ -120,8 +128,8 @@ export const TIERS: Tier[] = [
     name: "Engine",
     outcome: "Stay visible and grow — without lifting a finger.",
     tagline: "A full content engine, run for you.",
-    priceMonthly: 1990,
-    setupFee: 1500,
+    priceMonthly: 890,
+    setupFee: 690,
     setupWaiverNote: "Setup waived on 6-month prepay",
     pickThisIf: "You have a site but no time to post and stay visible.",
     forWho: [
@@ -152,6 +160,7 @@ export const TIERS: Tier[] = [
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_PRO",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_PRO",
+    paymentLink: "https://buy.stripe.com/bJe6oJ7RL6vYazY7jf08g04",
     highlight: true,
     features: [
       "Everything in Presence",
@@ -168,8 +177,8 @@ export const TIERS: Tier[] = [
     name: "Growth Partner",
     outcome: "Turn attention into booked customers.",
     tagline: "We run your paid growth end to end.",
-    priceMonthly: 3900,
-    setupFee: 2500,
+    priceMonthly: 1990,
+    setupFee: 990,
     setupWaiverNote: "Setup waived on 12-month commitment",
     pickThisIf: "You're ready to spend on ads and want a steady flow of leads.",
     forWho: [
@@ -200,6 +209,7 @@ export const TIERS: Tier[] = [
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_AGENCY",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_AGENCY",
+    paymentLink: "https://buy.stripe.com/dRm28t1tn07A0Zo8nj08g05",
     features: [
       "Everything in Engine",
       "Managed Meta / Instagram ads (ad spend separate)",
