@@ -12,17 +12,28 @@ Rules: 70–120 words. Plain text only (no markdown). Structure: greeting using 
  * warm, qualified lead. References the intent signal when present.
  */
 export async function pitch(business: Business, offerUrl: string, signal?: string): Promise<string> {
-  if (!hasLLM()) {
-    const opener = signal
-      ? `We saw you're looking to bring in more work`
-      : `We noticed your business could stand out more online`;
-    return `Hi ${business.name},\n\n${opener} — so we went ahead and built you a website to show what's possible. You can see it (and exactly what it'd cost) here:\n${offerUrl}\n\nIf you like it, book a quick 15-minute call from that page and we'll make it yours.\n\nThe GrowVera team`;
+  if (hasLLM()) {
+    try {
+      const message = await complete({
+        model: MODELS.build,
+        system: PITCH_SYSTEM,
+        prompt: `Business: ${business.name}, a ${business.category} in ${business.region}.${signal ? `\nIntent signal (what they said / their situation): ${signal}` : ""}\nOffer page URL (shows the demo site + price + booking): ${offerUrl}.\nWrite the outreach message.`,
+        // Headroom over the ~120-word target: reasoning-capable open models
+        // (e.g. GLM) spend hidden tokens first, and a tight budget can leave the
+        // visible content empty. 900 keeps the message from being truncated/blank.
+        maxTokens: 900,
+        cacheSystem: true,
+      });
+      // Never persist a blank pitch — fall through to the deterministic template
+      // if the model returned nothing usable.
+      if (message.trim().length >= 40) return message.trim();
+      console.warn(`  [pitcher] model returned a blank/short pitch for ${business.name}; using template.`);
+    } catch (err) {
+      console.warn(`  [pitcher] AI pitch failed (${(err as Error).message}); using template.`);
+    }
   }
-  return complete({
-    model: MODELS.build,
-    system: PITCH_SYSTEM,
-    prompt: `Business: ${business.name}, a ${business.category} in ${business.region}.${signal ? `\nIntent signal (what they said / their situation): ${signal}` : ""}\nOffer page URL (shows the demo site + price + booking): ${offerUrl}.\nWrite the outreach message.`,
-    maxTokens: 500,
-    cacheSystem: true,
-  });
+  const opener = signal
+    ? `We saw you're looking to bring in more work`
+    : `We noticed your business could stand out more online`;
+  return `Hi ${business.name},\n\n${opener} — so we went ahead and built you a website to show what's possible. You can see it (and exactly what it'd cost) here:\n${offerUrl}\n\nIf you like it, book a quick 15-minute call from that page and we'll make it yours.\n\nThe GrowVera team`;
 }

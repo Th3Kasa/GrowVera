@@ -49,7 +49,11 @@ async function fromGooglePlaces(region: string, category: string, limit: number)
       "X-Goog-FieldMask":
         "places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.photos,places.regularOpeningHours",
     },
-    body: JSON.stringify({ textQuery: `${category} in ${region}`, maxResultCount: Math.min(limit * 3, 20) }),
+    // Always pull a full pool (Places caps at 20), not limit*3 — most listed
+    // trades already have a website and get filtered out below, so a small limit
+    // (e.g. 1) would otherwise leave zero survivors. We slice to `limit` after
+    // the no-website filter, in prospect().
+    body: JSON.stringify({ textQuery: `${category} in ${region}`, maxResultCount: 20 }),
   });
 
   if (!res.ok) {
