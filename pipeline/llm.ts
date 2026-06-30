@@ -36,6 +36,13 @@ export interface CompleteOpts {
   images?: ImageInput[];
   maxTokens?: number;
   cacheSystem?: boolean;
+  /** Enable hidden "thinking" tokens on reasoning-capable open models (e.g.
+   * GLM). Off by default: reasoning tokens share the same maxTokens budget as
+   * the visible answer and can consume it entirely on short outputs, leaving
+   * content blank (confirmed live — GLM-4.6 spent 500-2200+ variable thinking
+   * tokens on a single short pitch with the same prompt). Set true only for
+   * tasks that benefit from deliberate multi-step reasoning. */
+  reasoning?: boolean;
 }
 
 /**
@@ -50,7 +57,7 @@ export async function complete(opts: CompleteOpts): Promise<string> {
 /** OpenRouter — OpenAI-compatible chat completions. No SDK needed; one key
  * reaches every open model. Images go as data-URI image_url parts. */
 async function openrouterComplete(opts: CompleteOpts): Promise<string> {
-  const { model, system, prompt, images, maxTokens = 8000 } = opts;
+  const { model, system, prompt, images, maxTokens = 8000, reasoning = false } = opts;
 
   const userContent: Record<string, unknown>[] = [{ type: "text", text: prompt }];
   for (const img of images ?? []) {
@@ -71,6 +78,7 @@ async function openrouterComplete(opts: CompleteOpts): Promise<string> {
     body: JSON.stringify({
       model,
       max_tokens: maxTokens,
+      reasoning: { enabled: reasoning },
       messages: [
         { role: "system", content: system },
         { role: "user", content: userContent },

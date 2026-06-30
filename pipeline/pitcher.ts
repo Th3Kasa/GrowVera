@@ -18,10 +18,7 @@ export async function pitch(business: Business, offerUrl: string, signal?: strin
         model: MODELS.build,
         system: PITCH_SYSTEM,
         prompt: `Business: ${business.name}, a ${business.category} in ${business.region}.${signal ? `\nIntent signal (what they said / their situation): ${signal}` : ""}\nOffer page URL (shows the demo site + price + booking): ${offerUrl}.\nWrite the outreach message.`,
-        // Headroom over the ~120-word target: reasoning-capable open models
-        // (e.g. GLM) spend hidden tokens first, and a tight budget can leave the
-        // visible content empty. 900 keeps the message from being truncated/blank.
-        maxTokens: 900,
+        maxTokens: 400,
         cacheSystem: true,
       });
       // Never persist a blank pitch — fall through to the deterministic template
