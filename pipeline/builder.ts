@@ -30,6 +30,16 @@ BANNED — using any of these makes the output look like a generic AI template a
 - Generic rounded-pill buttons with a drop shadow as the only interactive element — design at least one distinctive, on-brand interactive/hover moment.
 - Stacking multiple competing scroll/hover animation styles (parallax + fade-up + tilt + count-up, all on one page). Heavy, busy motion is the current tell for "AI template" — real premium sites at this price point keep interaction restrained to one or two deliberate moments (a hover state, a single scroll reveal), nothing more.
 
+PERSONALISATION (non-negotiable — this is a bespoke site for ONE specific business, not a template with the name swapped in):
+- Everything must feel individually designed for THIS business: its exact name, trade and suburb shape the brand mark, the accent colour, the hero value proposition, the service list and the copy. If the page would look identical after swapping in a different business name, it has failed.
+
+BRAND MARK / LOGO (every business must have a real brand identity in the header, not plain default-font text):
+- If a "logoUrl" is provided in the brief, use it as the header brand mark via an <img> (business name as alt text), sized tastefully (~32–44px tall), never stretched or pixelated; optionally repeat smaller in the footer.
+- If NO logoUrl is provided (the common case), do NOT just drop the raw business name in a default font. DESIGN a small, considered brand mark, matched to the palette — either:
+  (a) a refined WORDMARK: the name set in the display face with deliberate weight, letter-spacing and colour, optionally a tiny inline-SVG accent glyph; or
+  (b) a MONOGRAM badge: the business's initials in a styled square/circle/hexagon sitting next to the name.
+- Derive the initials/wordmark sensibly from the real name — drop generic suffixes ("Pty Ltd", "Services", "& Sons") and the suburb so the mark is clean and legible. It should look like a mark a design studio mocked up for the pitch, distinct to this business.
+
 DESIGN DIRECTION:
 - Pick ONE considered palette that feels bespoke to this specific brand/trade, not a formula applied identically every time: a deep, confident base (ink/charcoal/forest/navy-black — not stock blue) + a single saturated accent used sparingly for CTAs only, on a warm off-white or near-black background. Let the category and business name nudge the accent hue so sites don't all converge on the same green. No default Bootstrap blue, no purple-on-white SaaS gradient.
 - Typography: pair a characterful display face (a serif like Fraunces/Newsreader/Playfair, or a confident grotesk like Space Grotesk/General Sans) for headlines against a clean workhorse sans (Inter/Manrope) for body. Large, confident type scale on the hero (clamp() driven). Tight letter-spacing on headlines.
@@ -147,6 +157,7 @@ export async function buildSite(business: Business, feedback?: string): Promise<
       reviewsCount: business.reviewsCount,
       hours: business.hours,
       photos: business.photos,
+      logoUrl: business.logoUrl,
     },
     null,
     2,

@@ -20,6 +20,7 @@ Read the markup and styles and catch anything that would render broken, misalign
 - Inconsistent spacing/alignment: differing container widths, section padding, or grid gaps that make the page look misaligned down the column.
 - Low contrast text (light text on light bg / dark on dark), placeholder/lorem text, broken or missing image references, fabricated claims.
 - Generic AI-template look: emoji used as icons, the orange/navy tradie palette, filler copy.
+- No real brand identity: the header shows the business name as plain default-font text with no designed wordmark or monogram treatment (and no logo image). A bespoke site should have a considered brand mark, not raw text.
 
 Be demanding — this must look like a real agency built it. Respond with ONLY a JSON object, no prose:
 {"passed": boolean, "score": 0-100, "issues": ["specific, actionable fix the builder can apply", ...], "summary": "one sentence"}

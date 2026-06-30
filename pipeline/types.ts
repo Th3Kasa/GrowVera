@@ -10,6 +10,10 @@ export interface Business {
   reviewsCount?: number;
   hours?: string;
   photos: string[]; // public photo URLs (or local paths)
+  /** Real brand logo URL when one is known (e.g. added in Airtable). Absent for
+   * most no-website prospects — the builder designs a bespoke wordmark/monogram
+   * instead, and the real logo is swapped in at client onboarding. */
+  logoUrl?: string;
   source: "google_places" | "sample" | "signal";
   score?: number; // 0–100 opportunity score
 }
