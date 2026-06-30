@@ -66,6 +66,10 @@ export default async function OfferPage({ params }: PageProps) {
                   style={{ width: "100%", height: "560px", border: "none", background: "#fff" }}
                 />
               </div>
+              <p style={{ fontSize: "0.82rem", color: "#8A9A92", marginTop: "0.9rem", maxWidth: "44rem", lineHeight: 1.6, display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                <CheckCircle size={15} weight="fill" style={{ color: "#34D399", flexShrink: 0, marginTop: "2px" }} />
+                <span>This is a starting concept we built from your public information to show what&apos;s possible. Once we have a quick chat and you come on board, your full custom website is designed and built properly with you — your branding, your photos, your content.</span>
+              </p>
             </ScrollReveal>
           </div>
         </section>

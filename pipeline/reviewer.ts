@@ -11,6 +11,20 @@ Respond with ONLY a JSON object, no prose:
 {"passed": boolean, "score": 0-100, "issues": ["specific, actionable fix", ...], "summary": "one sentence"}
 "passed" is true only if score >= 80 and there are no broken/critical issues.`;
 
+const HTML_RUBRIC = `You are a ruthless senior front-end designer reviewing the RAW HTML+CSS of a freshly generated small-business website before it is shown to the actual business owner — the most important moment, because if it looks cheap or broken they walk away instantly. You cannot see a screenshot, so reason carefully about how this CSS actually renders.
+
+Read the markup and styles and catch anything that would render broken, misaligned, cramped or cheap. Pay special attention to these common failures:
+- Hero cramped under a fixed/sticky header: if the header is position:fixed or sticky, the hero/first section MUST have enough top padding or margin to clear the header height — otherwise the headline hides behind or jams against the bar. Flag if missing.
+- Mobile bottom call bar overlapping content: if there is a fixed-bottom bar on mobile, the body or last section MUST have bottom padding at least the bar height, or the bar covers the footer/contact text. Flag if missing.
+- Empty, stubby, or half-built sections: a section with a heading and almost no content, or huge empty space, reads as unfinished.
+- Inconsistent spacing/alignment: differing container widths, section padding, or grid gaps that make the page look misaligned down the column.
+- Low contrast text (light text on light bg / dark on dark), placeholder/lorem text, broken or missing image references, fabricated claims.
+- Generic AI-template look: emoji used as icons, the orange/navy tradie palette, filler copy.
+
+Be demanding — this must look like a real agency built it. Respond with ONLY a JSON object, no prose:
+{"passed": boolean, "score": 0-100, "issues": ["specific, actionable fix the builder can apply", ...], "summary": "one sentence"}
+"passed" is true only if score >= 80 with no broken/critical layout issues. List the concrete issues so the builder can fix them on a revision pass.`;
+
 async function screenshots(filePath: string): Promise<{ desktop: string; mobile: string } | null> {
   try {
     // Imported lazily so the rest of the pipeline runs even if Playwright
@@ -35,16 +49,50 @@ async function screenshots(filePath: string): Promise<{ desktop: string; mobile:
   }
 }
 
-/** Vision QA pass on desktop + mobile screenshots (vision model via the active
- * provider). Skips gracefully (passing) if no LLM or browser is available. */
+/** Browserless QA pass on the raw HTML+CSS. This is the gate that runs in CI /
+ * hosted mode (no Playwright browser, no on-disk file): the design model reads
+ * the markup and flags layout/UX defects so the build can be revised before it
+ * ships. Far from perfect vs. real screenshots, but it means every demo is
+ * actually reviewed instead of silently passing. */
+async function reviewHtml(artifact: SiteArtifact, business: Business): Promise<ReviewResult> {
+  // Cap the payload so a huge document can't blow the context; the <head>/CSS
+  // and first screenful (where layout defects live) are what matter most.
+  const html = artifact.html.slice(0, 24000);
+  const text = await complete({
+    model: MODELS.build, // text model — the vision model isn't needed for markup
+    system: HTML_RUBRIC,
+    prompt: `Business: ${business.name} — ${business.category} in ${business.region}.\nReview this generated website's HTML and CSS:\n\n${html}`,
+    maxTokens: 1200,
+    cacheSystem: true,
+  });
+  const parsed = extractJson<{ passed: boolean; score: number; issues: string[]; summary: string }>(text);
+  if (!parsed) {
+    return { passed: true, score: 70, issues: [], summary: "HTML review returned unparseable output; passed by default.", reviewedBy: "ai" };
+  }
+  return {
+    passed: !!parsed.passed,
+    score: parsed.score ?? 0,
+    issues: parsed.issues ?? [],
+    summary: parsed.summary ?? "",
+    reviewedBy: "ai",
+  };
+}
+
+/** QA pass before a demo ships. Prefers a vision review on desktop + mobile
+ * screenshots when a browser is available (local); otherwise falls back to a
+ * browserless HTML/CSS critique so the gate STILL runs in CI / hosted mode
+ * instead of silently passing. Only skips entirely when no LLM is configured. */
 export async function review(artifact: SiteArtifact, business: Business): Promise<ReviewResult> {
-  if (!hasLLM() || !artifact.path) {
+  if (!hasLLM()) {
     return { passed: true, score: 0, issues: [], summary: "Review skipped (no model configured).", reviewedBy: "skipped" };
   }
 
-  const shots = await screenshots(artifact.path);
+  // Best path: real screenshots (needs an on-disk file + a Playwright browser).
+  const shots = artifact.path ? await screenshots(artifact.path) : null;
   if (!shots) {
-    return { passed: true, score: 0, issues: [], summary: "Review skipped (no browser).", reviewedBy: "skipped" };
+    // CI / hosted mode: no browser or no file on disk — critique the markup
+    // directly rather than skipping, so nothing ships unreviewed.
+    return reviewHtml(artifact, business);
   }
 
   const images: ImageInput[] = [

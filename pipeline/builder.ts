@@ -16,6 +16,12 @@ OUTPUT RULES (strict):
 - Mobile-first and fully responsive, including a persistent mobile bottom call bar. Semantic, accessible, fast.
 - Footer copyright year must read exactly "${new Date().getFullYear()}" — never write any other year.
 
+LAYOUT INTEGRITY (these are the most common ways a generated site looks broken/cheap — get them exactly right):
+- The hero must NOT be cramped under the sticky header. If the header is position:fixed/sticky, the hero needs top padding (or margin) at least equal to the header height so the headline never sits jammed against the top edge or hides behind the bar. Give the hero real vertical breathing room — min-height around 70–88vh on desktop — so the headline, subhead and CTA sit centred with space around them, not squeezed into a thin band.
+- The persistent mobile bottom call bar is fixed at the bottom on small screens, so it covers whatever is behind it. The <body> (or last section) MUST have bottom padding at least equal to the bar's height on mobile, so the footer/contact content is never hidden or overlapped by the bar. Never let the bar float over and obscure body text.
+- No empty, half-empty, or stubby sections. Every section needs enough real content to look intentional — services cards with a heading + a real sentence each, a gallery with all provided photos, an about paragraph with substance. Sparse sections with one line of text and huge empty space read as an unfinished template.
+- Consistent alignment and spacing: section padding, max-width container and grid gaps should be uniform down the page. Headings, body text and cards within a section share a consistent left edge / alignment. Nothing should look randomly indented, off-centre, or misaligned relative to the section above it.
+
 BANNED — using any of these makes the output look like a generic AI template and is an automatic fail:
 - Emoji used as icons (⚡🔌📞📍🕐 etc). Build small inline SVG line icons (stroke="currentColor", no external library) or skip icons entirely — never an emoji glyph standing in for an icon.
 - The orange-and-navy "tradie template" palette (#FF6B00 / #1A3A52 or near-identical hex values). It is the single most overused local-trade-site palette and instantly reads as cheap.
@@ -31,6 +37,20 @@ DESIGN DIRECTION:
 - Photography is the primary trust signal for a trade business — a prospect judging "is this person any good" looks at the work, not the copy. Give the gallery of real project photos a featured, generous section (not a cramped afterthought grid) — treat it as the digital equivalent of a portfolio showroom. Treat all photos consistently (uniform aspect-ratio, object-fit: cover, a subtle gradient overlay behind hero text for legibility).
 - Structure: sticky header with business name + phone tel: CTA; a hero with a real photo and a sharp, specific value proposition (not generic adjectives); services (only those implied by the category — never invent specialised services); a generously-sized gallery/portfolio section using the provided photos as the visual centerpiece of the page; an about section; social proof if a rating/review count is given; a prominent contact section with phone, address and hours; a footer with the exact current year.
 - Use ONLY the real business details provided. Do not fabricate awards, years in business, licensing claims, or guarantees that weren't given to you.`;
+
+/**
+ * Sets the prospect's expectations directly on the demo: it's a starting
+ * concept built from public info, not the final custom site. Injected
+ * deterministically (scoped #gv id, max z-index, self-contained styles) so it
+ * appears on every demo regardless of the generated CSS, and positioned to
+ * sit clear of the mobile bottom call bar rather than overlap it. The prominent
+ * version of this message also lives on the /offer page the prospect lands on.
+ */
+function injectPreviewDisclaimer(html: string): string {
+  const badge = `<div id="gv-preview-badge">Preview concept — your full custom website is designed with you once you come on board.</div>
+<style>#gv-preview-badge{position:fixed;right:14px;bottom:14px;z-index:2147483647;max-width:300px;background:rgba(17,17,19,.93);color:#fff;font:500 12px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:9px 13px;border-radius:10px;box-shadow:0 6px 22px rgba(0,0,0,.30);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}@media(max-width:767px){#gv-preview-badge{left:14px;right:14px;bottom:84px;max-width:none;text-align:center}}</style>`;
+  return /<\/body>/i.test(html) ? html.replace(/<\/body>/i, `${badge}\n</body>`) : html + badge;
+}
 
 function renderTemplate(b: Business): string {
   const hero = b.photos[0] ?? "";
@@ -145,6 +165,7 @@ export async function buildSite(business: Business, feedback?: string): Promise<
     // Belt-and-braces: don't trust the model to get the copyright year right —
     // force any "© NNNN" to the real current year regardless of prompt compliance.
     html = html.replace(/©\s*\d{4}/g, `© ${new Date().getFullYear()}`);
+    html = injectPreviewDisclaimer(html);
     return { businessId: business.id, slug, html, generatedBy: "ai" };
   } catch (err) {
     console.warn(`  [builder] AI build failed (${(err as Error).message}); using template.`);
