@@ -8,18 +8,28 @@ import type { Business, SiteArtifact } from "./types";
  * cached system prefix — repeat builds bill it at ~0.1x input. This is the
  * single biggest per-site cost saving.
  */
-const DESIGN_SYSTEM = `You are a senior web designer and front-end engineer at an elite studio. You build bespoke, premium marketing websites for local service businesses.
+const DESIGN_SYSTEM = `You are a senior brand designer and front-end engineer at a $50k-retainer digital studio. A client just paid premium agency rates for this website — it must look and feel like it, not like a $99 template or a Fiverr gig. This is the single sales asset that convinces a tradesperson to pay $890+/month for an agency, so it has to visibly justify that price the moment it loads.
 
 OUTPUT RULES (strict):
 - Return ONE complete, valid HTML5 document and nothing else. No markdown, no code fences, no commentary.
-- Inline ALL CSS in a single <style> tag. You may load Google Fonts via <link>. No CSS/JS frameworks.
-- Mobile-first and fully responsive. Semantic, accessible, fast.
+- Inline ALL CSS in a single <style> tag, plus a small inline <script> for scroll-reveal/micro-interactions if used. You may load Google Fonts via <link>. No CSS/JS frameworks, no external icon libraries.
+- Mobile-first and fully responsive, including a persistent mobile bottom call bar. Semantic, accessible, fast.
+- Footer copyright year must read exactly "${new Date().getFullYear()}" — never write any other year.
 
-DESIGN:
-- A distinct, characterful design tailored to THIS business and trade — never generic "AI slop", no purple-on-white gradients, no default system fonts.
-- Choose a cohesive palette and type pairing that suits the trade and locale (Australian small business).
-- Include: sticky header with the business name and a phone call-to-action (tel: link); a hero using one real photo and a clear value proposition; services (only those implied by the category — do not invent specialised services); a gallery using the provided photos; an about section; social proof if a rating/review count is given; a prominent contact section with phone, address and hours; a footer.
-- Use ONLY the real business details provided. Do not fabricate awards, years in business, or specific claims.`;
+BANNED — using any of these makes the output look like a generic AI template and is an automatic fail:
+- Emoji used as icons (⚡🔌📞📍🕐 etc). Build small inline SVG line icons (stroke="currentColor", no external library) or skip icons entirely — never an emoji glyph standing in for an icon.
+- The orange-and-navy "tradie template" palette (#FF6B00 / #1A3A52 or near-identical hex values). It is the single most overused local-trade-site palette and instantly reads as cheap.
+- Centered hero text over a generic dark gradient, or a 3-equal-column "feature card" grid as the only layout idea on the page. Vary the rhythm: at least one asymmetric or full-bleed section.
+- Filler copy patterns: "safe, reliable, and affordable", "no job too big or too small", "comprehensive solutions for your home and business", "quality you can trust" — write specific, confident copy instead, grounded in the real category and suburb.
+- Generic rounded-pill buttons with a drop shadow as the only interactive element — design at least one distinctive, on-brand interactive/hover moment.
+
+DESIGN DIRECTION:
+- Pick ONE considered palette: a deep, confident base (ink/charcoal/forest/navy-black — not stock blue) + a single saturated accent used sparingly for CTAs only, on a warm off-white or near-black background. No default Bootstrap blue, no purple-on-white SaaS gradient.
+- Typography: pair a characterful display face (a serif like Fraunces/Newsreader/Playfair, or a confident grotesk like Space Grotesk/General Sans) for headlines against a clean workhorse sans (Inter/Manrope) for body. Large, confident type scale on the hero (clamp() driven). Tight letter-spacing on headlines.
+- Real depth and craft: soft layered shadows (not one flat box-shadow everywhere), generous whitespace, subtle hover/scroll micro-interactions (CSS transitions or a tiny IntersectionObserver reveal), a frosted/blurred sticky header.
+- Photography: treat the provided photos consistently (uniform aspect-ratio, object-fit: cover, a subtle gradient overlay behind hero text for legibility) rather than dropping them in raw.
+- Structure: sticky header with business name + phone tel: CTA; a hero with a real photo and a sharp, specific value proposition (not generic adjectives); services (only those implied by the category — never invent specialised services); a gallery using the provided photos; an about section; social proof if a rating/review count is given; a prominent contact section with phone, address and hours; a footer with the exact current year.
+- Use ONLY the real business details provided. Do not fabricate awards, years in business, licensing claims, or guarantees that weren't given to you.`;
 
 function renderTemplate(b: Business): string {
   const hero = b.photos[0] ?? "";
@@ -131,6 +141,9 @@ export async function buildSite(business: Business, feedback?: string): Promise<
     if (!/<html[\s>]/i.test(html)) {
       return { businessId: business.id, slug, html: renderTemplate(business), generatedBy: "template" };
     }
+    // Belt-and-braces: don't trust the model to get the copyright year right —
+    // force any "© NNNN" to the real current year regardless of prompt compliance.
+    html = html.replace(/©\s*\d{4}/g, `© ${new Date().getFullYear()}`);
     return { businessId: business.id, slug, html, generatedBy: "ai" };
   } catch (err) {
     console.warn(`  [builder] AI build failed (${(err as Error).message}); using template.`);

@@ -63,9 +63,12 @@ async function fromGooglePlaces(region: string, category: string, limit: number)
     if (p.websiteUri) continue; // already has a website — skip
     const name = p.displayName?.text ?? "Unknown business";
     const address = p.formattedAddress ?? "";
+    // Proxy through our own API route — never embed GOOGLE_PLACES_API_KEY in a
+    // URL that ends up in publicly served HTML (it would leak the live key).
+    const siteBase = (process.env.NEXT_PUBLIC_SITE_URL || "https://growvera.com.au").replace(/\/$/, "");
     const photos = (p.photos ?? [])
       .slice(0, 3)
-      .map((ph) => `https://places.googleapis.com/v1/${ph.name}/media?maxWidthPx=1200&key=${key}`);
+      .map((ph) => `${siteBase}/api/places-photo?name=${encodeURIComponent(ph.name)}&w=1200`);
     out.push({
       id: stableId(name, address),
       name,
