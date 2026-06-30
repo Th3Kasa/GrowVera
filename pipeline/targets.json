@@ -1,26 +1,262 @@
 [
-  { "region": "Penrith NSW", "category": "Plumber" },
-  { "region": "Blacktown NSW", "category": "Electrician" },
-  { "region": "Campbelltown NSW", "category": "Carpenter" },
-  { "region": "Parramatta NSW", "category": "Painter" },
-  { "region": "Liverpool NSW", "category": "Landscaper" },
-  { "region": "Hornsby NSW", "category": "Tiler" },
-  { "region": "Bankstown NSW", "category": "Roofer" },
-  { "region": "Castle Hill NSW", "category": "Concreter" },
-  { "region": "Chatswood NSW", "category": "Cleaning service" },
-  { "region": "Cronulla NSW", "category": "Mechanic" },
-  { "region": "Sutherland NSW", "category": "Plumber" },
-  { "region": "Hurstville NSW", "category": "Electrician" },
-  { "region": "Manly NSW", "category": "Builder" },
-  { "region": "Seven Hills NSW", "category": "Handyman" },
-  { "region": "Kellyville NSW", "category": "Landscaper" },
-  { "region": "Ryde NSW", "category": "Painter" },
-  { "region": "Fairfield NSW", "category": "Carpenter" },
-  { "region": "Auburn NSW", "category": "Tiler" },
-  { "region": "Rockdale NSW", "category": "Cleaner" },
-  { "region": "Strathfield NSW", "category": "Mechanic" },
-  { "region": "Miranda NSW", "category": "Plumber" },
-  { "region": "Merrylands NSW", "category": "Electrician" },
-  { "region": "Winston Hills NSW", "category": "Roofer" },
-  { "region": "Baulkham Hills NSW", "category": "Concreter" }
+  {
+    "region": "Blacktown NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Windsor NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Campbelltown NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Campbelltown NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Campbelltown NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Lawn mowing"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Rubbish removal"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Camden NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Windsor NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Windsor NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Wollongong NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Wollongong NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Mobile mechanic"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Lawn mowing"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Electrician"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Katoomba NSW",
+    "category": "Fencing contractor"
+  },
+  {
+    "region": "Katoomba NSW",
+    "category": "Electrician"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Electrician"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Camden NSW",
+    "category": "Lawn mowing"
+  },
+  {
+    "region": "Camden NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Windsor NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Windsor NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Tiler"
+  },
+  {
+    "region": "Penrith NSW",
+    "category": "Plumber"
+  },
+  {
+    "region": "Campbelltown NSW",
+    "category": "Fencing contractor"
+  },
+  {
+    "region": "Campbelltown NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Pressure washing"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Plumber"
+  },
+  {
+    "region": "Blacktown NSW",
+    "category": "Electrician"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Fencing contractor"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Pressure washing"
+  },
+  {
+    "region": "Liverpool NSW",
+    "category": "Plumber"
+  },
+  {
+    "region": "Katoomba NSW",
+    "category": "Handyman"
+  },
+  {
+    "region": "Katoomba NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Katoomba NSW",
+    "category": "Carpenter"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Lawn mowing"
+  },
+  {
+    "region": "Richmond NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Wollongong NSW",
+    "category": "Gardener"
+  },
+  {
+    "region": "Wollongong NSW",
+    "category": "Pressure washing"
+  },
+  {
+    "region": "Wollongong NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Rubbish removal"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Painter"
+  },
+  {
+    "region": "Gosford NSW",
+    "category": "Plumber"
+  }
 ]
