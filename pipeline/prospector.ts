@@ -24,6 +24,50 @@ function scoreBusiness(b: Business): number {
   return Math.round(clamp(s));
 }
 
+/**
+ * A business "has a website" for our purposes only if it's a real, owned domain.
+ * A Facebook/Instagram/linktr.ee/free-builder page is exactly GrowVera's ideal
+ * prospect — they've tried to be online and it looks cheap — so those count as
+ * NO real website and stay in the funnel. Google Places also ranks properly-
+ * websited businesses first, so without this nearly every top result in a metro
+ * suburb gets filtered out and prospecting returns nothing.
+ */
+const NON_WEBSITE_HOSTS = [
+  "facebook.com",
+  "fb.com",
+  "instagram.com",
+  "linktr.ee",
+  "linktree.com",
+  "tiktok.com",
+  "twitter.com",
+  "x.com",
+  "youtube.com",
+  "yelp.com",
+  "yellowpages.com",
+  "google.com",
+  "g.page",
+  "business.site", // Google's free "Business Profile" site builder
+  "wixsite.com",
+  "godaddysites.com",
+  "weebly.com",
+  "wordpress.com",
+  "blogspot.com",
+  "myob.com",
+  "hotfrog.com",
+  "truelocal.com",
+];
+
+function hasRealWebsite(uri?: string): boolean {
+  if (!uri) return false;
+  let host: string;
+  try {
+    host = new URL(uri).hostname.toLowerCase().replace(/^www\./, "");
+  } catch {
+    return false; // unparseable → treat as no real site, keep them as a lead
+  }
+  return !NON_WEBSITE_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+}
+
 interface PlacesSearchResponse {
   places?: Array<{
     id: string;
@@ -64,7 +108,7 @@ async function fromGooglePlaces(region: string, category: string, limit: number)
   const out: Business[] = [];
 
   for (const p of data.places ?? []) {
-    if (p.websiteUri) continue; // already has a website — skip
+    if (hasRealWebsite(p.websiteUri)) continue; // real owned domain — not a prospect
     const name = p.displayName?.text ?? "Unknown business";
     const address = p.formattedAddress ?? "";
     // Proxy through our own API route — never embed GOOGLE_PLACES_API_KEY in a
