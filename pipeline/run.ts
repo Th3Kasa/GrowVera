@@ -36,14 +36,16 @@ function siteBase(): string {
 }
 
 async function main() {
-  let region = arg("region", process.env.REGION ?? "*");
-  let category = arg("category", process.env.CATEGORY ?? "*");
-  const limit = parseInt(arg("limit", process.env.LIMIT ?? "5"), 10);
+  // `||` (not `??`) so an empty string falls back too — GitHub Actions
+  // workflow_dispatch sets unfilled inputs to "" rather than leaving them unset.
+  let region = arg("region", process.env.REGION || "*");
+  let category = arg("category", process.env.CATEGORY || "*");
+  const limit = parseInt(arg("limit", process.env.LIMIT || "5"), 10);
 
   // Auto-pick a target suburb × trade from the rotation list when no explicit
   // region/category is provided. Advances the index in Airtable Settings so each
   // scheduled run covers a fresh area.
-  if (region === "*" || category === "*") {
+  if (!region || region === "*" || !category || category === "*") {
     const idx = await getTargetIndex();
     const target = targets[idx % targets.length] as { region: string; category: string };
     region = target.region;
