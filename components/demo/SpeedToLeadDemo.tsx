@@ -410,7 +410,7 @@ export default function SpeedToLeadDemo() {
 
                       <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginTop: "0.55rem", color: "var(--color-accent)" }}>
                         <CalendarBlank size={13} weight="fill" />
-                        <p style={{ fontSize: "0.72rem", fontWeight: 600 }}>Friday afternoon · confirmation text sent</p>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 600 }}>Friday afternoon · notes sent to plumber</p>
                       </div>
                     </motion.div>
                   )}

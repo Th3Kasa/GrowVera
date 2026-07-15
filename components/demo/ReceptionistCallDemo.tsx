@@ -172,8 +172,9 @@ export default function ReceptionistCallDemo() {
                     <span style={{ fontSize: "0.62rem", fontWeight: 700, color: "var(--color-on-dark-text-muted)", letterSpacing: "0.03em" }}>MESSAGES · now</span>
                   </div>
                   <p style={{ fontSize: "0.76rem", fontWeight: 700, color: "var(--color-on-dark-text)", marginBottom: "0.3rem" }}>New after-hours booking</p>
-                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.5 }}>Dave · Marrickville · Leaking kitchen tap, water pooling (valve shut, slow drip)</p>
-                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Booked: tomorrow 8:00am · call-out from $120</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.5 }}>Dave · Unit 2/14 Station St, Marrickville · 0491 570 156 (confirmed)</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Leaking kitchen tap — mixer type, water pooling (valve shut, slow drip)</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Booked: tomorrow 8:00am · notes sent to assigned plumber</p>
                   <p style={{ fontSize: "0.72rem", color: "var(--color-accent)", fontWeight: 600, lineHeight: 1.55 }}>Customer confirmed via text.</p>
                 </motion.div>
               )}

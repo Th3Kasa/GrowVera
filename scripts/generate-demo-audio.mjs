@@ -85,6 +85,7 @@ const SETTINGS = {
 const GAP = 300; // default inter-line silence (ms)
 const BEAT = 500; // stretched gap after the emotional beat (ms)
 const MIDPAUSE = 500; // mid-line (0.5s pause) rendered as silence (ms)
+const PUSHBACK_BEAT = 400; // gap BEFORE a pushback/objection line, so it lands (Gate 3c)
 
 /** @typedef {{ text: string, pauseAfterMs?: number }} Part */
 /** @typedef {{ speaker: "ai"|"caller", role: "A"|"B1"|"B2", parts: Part[], gapAfterMs: number }} Line */
@@ -94,61 +95,107 @@ const DIALOGUES = [
   {
     id: "receptionist",
     out: "receptionist-call.mp3",
+    // Gate 3c — approved script rewrite: recording disclosure, address
+    // collection + readback, number confirmation, mixer-tap detail question,
+    // price pushback + trust response, "notes to the assigned plumber" close.
     lines: [
+      // 1
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Good evening, you've reached Harbourline Plumbing's after-hours assistant. I can take your details and get you booked in — what's going on tonight?" },
+        { text: "Good evening, you've reached Harbourline Plumbing's after-hours assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. Now, what's going on tonight?" },
       ] },
+      // 2
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Yeah, hi — I've got a tap under the kitchen sink that's leaking, and it's sort of getting worse. There's water pooling in the cupboard now." },
       ] },
-      // Line 3: (0.5s pause before "First things".)
+      // 3: (0.5s pause before "First things".)
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
         { text: "Okay, water in the cupboard — let's sort that.", pauseAfterMs: MIDPAUSE },
         { text: "First things, have you been able to shut the water off to it, or is it still running?" },
       ] },
+      // 4
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Ah — there's a little valve under there, I think I turned it. It's slowed right down but it's still dripping." },
       ] },
+      // 5
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Good on you, that's exactly the right move — that'll keep the damage down overnight. Whereabouts are you? Which suburb?" },
+        { text: "Good on you, that's exactly the right move. Let me take some notes down for the plumber — which suburb are you in?" },
       ] },
+      // 6
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Marrickville." },
       ] },
+      // 7
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Beautiful, we cover Marrickville. Can I grab your name and the best number to reach you on?" },
+        { text: "Beautiful, we cover Marrickville. And the address there?" },
       ] },
+      // 8
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "It's Dave — oh four hundred… one two three… four five six." },
+        { text: "Unit two, fourteen Station Street." },
       ] },
-      // Line 9: (0.5s pause before the price.) Naturalness pass: name dropped
-      // here (kept only at the line-16 signoff, 2 mentions total incl. the
-      // caller's own self-intro at line 8); price spoken as words.
+      // 9
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Thanks. So you know what to expect,", pauseAfterMs: MIDPAUSE },
-        { text: "our call-out starts from a hundred and twenty dollars, and the plumber gives you an exact quote once he's had a look — no surprises." },
+        { text: "Unit two, fourteen Station Street, Marrickville — got it. And your name and best number?" },
       ] },
+      // 10
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Yeah, that's fine." },
+        { text: "It's Dave — oh four nine one… five seven oh… one five six." },
       ] },
+      // 11
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Easy. I can get someone out to you first thing — does eight in the morning suit?" },
+        { text: "Thanks. Just confirming — oh four nine one, five seven oh, one five six is the right number for the confirmation text?" },
       ] },
-      // Line 12: emotional beat -> 500ms gap after.
+      // 12
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Yep, that's the one." },
+      ] },
+      // 13
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Perfect. One more for the notes — is it a mixer tap, the single-lever type, or separate hot and cold?" },
+      ] },
+      // 14
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "The mixer type — one lever." },
+      ] },
+      // 15: (0.5s pause before the price.) Gap after = PUSHBACK_BEAT so the
+      // objection on line 16 lands.
+      { speaker: "ai", role: "A", gapAfterMs: PUSHBACK_BEAT, parts: [
+        { text: "Mixer, noted. So you know what to expect, the call-out starts from", pauseAfterMs: MIDPAUSE },
+        { text: "a hundred and twenty dollars, and you get an exact quote before any work starts — no surprises." },
+      ] },
+      // 16: PUSHBACK.
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Hmm — a hundred and twenty just to come out? That's a bit steep for a tap, isn't it?" },
+      ] },
+      // 17: TRUST RESPONSE.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Fair question. That covers a licensed plumber coming to you with the gear and common parts already on the van — and if you go ahead with the job, it comes off the final price. No hidden extras, you'll see everything before you say yes." },
+      ] },
+      // 18
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Righto — that's fair enough, actually." },
+      ] },
+      // 19
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "I can get someone out first thing — does eight in the morning suit?" },
+      ] },
+      // 20: emotional beat -> 500ms gap after.
       { speaker: "caller", role: "B1", gapAfterMs: BEAT, parts: [
         { text: "Eight's perfect, yeah. That'd be a big relief, honestly." },
       ] },
-      // Line 13 (naturalness pass): split the original three-thought line into
-      // two shorter AI clips with a natural beat between them; time as words.
+      // 21
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Done — you're booked for eight tomorrow morning. I'll text you the confirmation now." },
+        { text: "Done — you're booked for eight tomorrow morning. I'll text the confirmation now." },
       ] },
+      // 22: "notes to the assigned plumber" close, replaces the old "owner
+      // sees a summary" line.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "And the owner sees a summary of this tonight — so it's all in hand." },
+        { text: "And I'll send these notes through to the assigned plumber who'll be visiting you — so he knows exactly what he's walking into." },
       ] },
+      // 23
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Ah, brilliant. Thanks so much for that." },
       ] },
+      // 24
       { speaker: "ai", role: "A", gapAfterMs: 0, parts: [
         { text: "No worries at all, Dave. Keep that valve turned down and we'll see you in the morning. Night now." },
       ] },
@@ -157,38 +204,85 @@ const DIALOGUES = [
   {
     id: "speedtolead",
     out: "speedtolead-call.mp3",
+    // Gate 3c — approved script rewrite: recording disclosure, gutters +
+    // downpipes detail question, "is this an AI?" pushback + trust response,
+    // address collection + readback, "notes to the assigned plumber" close.
     lines: [
+      // 1
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Hi, this is the assistant from Harbourline Plumbing — you just popped in a request for gutter cleaning on a two-storey in Parramatta. Have I caught you at an okay time?" },
+        { text: "Hi, it's the assistant from Harbourline Plumbing — quick heads-up, this call's recorded for training purposes; happy to switch that off if you'd prefer. You just sent through a request for gutter cleaning on a two-storey in Parramatta?" },
       ] },
+      // 2
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
         { text: "Oh — wow, that was fast. I literally just hit submit." },
       ] },
+      // 3
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "We like to be quick! Just a couple of things so we can quote it properly. Is there safe ladder access around the place, or anything tricky like a steep pitch?" },
+        { text: "We like to be quick! Just a couple of things so we can quote it properly. Is there safe ladder access, or anything tricky like a steep pitch?" },
       ] },
+      // 4
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
         { text: "Nah, access is fine. There's a bit of a slope out the back but nothing mad." },
       ] },
-      // Line 5: (0.5s pause before "And roughly".) Naturalness pass: light
-      // acknowledgement opener swapped in (second part text left exactly as
-      // before so the cache still hits it — no re-bill for unchanged audio).
+      // 5: (0.5s pause before "and roughly".)
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
         { text: "Righto —", pauseAfterMs: MIDPAUSE },
         { text: "And roughly how long since they were last done?" },
       ] },
+      // 6
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
         { text: "Ooh — probably a good two years. They're pretty full." },
       ] },
+      // 7: detail question + note-taking signal.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "No dramas, that's a common one this time of year. I've got a spot Thursday morning or Friday afternoon — which works better for you?" },
+        { text: "No dramas, common this time of year. And is it gutters only, or want the downpipes flushed as well? I'll pop it in the notes." },
       ] },
+      // 8: upsell moment. Gap after = PUSHBACK_BEAT so the pivot into the
+      // pushback on line 9 lands.
+      { speaker: "caller", role: "B2", gapAfterMs: PUSHBACK_BEAT, parts: [
+        { text: "Ah — may as well do the downpipes too." },
+      ] },
+      // 9: PUSHBACK.
+      { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
+        { text: "Actually, hang on — is this one of those AI callers?" },
+      ] },
+      // 10: TRUST RESPONSE.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "It is — I'm Harbourline's assistant, so no enquiry sits waiting while the team's up a ladder. Everything you tell me goes straight to the crew, and a real plumber does the work. Fair enough?" },
+      ] },
+      // 11
+      { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
+        { text: "Huh — fair enough, yeah." },
+      ] },
+      // 12
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "I've got Thursday morning or Friday afternoon — which works better?" },
+      ] },
+      // 13
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
         { text: "Friday arvo would be good." },
       ] },
+      // 14: address collection.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Locked in for Friday afternoon. I'll shoot you a text now with the confirmation and what to expect. Thanks for that — talk soon." },
+        { text: "Locked in for Friday afternoon. And the address, so the crew knows where they're headed?" },
       ] },
+      // 15
+      { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
+        { text: "Twenty-two Beech Street, Parramatta." },
+      ] },
+      // 16: address readback + number confirmation (from-the-form variant).
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Twenty-two Beech Street — got it. And I've got your mobile from the form, ending one five six — best number for the confirmation text?" },
+      ] },
+      // 17
+      { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
+        { text: "Yep, that's me." },
+      ] },
+      // 18: "notes to the assigned plumber" close.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Perfect. I'll text the confirmation now and send these notes to the assigned plumber who'll be visiting you. Talk soon." },
+      ] },
+      // 19
       { speaker: "caller", role: "B2", gapAfterMs: 0, parts: [
         { text: "Great, thanks!" },
       ] },
