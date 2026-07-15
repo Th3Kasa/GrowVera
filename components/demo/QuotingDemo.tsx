@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowClockwise, CaretDown, FileText, GridFour, ChatText, Gear } from "@phosphor-icons/react";
+import { ArrowClockwise, CaretDown, FileText, GridFour, ChatText, Gear, Lock, Check } from "@phosphor-icons/react";
 import { formatAud } from "@/lib/tiers";
 import { FictionLabel, AuditCTA, StatusChip, Takeaway, DemoHeader } from "./DemoChrome";
 import { Monogram } from "./CallUI";
@@ -19,9 +19,15 @@ import { useDemoMotion, useChatAutoScroll, FRAME_H } from "./motion";
  * — 12 deterministic totals.
  */
 
-const LABOUR_RATE = 110; // $/hour
+const LABOUR_RATE = 110; // $/hour (charged)
 const CALL_OUT_FEE = 60; // flat call-out
 const PRIORITY_SURCHARGE = 60; // same-day priority
+
+// Internal-only figures (staff view). These never change the charged totals above —
+// they only reveal what the job actually costs so margin can be shown honestly.
+const INTERNAL_LABOUR_RATE = 75; // $/hour — real cost to staff the job
+const TRAVEL_COST = 18; // flat travel/fuel cost carried on every job
+const TRADE_FACTOR = 0.68; // trade buy price ≈ 68% of the charged part price
 
 type JobTypeId = "tap" | "hotwater" | "drain";
 type UrgencyId = "standard" | "priority";
@@ -90,6 +96,24 @@ function buildQuote(jobType: JobType, variant: Variant, urgency: UrgencyId): Quo
   return { variant, labourCost, callOut: CALL_OUT_FEE, priority, total };
 }
 
+/** Deterministic internal-only figures derived from the visible quote. */
+type Internal = { tradeParts: number; labourInternal: number; margin: number; marginPct: number };
+
+function buildInternal(variant: Variant, quote: Quote): Internal {
+  const tradeParts = variant.partCost > 0 ? Math.round(variant.partCost * TRADE_FACTOR) : 0;
+  const labourInternal = variant.labourHours * INTERNAL_LABOUR_RATE;
+  const margin = Math.round(quote.total - tradeParts - labourInternal - TRAVEL_COST);
+  const marginPct = Math.round((margin / quote.total) * 100);
+  return { tradeParts, labourInternal, margin, marginPct };
+}
+
+/** Closest-van flavour per job type — cost is flat $18, minutes are display only. */
+const DEPOTS: Record<JobTypeId, { depot: string; min: number }> = {
+  tap: { depot: "Marrickville depot", min: 12 },
+  hotwater: { depot: "Alexandria depot", min: 18 },
+  drain: { depot: "Marrickville depot", min: 9 },
+};
+
 type Msg = { role: "agent" | "user"; text: string; at: string };
 type Phase = "job" | "detail" | "urgency" | "typing" | "quote";
 
@@ -116,7 +140,8 @@ export default function QuotingDemo() {
   const [variant, setVariant] = useState<Variant | null>(null);
   const [urgency, setUrgency] = useState<UrgencyId | null>(null);
   const [showPrices, setShowPrices] = useState(false);
-  const chat = useChatAutoScroll(`${log.length}-${phase}`, !m.reduce);
+  const [feedback, setFeedback] = useState<null | "looks-right" | "too-high">(null);
+  const chat = useChatAutoScroll(`${log.length}-${phase}-${feedback}`, !m.reduce);
   const timers = useRef<number[]>([]);
 
   const clearTimers = () => {
@@ -166,9 +191,11 @@ export default function QuotingDemo() {
     setJobType(null);
     setVariant(null);
     setUrgency(null);
+    setFeedback(null);
   };
 
   const quote = jobType && variant && urgency && phase === "quote" ? buildQuote(jobType, variant, urgency) : null;
+  const internal = quote && variant ? buildInternal(variant, quote) : null;
 
   const optionBtnStyle: React.CSSProperties = {
     background: "var(--color-bg-card)",
@@ -338,9 +365,99 @@ export default function QuotingDemo() {
                         Prepared by the Harbourline quoting tool · just now
                       </p>
                     </motion.div>
+
+                    {/* Internal-only view — staff see cost + margin behind the clean price */}
+                    {internal && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: m.reduce ? 0 : 0.18 + sheetRows.length * 0.12 + 0.2 }}
+                        style={{ marginTop: "0.8rem", background: "var(--color-bg-subtle)", border: "1px dashed var(--color-border-strong)", borderRadius: "0.5rem", padding: "0.7rem 0.75rem" }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.5rem" }}>
+                          <Lock size={12} weight="fill" color="var(--color-text-faint)" />
+                          <span style={{ fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--color-text-faint)" }}>
+                            Internal view — only your team sees this
+                          </span>
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.7rem", padding: "0.16rem 0" }}>
+                          <span style={intKey}>Parts</span>
+                          <span style={intVal}>
+                            {variant.partCost > 0
+                              ? `${variant.itemLabel.replace(/\s*\(.*\)\s*$/, "")} — trade ${formatAud(internal.tradeParts)} · charged ${formatAud(variant.partCost)}`
+                              : variant.equipment > 0
+                                ? `${variant.equipmentLabel ?? "Equipment"} — ${formatAud(variant.equipment)} (owned kit)`
+                                : "Labour-only job — no parts to mark up"}
+                          </span>
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.7rem", padding: "0.16rem 0" }}>
+                          <span style={intKey}>Travel</span>
+                          <span style={intVal}>Closest van: {DEPOTS[jobType.id].depot} · {DEPOTS[jobType.id].min} min</span>
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.7rem", marginTop: "0.35rem", paddingTop: "0.45rem", borderTop: "1px dashed var(--color-border)" }}>
+                          <span style={{ ...intKey, color: "var(--color-text-muted)" }}>Est. margin on job</span>
+                          <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "var(--color-text)", fontVariantNumeric: "tabular-nums" }}>
+                            {formatAud(internal.margin)} <span style={{ color: "var(--color-accent)", fontWeight: 700 }}>({internal.marginPct}%)</span>
+                          </span>
+                        </div>
+
+                        <p style={{ fontSize: "0.6rem", color: "var(--color-text-faint)", marginTop: "0.55rem", lineHeight: 1.5 }}>
+                          Customers never see this — they get one clean price. (That&apos;s the external version — the upsell.)
+                        </p>
+                      </motion.div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Feedback loop — teaches the agent your pricing (scripted, this session only) */}
+              {phase === "quote" && quote && (
+                <motion.div
+                  initial={m.reduce ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: m.reduce ? 0 : 0.45 }}
+                  style={{ alignSelf: "stretch", marginTop: "0.3rem" }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
+                    <span style={{ fontSize: "0.74rem", fontWeight: 700, color: "var(--color-text-muted)" }}>Happy with this quote?</span>
+                    {feedback === null && (
+                      <>
+                        <button onClick={() => setFeedback("looks-right")} style={fbBtn}>Looks right</button>
+                        <button onClick={() => setFeedback("too-high")} style={fbBtn}>Too high</button>
+                      </>
+                    )}
+                  </div>
+
+                  {feedback === "looks-right" && (
+                    <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }} style={{ marginTop: "0.5rem" }}>
+                      <span style={fbChip}>
+                        <Check size={11} weight="bold" /> Saved — I&apos;ll keep quoting this way.
+                      </span>
+                    </motion.div>
+                  )}
+
+                  {feedback === "too-high" && (
+                    <div style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                      <motion.div
+                        initial={m.reduce ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25 }}
+                        style={{ alignSelf: "flex-start", maxWidth: "90%", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", color: "var(--color-text)", borderRadius: "0.9rem", borderBottomLeftRadius: "0.25rem", padding: "0.5rem 0.75rem", fontSize: "0.8rem", lineHeight: 1.5 }}
+                      >
+                        Noted — I&apos;ll tighten the margin on jobs like this next time. Your pricing, your rules.
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2, delay: 0.1 }}>
+                        <span style={fbChip}>
+                          <Check size={11} weight="bold" /> Preference saved for next quote
+                        </span>
+                      </motion.div>
+                    </div>
+                  )}
+                </motion.div>
+              )}
             </div>
 
             {/* Option buttons */}
@@ -440,6 +557,11 @@ export default function QuotingDemo() {
     </div>
   );
 }
+
+const intKey: React.CSSProperties = { fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.03em", color: "var(--color-text-faint)", flexShrink: 0 };
+const intVal: React.CSSProperties = { fontSize: "0.72rem", color: "var(--color-text-muted)", textAlign: "right", fontVariantNumeric: "tabular-nums" };
+const fbBtn: React.CSSProperties = { background: "var(--color-bg-card)", color: "var(--color-text)", border: "1px solid var(--color-border-strong)", borderRadius: "2rem", padding: "0.3rem 0.75rem", fontSize: "0.72rem", fontWeight: 600, cursor: "pointer" };
+const fbChip: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.7rem", fontWeight: 700, color: "var(--color-accent)", background: "var(--color-accent-soft)", border: "1px solid var(--color-accent-border-soft)", borderRadius: "2rem", padding: "0.28rem 0.7rem" };
 
 const thStyle: React.CSSProperties = { textAlign: "left", padding: "0.4rem 0.3rem", borderBottom: "1px solid var(--color-border-strong)", color: "var(--color-text-faint)", fontWeight: 700, fontSize: "0.66rem", textTransform: "uppercase", letterSpacing: "0.04em" };
 const thStyleR: React.CSSProperties = { ...thStyle, textAlign: "right" };

@@ -34,7 +34,7 @@ const QuotingDemo = dynamic(() => import("./QuotingDemo"), { ssr: false, loading
 const CARDS = [
   { name: "24/7 AI Receptionist", instruction: "Press play and listen to how it answers", pitch: "Hear it answer a real after-hours call, capture the job, and text the owner.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
   { name: "Speed-to-Lead Agent", instruction: "Type a name, hit submit, watch the callback", pitch: "Submit a mock enquiry and watch the 20-second callback book the job.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
-  { name: "AI Quoting Agent", instruction: "Pick a job — get a priced quote in seconds", pitch: "Pick a job and detail — get an itemised, priced quote in seconds.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
+  { name: "AI Quoting Agent", instruction: "Your team's internal quoting tool — instant, accurate, and your customers never talk to AI unless you choose to add that later", pitch: "Pick a job and detail — get an itemised, priced quote in seconds.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
 ];
 
 export default function DemosHub() {
