@@ -19,6 +19,15 @@ export type CueLine = { speaker: "ai" | "caller"; text: string };
 export type Cue = CueLine & { startSec: number; dur: number };
 
 /**
+ * Transcript-only (no-audio) playback runs faster than a true reading pace so the
+ * silent fallback doesn't drag. This multiplier ONLY affects the timer path in
+ * runTimer(); when a real MP3 loads, cues still sync to audio.currentTime against
+ * the unscaled startSec values from buildCues(). Gaps scale uniformly, so the
+ * rhythm between lines is preserved — just compressed ~1.7×.
+ */
+const TRANSCRIPT_SPEED = 1.7;
+
+/**
  * Turn a flat transcript into timed cues. Estimate: ~2.6 words/sec speaking
  * pace + a 0.3s gap between lines (matches the ElevenLabs stitch spec in
  * ops/demo-call-scripts.md). These start times are estimates and will be
@@ -80,19 +89,22 @@ export function useCallPlayback(cues: Cue[], audioSrc?: string): Playback {
     usingAudioRef.current = false;
     setUsingAudio(false);
     startTs.current = performance.now();
+    // Compress the reading-pace timeline for the silent fallback only.
+    const scale = 1 / TRANSCRIPT_SPEED;
+    const scaledEnd = endSec * scale;
     cues.forEach((c, i) => {
-      timers.current.push(window.setTimeout(() => setIndex(i), c.startSec * 1000));
+      timers.current.push(window.setTimeout(() => setIndex(i), c.startSec * scale * 1000));
     });
     timers.current.push(
       window.setTimeout(() => {
         setStatus("ended");
         setProgress(1);
-      }, endSec * 1000)
+      }, scaledEnd * 1000)
     );
     const tick = () => {
       const elapsed = (performance.now() - startTs.current) / 1000;
-      setProgress(Math.min(1, elapsed / endSec));
-      if (elapsed < endSec) rafId.current = requestAnimationFrame(tick);
+      setProgress(Math.min(1, elapsed / scaledEnd));
+      if (elapsed < scaledEnd) rafId.current = requestAnimationFrame(tick);
     };
     rafId.current = requestAnimationFrame(tick);
   }, [cues, endSec]);
