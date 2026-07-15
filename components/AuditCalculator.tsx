@@ -34,6 +34,7 @@ function formatAud(n: number): string {
 
 export default function AuditCalculator() {
   const [trade, setTrade] = useState("");
+  const [otherTrade, setOtherTrade] = useState(""); // free-text trade when "Other local service" selected
   const [missed, setMissed] = useState(""); // missed calls per week
   const [jobValue, setJobValue] = useState(""); // average job value $
   const [closeRate, setCloseRate] = useState(40); // %
@@ -57,6 +58,10 @@ export default function AuditCalculator() {
 
   const canCalc = missedNum > 0 && jobNum > 0;
 
+  // Client-side display only: personalise the footnote when "Other" is selected.
+  const otherTradeDisplay =
+    trade === "Other local service" ? otherTrade.trim().slice(0, 40) : "";
+
   return (
     <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "clamp(1.5rem, 4vw, 2.25rem)" }}>
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 13rem), 1fr))" }}>
@@ -73,6 +78,19 @@ export default function AuditCalculator() {
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
+          {trade === "Other local service" && (
+            <div style={{ marginTop: "0.75rem" }}>
+              <label style={label} htmlFor="calc-other-trade">What kind of business?</label>
+              <input
+                style={field}
+                id="calc-other-trade"
+                type="text"
+                placeholder="e.g. pest control, towing, physio clinic"
+                value={otherTrade}
+                onChange={(e) => setOtherTrade(e.target.value)}
+              />
+            </div>
+          )}
         </div>
         <div>
           <label style={label} htmlFor="calc-missed">Missed calls a week (your best guess)</label>
@@ -176,7 +194,7 @@ export default function AuditCalculator() {
           </p>
           <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>a year</p>
           <p style={{ fontSize: "0.82rem", color: "var(--color-accent-muted)", lineHeight: 1.6, marginTop: "1.25rem", maxWidth: "34rem", marginInline: "auto" }}>
-            This is only an estimate from the numbers you put in ({missedNum} missed calls/week × {closeRate}% won × {formatAud(jobNum)} × 52 weeks). It&apos;s not a promise — we&apos;ll work out your real numbers together on the audit call. An AI receptionist catches the calls behind a figure like this.
+            This is only an estimate from the numbers you put in ({missedNum} missed calls/week × {closeRate}% won × {formatAud(jobNum)} × 52 weeks). It&apos;s not a promise — we&apos;ll work out your real numbers together on the audit call. An AI receptionist catches the calls behind a figure like this{otherTradeDisplay ? ` for a ${otherTradeDisplay} business` : ""}.
           </p>
         </div>
       )}
