@@ -353,6 +353,8 @@ export default function SpeedToLeadDemo() {
               <div
                 ref={chat.ref}
                 onScroll={chat.onScroll}
+                onWheel={chat.onWheel}
+                data-demo-scroll="speedtolead"
                 style={{ flex: 1, overflowY: "auto", padding: "0.5rem 0.7rem 0.5rem", display: "flex", flexDirection: "column", gap: "0.45rem", minHeight: 0 }}
               >
                 <AnimatePresence initial={false}>

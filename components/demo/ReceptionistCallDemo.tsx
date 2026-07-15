@@ -206,6 +206,8 @@ export default function ReceptionistCallDemo() {
             <div
               ref={chat.ref}
               onScroll={chat.onScroll}
+              onWheel={chat.onWheel}
+              data-demo-scroll="receptionist"
               style={{ flex: 1, overflowY: "auto", padding: "0.6rem 0.7rem 0.4rem", display: "flex", flexDirection: "column", gap: "0.45rem", minHeight: 0 }}
             >
               <AnimatePresence initial={false}>

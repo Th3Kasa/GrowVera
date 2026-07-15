@@ -52,27 +52,106 @@ export function useDemoMotion(): DemoMotion {
 /**
  * Internal chat auto-scroll with standard pin/unpin. Pins to the newest message
  * while the reader is at (or near) the bottom; unpins the moment they scroll up
- * to re-read; re-pins as soon as they return to the bottom. Pass `smooth=false`
- * (reduced motion) to jump instead of animate.
+ * to re-read; re-pins as soon as they return to the bottom.
+ *
+ * Implementation notes (this replaced a native `scrollTo({behavior:"smooth"})`
+ * version that could strand the scroller at the top): browsers cancel in-flight
+ * smooth scrolls when the DOM mutates, and programmatic smooth-scroll events are
+ * indistinguishable from user scrolls in a plain scroll handler — which made the
+ * old pin logic misread its own animation as a user scroll-up and permanently
+ * unpin. This version drives the follow itself with a rAF easing loop
+ * (recomputes the growing target every frame, immune to native cancellation)
+ * and distinguishes user intent explicitly:
+ *  - scroll events during our own writes are ignored (`auto` flag);
+ *  - scrollTop moving UP against our last write (wheel, drag, or a script
+ *    setting scrollTop=0) unpins immediately;
+ *  - the plain scroll handler re-pins whenever the reader returns to within
+ *    28px of the bottom.
+ * A ~1.2s keep-alive window after each trigger also catches end-state cards
+ * that mount with a small animation delay, so they're scrolled into view.
+ * Pass `smooth=false` (reduced motion) to jump instead of ease.
  */
 export function useChatAutoScroll(trigger: unknown, smooth = true) {
   const ref = useRef<HTMLDivElement | null>(null);
   const pinned = useRef(true);
+  const auto = useRef(false); // our rAF loop is writing scrollTop
+  const lastWrite = useRef(0); // last scrollTop we wrote
+  const rafId = useRef<number | null>(null);
+  const deadline = useRef(0);
+
+  const stopLoop = useCallback(() => {
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rafId.current = null;
+    auto.current = false;
+  }, []);
+
+  const follow = useCallback(() => {
+    deadline.current = performance.now() + 1200;
+    if (rafId.current) return; // loop already running; it picks up the new deadline
+    const step = () => {
+      const el = ref.current;
+      if (!el || !pinned.current) {
+        stopLoop();
+        return;
+      }
+      // User yanked the scroller upward against our writes → unpin, hand over.
+      if (auto.current && el.scrollTop < lastWrite.current - 30) {
+        pinned.current = false;
+        stopLoop();
+        return;
+      }
+      const target = el.scrollHeight - el.clientHeight;
+      const gap = target - el.scrollTop;
+      if (gap > 1) {
+        auto.current = true;
+        el.scrollTop = smooth ? el.scrollTop + Math.max(1, gap * 0.22) : target;
+        lastWrite.current = el.scrollTop;
+      } else if (performance.now() > deadline.current) {
+        stopLoop();
+        return;
+      } else {
+        // At the bottom but inside the keep-alive window (delayed end-state
+        // cards may still grow the content) — watch without writing.
+        auto.current = false;
+      }
+      rafId.current = requestAnimationFrame(step);
+    };
+    rafId.current = requestAnimationFrame(step);
+  }, [smooth, stopLoop]);
 
   const onScroll = useCallback(() => {
     const el = ref.current;
     if (!el) return;
+    if (auto.current) return; // our own write — not a user scroll
     const gap = el.scrollHeight - el.scrollTop - el.clientHeight;
-    pinned.current = gap < 28;
-  }, []);
+    if (gap < 28) {
+      pinned.current = true; // reader returned to the bottom → re-pin
+    } else {
+      pinned.current = false; // genuine user scroll away from the bottom
+      stopLoop();
+    }
+  }, [stopLoop]);
+
+  /** Wheel-up is unambiguous user intent — unpin before the scroll even lands. */
+  const onWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (e.deltaY < 0) {
+        pinned.current = false;
+        stopLoop();
+      }
+    },
+    [stopLoop]
+  );
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el || !pinned.current) return;
-    el.scrollTo({ top: el.scrollHeight, behavior: smooth ? "smooth" : "auto" });
-  }, [trigger, smooth]);
+    if (!pinned.current) return;
+    follow();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trigger, follow]);
 
-  return { ref, onScroll };
+  useEffect(() => () => stopLoop(), [stopLoop]);
+
+  return { ref, onScroll, onWheel };
 }
 
 /** Seconds → "M:SS". */

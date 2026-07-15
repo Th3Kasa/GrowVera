@@ -246,7 +246,7 @@ export default function QuotingDemo() {
             </div>
 
             {/* Chat (internal scroll) */}
-            <div ref={chat.ref} onScroll={chat.onScroll} style={{ flex: 1, overflowY: "auto", padding: "0.85rem", display: "flex", flexDirection: "column", gap: "0.4rem", background: "var(--color-bg-section)", minHeight: 0 }}>
+            <div ref={chat.ref} onScroll={chat.onScroll} onWheel={chat.onWheel} data-demo-scroll="quoting" style={{ flex: 1, overflowY: "auto", padding: "0.85rem", display: "flex", flexDirection: "column", gap: "0.4rem", background: "var(--color-bg-section)", minHeight: 0 }}>
               <AnimatePresence initial={false}>
                 {log.map((msg, i) => {
                   const isAgent = msg.role === "agent";
