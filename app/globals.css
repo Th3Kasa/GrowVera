@@ -58,9 +58,9 @@
   --color-danger-icon-bg:       rgba(220,38,38,0.12);
   --color-danger-border-strong: rgba(220,38,38,0.25);
 
-  /* on-dark tokens — scoped strictly to the three deliberate dark anchors:
-     Footer, the final CTA band, and ReviewAgentDemo's phone frame. Do not
-     use these outside those contexts. */
+  /* on-dark tokens — scoped strictly to the two deliberate dark anchors:
+     the Footer and the final CTA band. Do not use these outside those
+     contexts. */
   --color-on-dark-92: rgba(255,255,255,0.92);
   --color-on-dark-80: rgba(255,255,255,0.80);
   --color-on-dark-60: rgba(255,255,255,0.60);

@@ -17,7 +17,6 @@ import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
 import Pricing from "@/components/Pricing";
 import WithWithout from "@/components/WithWithout";
-import ReviewAgentDemo from "@/components/demo/ReviewAgentDemo";
 import DemosHub from "@/components/demo/DemosHub";
 import { TIERS, ADDONS, formatAud } from "@/lib/tiers";
 
@@ -90,7 +89,7 @@ export default function HomePage() {
             <ScrollReveal delay={0.08}>
               <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.75rem, 6.5vw, 6rem)", fontWeight: 900, lineHeight: 0.94, letterSpacing: "-0.04em", marginBottom: "2rem", color: "var(--color-text)" }}>
                 <span style={{ display: "block" }}>Never miss a call.</span>
-                <span style={{ display: "block", WebkitTextStroke: "2px var(--color-accent)", color: "transparent" }}>Never lose a job.</span>
+                <span style={{ display: "block", color: "var(--color-accent)" }}>Never lose a job.</span>
               </h1>
             </ScrollReveal>
             <ScrollReveal delay={0.14}>
@@ -269,7 +268,7 @@ export default function HomePage() {
               Don&apos;t take our word for it —<br />press play.
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "38rem" }}>
-              Four working demos, right here in your browser. Hear a call, watch a callback, build a quote. Each one is a scripted example on a fictional business — but it&apos;s exactly how the real thing behaves.
+              Three working demos, right here in your browser. Hear a call, watch a callback, build a quote. Each one is a scripted example on a fictional business — but it&apos;s exactly how the real thing behaves.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.08}>
@@ -316,32 +315,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* REVIEW AGENT DEMO */}
+      {/* GOOGLE REVIEW AGENT — add-on */}
       <section style={{ background: "var(--color-bg)", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-16 items-center">
-            <ScrollReveal>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                <Star size={18} weight="fill" style={{ color: "var(--color-accent)" }} />
-                <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "var(--color-accent)" }}>Google Review Agent</p>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 3.5rem)", display: "grid", gap: "2.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 18rem), 1fr))", alignItems: "center" }}>
+              <div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                  <Star size={18} weight="fill" style={{ color: "var(--color-accent)" }} />
+                  <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "var(--color-accent)" }}>Google Review Agent</p>
+                </div>
+                <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
+                  More 5-star reviews. No bad ones by surprise.
+                </h2>
+                <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+                  After every job, it politely asks your happy customers for a Google review — the thing that actually wins you the next one. And the moment a low rating comes in, it alerts you so you can sort it before the world sees it.
+                </p>
+                <a
+                  href="/audit"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "var(--color-accent)", color: "var(--color-on-accent)", padding: "0.9rem 1.9rem", borderRadius: "2rem", fontSize: "0.9rem", fontWeight: 700, textDecoration: "none" }}
+                >
+                  Add it to your audit <ArrowRight size={15} weight="bold" />
+                </a>
               </div>
-              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
-                More 5-star reviews. No bad ones by surprise.
-              </h2>
-              <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
-                After every job, it politely asks your happy customers for a Google review — the thing that actually wins you the next one. And the moment a low rating comes in, it alerts you so you can sort it before the world sees it.
-              </p>
-              <p style={{ fontSize: "0.9rem", color: "var(--color-accent-muted)", lineHeight: 1.7 }}>
-                81% of people check Google reviews before they pick a local business.{" "}
-                <a href="https://www.brightlocal.com/research/local-consumer-review-survey-2025/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-accent-muted)", textDecoration: "underline" }}>
+              <div style={{ background: "var(--gradient-card-featured)", border: "1px solid var(--color-accent-border-soft)", borderRadius: "1.25rem", padding: "2.5rem 2rem", textAlign: "center" }}>
+                <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(3.5rem, 10vw, 5rem)", fontWeight: 900, color: "var(--color-accent)", letterSpacing: "-0.04em", lineHeight: 1 }}>
+                  81%
+                </p>
+                <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1.6, marginTop: "0.75rem", maxWidth: "18rem", marginLeft: "auto", marginRight: "auto" }}>
+                  of people check Google reviews before they pick a local business.
+                </p>
+                <a href="https://www.brightlocal.com/research/local-consumer-review-survey-2025/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: "0.9rem", fontSize: "0.78rem", color: "var(--color-accent-muted)", textDecoration: "underline" }}>
                   BrightLocal, 2025
                 </a>
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <ReviewAgentDemo />
-            </ScrollReveal>
-          </div>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

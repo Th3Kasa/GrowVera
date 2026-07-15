@@ -9,81 +9,100 @@ import { FictionLabel, AuditCTA } from "./DemoChrome";
 /**
  * "Get a sample quote yourself" — Demo 3.
  * Fully deterministic, no LLM. A scripted decision-tree chat for the fictional
- * "Sample Mobile Mechanics": pick vehicle → job → urgency, then the agent
- * chat-types an itemised quote from the visible mock PRICE_LIST below.
+ * "Sample Plumbing Co" internal quoting tool: pick job type → job detail →
+ * urgency, then the agent chat-types an itemised quote computed purely from the
+ * visible mock PRICE_LIST below. Every number the card shows is derived from
+ * that table, so the demo can never quote something the price list doesn't back.
  */
 
 const LABOUR_RATE = 110; // $/hour
-const TRAVEL_FEE = 40; // flat call-out
+const CALL_OUT_FEE = 60; // flat call-out
 const PRIORITY_SURCHARGE = 60; // same-day priority
 
-type VehicleId = "civic" | "hilux" | "mazda3";
-type JobId = "brakes" | "battery" | "service";
+type JobTypeId = "tap" | "hotwater" | "drain";
 type UrgencyId = "standard" | "priority";
 
-const VEHICLES: { id: VehicleId; name: string }[] = [
-  { id: "civic", name: "2017 Honda Civic" },
-  { id: "hilux", name: "2020 Toyota Hilux" },
-  { id: "mazda3", name: "2015 Mazda 3" },
-];
+type Variant = {
+  id: string;
+  /** Button label shown in step 2. */
+  name: string;
+  /** Line label used on the quote card + price list for the part/unit. */
+  itemLabel: string;
+  /** Cost of the part or unit (0 = no part line, e.g. drain clears). */
+  partCost: number;
+  labourHours: number;
+  /** Extra equipment surcharge (0 = none). */
+  equipment: number;
+  equipmentLabel?: string;
+};
 
-const JOBS: { id: JobId; name: string; labourHours: number }[] = [
-  { id: "brakes", name: "Front brake pads & rotors", labourHours: 2.5 },
-  { id: "battery", name: "Battery replacement", labourHours: 1.5 },
-  { id: "service", name: "General service", labourHours: 2.0 },
+type JobType = {
+  id: JobTypeId;
+  name: string;
+  variants: Variant[];
+};
+
+/** Mock price list — the exact numbers this demo quotes from. */
+const JOB_TYPES: JobType[] = [
+  {
+    id: "tap",
+    name: "Leaking tap / mixer replacement",
+    variants: [
+      { id: "standard-mixer", name: "Standard mixer ($89 part)", itemLabel: "Standard mixer (part)", partCost: 89, labourHours: 1.0, equipment: 0 },
+      { id: "premium-mixer", name: "Premium mixer ($189 part)", itemLabel: "Premium mixer (part)", partCost: 189, labourHours: 1.0, equipment: 0 },
+    ],
+  },
+  {
+    id: "hotwater",
+    name: "Hot water system replacement",
+    variants: [
+      { id: "electric-250", name: "Electric storage 250L ($1,150 unit)", itemLabel: "Electric storage 250L (unit)", partCost: 1150, labourHours: 3.5, equipment: 0 },
+      { id: "gas-flow", name: "Gas continuous flow ($1,420 unit)", itemLabel: "Gas continuous flow (unit)", partCost: 1420, labourHours: 3.5, equipment: 0 },
+    ],
+  },
+  {
+    id: "drain",
+    name: "Blocked drain",
+    variants: [
+      { id: "single", name: "Single fixture blockage", itemLabel: "Single fixture blockage", partCost: 0, labourHours: 1.5, equipment: 0 },
+      { id: "main", name: "Main line (jetter required, +$180 equipment)", itemLabel: "Main line clearance", partCost: 0, labourHours: 2.5, equipment: 180, equipmentLabel: "Jetter equipment" },
+    ],
+  },
 ];
 
 const URGENCY: { id: UrgencyId; name: string }[] = [
-  { id: "standard", name: "Standard (this week)" },
-  { id: "priority", name: "Priority — same day (+$60)" },
+  { id: "standard", name: "Standard (next available)" },
+  { id: "priority", name: "Priority same-day (+$60)" },
 ];
 
-/** Mock parts price list — the exact numbers this demo quotes from. */
-const PARTS: Record<JobId, { name: string; price: Record<VehicleId, number> }[]> = {
-  brakes: [
-    { name: "Front brake pads (set)", price: { civic: 120, hilux: 160, mazda3: 110 } },
-    { name: "Front rotors (pair)", price: { civic: 180, hilux: 260, mazda3: 170 } },
-  ],
-  battery: [{ name: "Replacement battery", price: { civic: 220, hilux: 320, mazda3: 200 } }],
-  service: [
-    { name: "Oil + oil filter", price: { civic: 90, hilux: 120, mazda3: 85 } },
-    { name: "Air + cabin filters", price: { civic: 50, hilux: 60, mazda3: 45 } },
-  ],
-};
-
 type Quote = {
-  parts: { name: string; price: number }[];
-  partsSubtotal: number;
-  labourHours: number;
+  variant: Variant;
   labourCost: number;
-  travel: number;
+  callOut: number;
   priority: number;
   total: number;
 };
 
-function buildQuote(vehicle: VehicleId, jobId: JobId, urgency: UrgencyId): Quote {
-  const job = JOBS.find((j) => j.id === jobId)!;
-  const parts = PARTS[jobId].map((p) => ({ name: p.name, price: p.price[vehicle] }));
-  const partsSubtotal = parts.reduce((s, p) => s + p.price, 0);
-  const labourCost = job.labourHours * LABOUR_RATE;
+function buildQuote(jobType: JobType, variant: Variant, urgency: UrgencyId): Quote {
+  const labourCost = variant.labourHours * LABOUR_RATE;
   const priority = urgency === "priority" ? PRIORITY_SURCHARGE : 0;
-  const total = partsSubtotal + labourCost + TRAVEL_FEE + priority;
-  return { parts, partsSubtotal, labourHours: job.labourHours, labourCost, travel: TRAVEL_FEE, priority, total };
+  const total = variant.partCost + labourCost + CALL_OUT_FEE + variant.equipment + priority;
+  return { variant, labourCost, callOut: CALL_OUT_FEE, priority, total };
 }
 
 type Msg = { role: "agent" | "user"; text: string };
-type Phase = "vehicle" | "job" | "urgency" | "typing" | "quote";
+type Phase = "job" | "detail" | "urgency" | "typing" | "quote";
 
 const INITIAL_LOG: Msg[] = [
-  { role: "agent", text: "G'day! I'm the Sample Mobile Mechanics quoting assistant. Tell me a couple of things and I'll price it up on the spot." },
-  { role: "agent", text: "First up — which vehicle are we looking at?" },
+  { role: "agent", text: "G'day! This is the Sample Plumbing Co quoting tool. Tell me a couple of things and I'll price the job on the spot." },
+  { role: "agent", text: "First up — what's the job?" },
 ];
 
 export default function QuotingDemo() {
   const [log, setLog] = useState<Msg[]>(INITIAL_LOG);
-  const [phase, setPhase] = useState<Phase>("vehicle");
-  const [vehicle, setVehicle] = useState<VehicleId | null>(null);
-  const [job, setJob] = useState<JobId | null>(null);
+  const [phase, setPhase] = useState<Phase>("job");
+  const [jobType, setJobType] = useState<JobType | null>(null);
+  const [variant, setVariant] = useState<Variant | null>(null);
   const [urgency, setUrgency] = useState<UrgencyId | null>(null);
   const [showPrices, setShowPrices] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -111,16 +130,14 @@ export default function QuotingDemo() {
     );
   };
 
-  const pickVehicle = (v: VehicleId) => {
-    setVehicle(v);
-    const name = VEHICLES.find((x) => x.id === v)!.name;
-    advance(name, `Nice — a ${name}. What's the job?`, "job");
+  const pickJob = (jt: JobType) => {
+    setJobType(jt);
+    advance(jt.name, "Got it. Which option are we going with?", "detail");
   };
 
-  const pickJob = (j: JobId) => {
-    setJob(j);
-    const name = JOBS.find((x) => x.id === j)!.name;
-    advance(name, "Got it. And how soon do you need it done?", "urgency");
+  const pickVariant = (v: Variant) => {
+    setVariant(v);
+    advance(v.name, "And how soon do you need it done?", "urgency");
   };
 
   const pickUrgency = (u: UrgencyId) => {
@@ -139,13 +156,13 @@ export default function QuotingDemo() {
   const restart = () => {
     clearTimers();
     setLog(INITIAL_LOG);
-    setPhase("vehicle");
-    setVehicle(null);
-    setJob(null);
+    setPhase("job");
+    setJobType(null);
+    setVariant(null);
     setUrgency(null);
   };
 
-  const quote = vehicle && job && urgency && phase === "quote" ? buildQuote(vehicle, job, urgency) : null;
+  const quote = jobType && variant && urgency && phase === "quote" ? buildQuote(jobType, variant, urgency) : null;
 
   const optionBtnStyle: React.CSSProperties = {
     background: "var(--color-bg-card)",
@@ -179,8 +196,8 @@ export default function QuotingDemo() {
             <Wrench size={17} weight="fill" style={{ color: "var(--color-accent)" }} />
           </div>
           <div>
-            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)", lineHeight: 1.1 }}>Sample Mobile Mechanics</p>
-            <p style={{ fontSize: "0.66rem", color: "var(--color-text-faint)" }}>Instant quoting assistant</p>
+            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)", lineHeight: 1.1 }}>Sample Plumbing Co</p>
+            <p style={{ fontSize: "0.66rem", color: "var(--color-text-faint)" }}>Internal quoting tool</p>
           </div>
         </div>
 
@@ -235,7 +252,7 @@ export default function QuotingDemo() {
 
           {/* Quote card */}
           <AnimatePresence>
-            {quote && (
+            {quote && jobType && variant && (
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -245,15 +262,14 @@ export default function QuotingDemo() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.6rem" }}>
                   <Receipt size={15} weight="fill" style={{ color: "var(--color-accent)" }} />
                   <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)" }}>
-                    {VEHICLES.find((v) => v.id === vehicle)!.name} · {JOBS.find((j) => j.id === job)!.name}
+                    {jobType.name} · {variant.name.replace(/\s*\(.*\)\s*$/, "")}
                   </p>
                 </div>
 
-                {quote.parts.map((p) => (
-                  <Row key={p.name} label={p.name} value={formatAud(p.price)} />
-                ))}
-                <Row label={`Labour (${quote.labourHours}h × ${formatAud(LABOUR_RATE)}/h)`} value={formatAud(quote.labourCost)} />
-                <Row label="Travel / call-out" value={formatAud(quote.travel)} />
+                {variant.partCost > 0 && <Row label={variant.itemLabel} value={formatAud(variant.partCost)} />}
+                <Row label={`Labour (${variant.labourHours}h × ${formatAud(LABOUR_RATE)}/h)`} value={formatAud(quote.labourCost)} />
+                <Row label="Call-out fee" value={formatAud(quote.callOut)} />
+                {variant.equipment > 0 && <Row label={variant.equipmentLabel ?? "Equipment"} value={`+${formatAud(variant.equipment)}`} />}
                 {quote.priority > 0 && <Row label="Priority same-day surcharge" value={`+${formatAud(quote.priority)}`} />}
 
                 <div style={{ height: 1, background: "var(--color-accent-border)", margin: "0.55rem 0" }} />
@@ -271,17 +287,17 @@ export default function QuotingDemo() {
 
         {/* Option buttons */}
         <div style={{ borderTop: "1px solid var(--color-border)", padding: "0.75rem 0.85rem" }}>
-          {phase === "vehicle" && (
+          {phase === "job" && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              {VEHICLES.map((v) => (
-                <button key={v.id} onClick={() => pickVehicle(v.id)} style={optionBtnStyle}>{v.name}</button>
+              {JOB_TYPES.map((jt) => (
+                <button key={jt.id} onClick={() => pickJob(jt)} style={optionBtnStyle}>{jt.name}</button>
               ))}
             </div>
           )}
-          {phase === "job" && (
+          {phase === "detail" && jobType && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              {JOBS.map((j) => (
-                <button key={j.id} onClick={() => pickJob(j.id)} style={optionBtnStyle}>{j.name}</button>
+              {jobType.variants.map((v) => (
+                <button key={v.id} onClick={() => pickVariant(v)} style={optionBtnStyle}>{v.name}</button>
               ))}
             </div>
           )}
@@ -345,29 +361,32 @@ export default function QuotingDemo() {
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.72rem" }}>
                   <thead>
                     <tr>
-                      <th style={thStyle}>Part</th>
-                      <th style={thStyleR}>Civic</th>
-                      <th style={thStyleR}>Hilux</th>
-                      <th style={thStyleR}>Mazda 3</th>
+                      <th style={thStyle}>Job</th>
+                      <th style={thStyle}>Option</th>
+                      <th style={thStyleR}>Part / unit</th>
+                      <th style={thStyleR}>Labour</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(Object.keys(PARTS) as JobId[]).map((jid) =>
-                      PARTS[jid].map((p) => (
-                        <tr key={jid + p.name}>
-                          <td style={tdStyle}>{p.name}</td>
-                          <td style={tdStyleR}>{formatAud(p.price.civic)}</td>
-                          <td style={tdStyleR}>{formatAud(p.price.hilux)}</td>
-                          <td style={tdStyleR}>{formatAud(p.price.mazda3)}</td>
+                    {JOB_TYPES.map((jt) =>
+                      jt.variants.map((v, vi) => (
+                        <tr key={jt.id + v.id}>
+                          <td style={tdStyle}>{vi === 0 ? jt.name : ""}</td>
+                          <td style={tdStyle}>
+                            {v.itemLabel}
+                            {v.equipment > 0 ? ` (+${formatAud(v.equipment)} equip.)` : ""}
+                          </td>
+                          <td style={tdStyleR}>{v.partCost > 0 ? formatAud(v.partCost) : "—"}</td>
+                          <td style={tdStyleR}>{v.labourHours}h</td>
                         </tr>
                       ))
                     )}
                   </tbody>
                 </table>
                 <div style={{ marginTop: "0.6rem", display: "flex", flexWrap: "wrap", gap: "0.35rem 1rem", fontSize: "0.72rem", color: "var(--color-text-muted)" }}>
-                  <span>Labour: <strong style={{ color: "var(--color-text)" }}>{formatAud(LABOUR_RATE)}/h</strong> (1.5–2.5h by job)</span>
-                  <span>Travel: <strong style={{ color: "var(--color-text)" }}>{formatAud(TRAVEL_FEE)}</strong></span>
-                  <span>Priority: <strong style={{ color: "var(--color-text)" }}>+{formatAud(PRIORITY_SURCHARGE)}</strong></span>
+                  <span>Labour: <strong style={{ color: "var(--color-text)" }}>{formatAud(LABOUR_RATE)}/h</strong></span>
+                  <span>Call-out: <strong style={{ color: "var(--color-text)" }}>{formatAud(CALL_OUT_FEE)}</strong></span>
+                  <span>Priority same-day: <strong style={{ color: "var(--color-text)" }}>+{formatAud(PRIORITY_SURCHARGE)}</strong></span>
                 </div>
               </div>
             </motion.div>
@@ -375,7 +394,7 @@ export default function QuotingDemo() {
         </AnimatePresence>
       </div>
 
-      <FictionLabel business="Sample Mobile Mechanics" />
+      <FictionLabel business="Sample Plumbing Co" />
       <AuditCTA prompt="Want instant quoting for YOUR business?" />
     </div>
   );

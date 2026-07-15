@@ -5,9 +5,10 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react";
 
 /**
- * Homepage "Try them yourself" gallery. The four demos are code-split via
+ * Homepage "Try them yourself" gallery. The three demos are code-split via
  * next/dynamic (ssr:false) so the homepage stays fast — the demo bundles only
- * load on the client when this section mounts.
+ * load on the client when this section mounts. Laid out as a responsive
+ * three-across grid that collapses to a single column on smaller screens.
  */
 
 const DemoSkeleton = () => (
@@ -29,18 +30,16 @@ const DemoSkeleton = () => (
 const ReceptionistCallDemo = dynamic(() => import("./ReceptionistCallDemo"), { ssr: false, loading: DemoSkeleton });
 const SpeedToLeadDemo = dynamic(() => import("./SpeedToLeadDemo"), { ssr: false, loading: DemoSkeleton });
 const QuotingDemo = dynamic(() => import("./QuotingDemo"), { ssr: false, loading: DemoSkeleton });
-const ReviewAgentDemo = dynamic(() => import("./ReviewAgentDemo"), { ssr: false, loading: DemoSkeleton });
 
 const CARDS = [
   { name: "24/7 AI Receptionist", pitch: "Hear it answer a real after-hours call, capture the job, and text the owner.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
   { name: "Speed-to-Lead Agent", pitch: "Submit a mock enquiry and watch the 20-second callback book the job.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
-  { name: "AI Quoting Agent", pitch: "Build a sample quote yourself — vehicle, job, urgency, itemised total.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
-  { name: "Google Review Agent", pitch: "Watch it chase 5-star reviews and flag a bad one before it goes public.", href: "/#services", linkLabel: "See add-ons", Demo: ReviewAgentDemo },
+  { name: "AI Quoting Agent", pitch: "Build a sample plumbing quote yourself — job type, detail, urgency, itemised total.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
 ];
 
 export default function DemosHub() {
   return (
-    <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 24rem), 1fr))" }}>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {CARDS.map(({ name, pitch, href, linkLabel, Demo }) => (
         <div
           key={name}
