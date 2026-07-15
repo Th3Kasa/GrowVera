@@ -35,7 +35,7 @@ import { useDemoMotion, useChatAutoScroll, callLength, clockAt, mmss } from "./m
 const AUDIO_SRC = "/demos/receptionist-call.mp3";
 
 const LINES: CueLine[] = [
-  { speaker: "ai", text: "Good evening, you've reached Harbourline Plumbing's after-hours assistant. I can take your details and get you booked in — what's going on tonight?" },
+  { speaker: "ai", text: "Good evening, you've reached Harbourline Plumbing's assistant. I can take your details and get you booked in — what's going on tonight?" },
   { speaker: "caller", text: "Yeah, hi — I've got a tap under the kitchen sink that's leaking, and it's sort of getting worse. There's water pooling in the cupboard now." },
   { speaker: "ai", text: "Okay, water in the cupboard — let's sort that. First things, have you been able to shut the water off to it, or is it still running?" },
   { speaker: "caller", text: "Ah — there's a little valve under there, I think I turned it. It's slowed right down but it's still dripping." },
@@ -104,7 +104,7 @@ export default function ReceptionistCallDemo() {
               </div>
               <div>
                 <p style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.2 }}>Harbourline Plumbing</p>
-                <p style={{ fontSize: "0.82rem", color: "var(--color-on-dark-text-muted)", marginTop: "0.2rem" }}>After Hours</p>
+                <p style={{ fontSize: "0.82rem", color: "var(--color-on-dark-text-muted)", marginTop: "0.2rem" }}>24/7 assistant</p>
                 <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-faint)", marginTop: "0.1rem" }}>mobile · Sydney</p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function ReceptionistCallDemo() {
               <Monogram size={32} label="HP" />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.15 }}>Harbourline Plumbing</p>
-                <p style={{ fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)" }}>After-hours assistant</p>
+                <p style={{ fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)" }}>24/7 assistant</p>
               </div>
               <span style={{ fontSize: "0.72rem", fontWeight: 700, color: ended ? "var(--color-on-dark-text-muted)" : "var(--color-accent)", fontVariantNumeric: "tabular-nums" }}>
                 {ended ? `Ended ${mmss(TOTAL)}` : mmss(elapsed)}

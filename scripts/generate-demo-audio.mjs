@@ -101,7 +101,7 @@ const DIALOGUES = [
     lines: [
       // 1
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Good evening, you've reached Harbourline Plumbing's after-hours assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. Now, what's going on tonight?" },
+        { text: "Good evening, you've reached Harbourline Plumbing's assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. Now, what's going on tonight?" },
       ] },
       // 2
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
