@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Play, ArrowClockwise, SpeakerHigh, SpeakerSlash, ChatText } from "@phosphor-icons/react";
 import { buildCues, useCallPlayback, type CueLine } from "./useCallPlayback";
+import { RECEPTIONIST_CUES } from "./callCues.generated";
 import { FictionLabel, AuditCTA } from "./DemoChrome";
 
 /**
@@ -12,6 +13,12 @@ import { FictionLabel, AuditCTA } from "./DemoChrome";
  * incoming-call screen; on Play the call plays with the transcript animating in.
  * Audio-optional: tries /demos/receptionist-call.mp3, otherwise transcript-only.
  * Dialogue transcribed verbatim from ops/demo-call-scripts.md (Dialogue 1).
+ *
+ * Cues: RECEPTIONIST_CUES (components/demo/callCues.generated.ts) carries the
+ * EXACT startSec/dur measured from the generated MP3 — used whenever it's
+ * available. LINES + buildCues() below is the transcript-only fallback,
+ * used only if the generated cues are ever missing (should not happen now
+ * that the audio has been generated); it keeps working exactly as before.
  */
 
 const AUDIO_SRC = "/demos/receptionist-call.mp3";
@@ -34,7 +41,7 @@ const LINES: CueLine[] = [
   { speaker: "ai", text: "No worries at all, Dave. Keep that valve turned down and we'll see you in the morning. Night now." },
 ];
 
-const CUES = buildCues(LINES);
+const CUES = RECEPTIONIST_CUES?.length ? RECEPTIONIST_CUES : buildCues(LINES);
 
 export default function ReceptionistCallDemo() {
   const pb = useCallPlayback(CUES, AUDIO_SRC);

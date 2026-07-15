@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightning, CheckCircle, PhoneCall, ArrowClockwise, Timer } from "@phosphor-icons/react";
 import { buildCues, useCallPlayback, type CueLine } from "./useCallPlayback";
+import { SPEEDTOLEAD_CUES } from "./callCues.generated";
 import { FictionLabel, AuditCTA } from "./DemoChrome";
 
 /**
@@ -12,6 +13,12 @@ import { FictionLabel, AuditCTA } from "./DemoChrome";
  * rings back → the callback call plays (audio-optional, /demos/speedtolead-call.mp3)
  * → a booking-confirmed card drops in. Dialogue 2 verbatim from
  * ops/demo-call-scripts.md. Replay resets the whole sequence.
+ *
+ * Cues: SPEEDTOLEAD_CUES (components/demo/callCues.generated.ts) carries the
+ * EXACT startSec/dur measured from the generated MP3 — used whenever it's
+ * available. LINES + buildCues() below is the transcript-only fallback,
+ * used only if the generated cues are ever missing (should not happen now
+ * that the audio has been generated); it keeps working exactly as before.
  */
 
 const AUDIO_SRC = "/demos/speedtolead-call.mp3";
@@ -29,7 +36,7 @@ const LINES: CueLine[] = [
   { speaker: "caller", text: "Great, thanks!" },
 ];
 
-const CUES = buildCues(LINES);
+const CUES = SPEEDTOLEAD_CUES?.length ? SPEEDTOLEAD_CUES : buildCues(LINES);
 
 type Stage = "form" | "timeline" | "call";
 
