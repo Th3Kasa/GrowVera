@@ -119,12 +119,14 @@ const DIALOGUES = [
         { text: "Beautiful, we cover Marrickville. Can I grab your name and the best number to reach you on?" },
       ] },
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "It's Dave — 0400 123 456." },
+        { text: "It's Dave — oh four hundred… one two three… four five six." },
       ] },
-      // Line 9: (0.5s pause before the price.)
+      // Line 9: (0.5s pause before the price.) Naturalness pass: name dropped
+      // here (kept only at the line-16 signoff, 2 mentions total incl. the
+      // caller's own self-intro at line 8); price spoken as words.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Thanks Dave. So you know what to expect,", pauseAfterMs: MIDPAUSE },
-        { text: "our call-out starts from $120, and the plumber gives you an exact quote once he's had a look — no surprises." },
+        { text: "Thanks. So you know what to expect,", pauseAfterMs: MIDPAUSE },
+        { text: "our call-out starts from a hundred and twenty dollars, and the plumber gives you an exact quote once he's had a look — no surprises." },
       ] },
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Yeah, that's fine." },
@@ -136,8 +138,13 @@ const DIALOGUES = [
       { speaker: "caller", role: "B1", gapAfterMs: BEAT, parts: [
         { text: "Eight's perfect, yeah. That'd be a big relief, honestly." },
       ] },
+      // Line 13 (naturalness pass): split the original three-thought line into
+      // two shorter AI clips with a natural beat between them; time as words.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Done — you're booked for 8am. I'll text you a confirmation with all the details in just a moment, and the owner gets a summary of this tonight, so it's all in hand." },
+        { text: "Done — you're booked for eight tomorrow morning. I'll text you the confirmation now." },
+      ] },
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "And the owner sees a summary of this tonight — so it's all in hand." },
       ] },
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
         { text: "Ah, brilliant. Thanks so much for that." },
@@ -163,9 +170,11 @@ const DIALOGUES = [
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
         { text: "Nah, access is fine. There's a bit of a slope out the back but nothing mad." },
       ] },
-      // Line 5: (0.5s pause before "And roughly".)
+      // Line 5: (0.5s pause before "And roughly".) Naturalness pass: light
+      // acknowledgement opener swapped in (second part text left exactly as
+      // before so the cache still hits it — no re-bill for unchanged audio).
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Perfect.", pauseAfterMs: MIDPAUSE },
+        { text: "Righto —", pauseAfterMs: MIDPAUSE },
         { text: "And roughly how long since they were last done?" },
       ] },
       { speaker: "caller", role: "B2", gapAfterMs: GAP, parts: [
