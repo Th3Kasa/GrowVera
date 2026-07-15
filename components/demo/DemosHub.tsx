@@ -32,9 +32,9 @@ const SpeedToLeadDemo = dynamic(() => import("./SpeedToLeadDemo"), { ssr: false,
 const QuotingDemo = dynamic(() => import("./QuotingDemo"), { ssr: false, loading: DemoSkeleton });
 
 const CARDS = [
-  { name: "24/7 AI Receptionist", instruction: "Press play and listen to how it answers", pitch: "Hear it answer a real after-hours call, capture the job, and text the owner.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
-  { name: "Speed-to-Lead Agent", instruction: "Type a name, hit submit, watch the callback", pitch: "Submit a mock enquiry and watch the 20-second callback book the job.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
-  { name: "AI Quoting Agent", instruction: "Your team's internal quoting tool — instant, accurate, and your customers never talk to AI unless you choose to add that later", pitch: "Pick a job and detail — get an itemised, priced quote in seconds.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
+  { name: "24/7 AI Receptionist", instruction: "Press play and hear it answer", pitch: "Hear it pick up an after-hours call, capture the job, and text the owner — the call you'd have lost at 9pm.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
+  { name: "Speed-to-Lead Agent", instruction: "Type a name, hit submit, watch the callback", pitch: "Drop in a mock enquiry and watch the 20-second callback book the job — before the other quote even sees it.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
+  { name: "AI Quoting Agent", instruction: "Pick a job — see a priced quote in seconds", pitch: "Step into your team's shoes: pick a job and get an itemised, priced quote in seconds. It's an internal tool — your customers never see it.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
 ];
 
 export default function DemosHub() {

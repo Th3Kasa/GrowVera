@@ -255,7 +255,7 @@ export default function ReceptionistCallDemo() {
         )}
       </PhoneFrame>
 
-      {ended && <Takeaway>That&apos;s a 9pm call captured that would&apos;ve gone to voicemail.</Takeaway>}
+      {ended && <Takeaway>That&apos;s a 9pm job captured — one that would&apos;ve rung out and gone to the next tradie.</Takeaway>}
       <FictionLabel business="Harbourline Plumbing" />
       <AuditCTA />
     </div>

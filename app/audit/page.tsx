@@ -8,7 +8,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 export const metadata: Metadata = {
   title: "Free AI Audit — see what missed calls are costing you | GrowVera",
   description:
-    "Put in your numbers and see, on the spot, roughly what missed calls and slow quotes are costing your trade business each year. Then book a free 15-minute audit call — no obligation.",
+    "See, on the spot, roughly what missed calls and slow quotes cost your trade business each year — an honest estimate from your own numbers. Then book a free 15-minute call, no obligation, and we'll work out the real figure together.",
 };
 
 export default function AuditPage() {
@@ -32,7 +32,7 @@ export default function AuditPage() {
               <span style={{ color: "var(--color-accent)" }}>are costing you.</span>
             </h1>
             <p style={{ color: "var(--color-text-muted)", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
-              Put in a few numbers below and we&apos;ll show you, on the spot, roughly what jobs you&apos;re losing each year. Then book a quick call and we&apos;ll work out the real figure together.
+              Put in a few numbers and see, on the spot, roughly what you&apos;re losing each year. Most owners guess low &mdash; this shows your real number in two minutes. Then book a quick call and we&apos;ll work out the exact figure together.
             </p>
           </ScrollReveal>
         </div>
@@ -60,17 +60,17 @@ export default function AuditPage() {
                 {
                   icon: Calculator,
                   title: "We check your real numbers",
-                  body: "The estimate above is a rough guide. On the call we work out what's actually walking past your phone.",
+                  body: "The estimate above is a rough guide from your inputs. On the call we work out what's actually walking past your phone — often more than owners expect.",
                 },
                 {
                   icon: Phone,
                   title: "15 minutes, plain English",
-                  body: "No jargon, no hard sell. We show you where you're losing jobs and the simplest way to plug it.",
+                  body: "No jargon, no hard sell. We show you where jobs are slipping out and the simplest, cheapest way to plug the gap.",
                 },
                 {
                   icon: ShieldCheck,
                   title: "No obligation — ever",
-                  body: "The audit is yours to keep. No follow-up unless you ask for it. We comply with the Australian Spam Act 2003.",
+                  body: "The audit is yours to keep, whether we work together or not. No follow-up unless you ask for it. We comply with the Australian Spam Act 2003.",
                 },
               ].map((point) => {
                 const Icon = point.icon;
@@ -104,7 +104,7 @@ export default function AuditPage() {
                 Book your free 15-minute audit.
               </h2>
               <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", maxWidth: "34rem", marginInline: "auto", lineHeight: 1.6 }}>
-                Pick a time that suits. We&apos;ll go through your real numbers and show you the simplest way to stop losing jobs.
+                Pick a time that suits. We&apos;ll walk through your real numbers and show you the simplest way to stop losing jobs &mdash; with no pressure to buy anything on the call.
               </p>
             </div>
             <CalEmbed />
@@ -121,7 +121,7 @@ export default function AuditPage() {
                 Rather we reach out?
               </p>
               <h3 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.02em" }}>
-                Leave your details and we&apos;ll call you.
+                Leave your details and we&apos;ll ring you back.
               </h3>
             </div>
             <LeadForm />
@@ -132,7 +132,7 @@ export default function AuditPage() {
               <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "1.5rem" }}>
                 {[
                   "Free, no obligation",
-                  "Answers when you can't — you stay in control",
+                  "Answers only when you can't — you're first to pick up",
                   "Receptionist from $990 setup + $650/mo",
                 ].map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>

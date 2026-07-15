@@ -31,21 +31,21 @@ const steps = [
     name: "Free AI audit",
     icon: Calculator,
     title: "We show you what missed calls are costing you",
-    desc: "Put in a few numbers — how many calls you miss, your average job value — and we show you, on the spot, roughly what's walking past your phone each year. Then a quick call to work out the real figure. No jargon, no pressure.",
+    desc: "Put in a few numbers — calls you miss, your average job value — and see, on the spot, roughly what's walking past your phone each year. Most owners guess low; the audit shows your real number in two minutes. No jargon, no pressure.",
   },
   {
     step: "02",
     name: "We build it",
     icon: ShieldCheck,
     title: "We set it up for your business — you approve every bit",
-    desc: "We build your AI receptionist or quoting tool around how you actually work. You hear exactly how it answers, or see exactly how it quotes, and you sign off before anything is switched on.",
+    desc: "We build your receptionist around how you actually work — your jobs, your area, your rates. The quoting tool your team runs stays in-house; your customers never talk to AI unless you choose that later. You hear exactly how it sounds and sign off before anything switches on.",
   },
   {
     step: "03",
     name: "You approve, then it goes live",
     icon: Phone,
     title: "It runs quietly in the background",
-    desc: "Once you're happy, it goes live. Calls get answered, leads get chased, quotes get done — while you stay on the tools. If the system's ever down, calls fall back to your phone exactly as before.",
+    desc: "Once you're happy, it goes live. Calls get answered, leads get chased, quotes get done — while you stay on the tools. Start with one agent, watch it work for a month, then decide what's next. And if the system's ever down, calls fall straight back to your phone, exactly as before.",
   },
 ];
 
@@ -94,7 +94,7 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={0.14}>
               <p style={{ fontSize: "1.15rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "40rem", marginBottom: "2rem" }}>
-                AI receptionists and instant quoting for Australian trades and local services — your phone answered 24/7, your quotes done in seconds. Humans still answer when you&apos;re free. This just catches everything you can&apos;t.
+                An AI receptionist that only answers when you can&apos;t &mdash; plus quoting your team runs in-house. You still pick up when you&apos;re free, and your customers never talk to a machine unless you decide they should. This just catches the jobs you&apos;d have lost.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.18}>
@@ -102,11 +102,11 @@ export default function HomePage() {
               <div className="grid grid-cols-3 gap-8 mb-8" style={{ maxWidth: "36rem" }}>
                 <div>
                   <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>24/7</p>
-                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>your phone answered,<br />even after hours</p>
+                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>the calls you can&apos;t get to,<br />answered day or night</p>
                 </div>
                 <div>
                   <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>20s</p>
-                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>every web lead<br />called back, fast</p>
+                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>every web lead rung back<br />before it goes cold</p>
                 </div>
                 <div>
                   <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>$650</p>
@@ -138,14 +138,14 @@ export default function HomePage() {
               It&apos;s not your work.<br />It&apos;s the calls you can&apos;t get to.
             </h2>
             <p style={{ fontSize: "0.975rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "36rem", marginBottom: "3rem" }}>
-              You&apos;re under a sink or up a ladder when the phone rings. It goes to voicemail. And most people don&apos;t leave one — they just ring the next tradie.
+              You&apos;re under a sink when the phone rings. Hands full, you let it ring out &mdash; and most people won&apos;t leave a message. They just ring the next tradie. That job was yours &mdash; and you never even knew they called.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.06}>
             <WithWithout
               stat="When a call goes to voicemail, about 80% of people hang up without leaving a message — and 62% of them just ring the next business."
-              without="A call goes to voicemail, the customer hangs up, rings the next tradie, and you never even knew they called."
-              withGV="Every call gets answered, the job gets captured and booked, and you get a text — so nothing slips past you."
+              without="The call rings out, they hang up, ring the next tradie — and you never even knew they called."
+              withGV="It answers on your behalf, captures the job, books it, and texts you the details — so nothing slips past."
               sources={[{ label: "AIRA (411 Locals, PATLive, Dialzara data)", url: "https://www.getaira.io/blog/missed-business-calls-statistics" }]}
               packageName="GrowVera"
             />
@@ -202,7 +202,7 @@ export default function HomePage() {
               Three ways to stop<br />losing jobs.
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "36rem" }}>
-              Start with the receptionist so you never miss a call. Add speed-to-lead and instant quoting when you&apos;re ready. Pick what hurts most right now.
+              Start with the receptionist so no call goes unanswered. Add speed-to-lead and instant quoting when you&apos;re ready &mdash; one step at a time, no fifty-grand overhaul. Pick what&apos;s costing you most right now.
             </p>
           </ScrollReveal>
 
@@ -268,7 +268,7 @@ export default function HomePage() {
               Don&apos;t take our word for it —<br />press play.
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "38rem" }}>
-              Three working demos, right here in your browser. Hear a call, watch a callback, build a quote. Each one is a scripted example on a fictional business — but it&apos;s exactly how the real thing behaves.
+              Three working demos, right here in your browser — hear a call answered, watch a callback, build a quote. Each one&apos;s a scripted example on a made-up business, but it behaves exactly like the real thing. No signup, no catch.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.08}>
@@ -291,7 +291,7 @@ export default function HomePage() {
                   What are missed calls actually costing you?
                 </h2>
                 <p style={{ fontSize: "0.975rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
-                  Put in your own numbers and see a rough figure on the spot — no email needed. It&apos;s an honest estimate from your inputs, and we&apos;ll check the real numbers together on a quick call.
+                  Put in your own numbers and watch the figure land &mdash; no email needed. It&apos;s an honest estimate from what you enter, and we&apos;ll check the real number together on a quick call. How many jobs walked past your phone this year?
                 </p>
                 <a
                   href="/audit"
@@ -329,7 +329,7 @@ export default function HomePage() {
                   More 5-star reviews. No bad ones by surprise.
                 </h2>
                 <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
-                  After every job, it politely asks your happy customers for a Google review — the thing that actually wins you the next one. And the moment a low rating comes in, it alerts you so you can sort it before the world sees it.
+                  After every job, it asks your happy customers for the Google review that wins you the next one. And the second a low rating lands, it pings you first &mdash; so you can make it right before the whole suburb reads it.
                 </p>
                 <a
                   href="/audit"
@@ -364,7 +364,7 @@ export default function HomePage() {
                 Built so you&apos;re never worse off.
               </h2>
               <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
-                We&apos;re a small Sydney outfit and we&apos;d rather earn your trust than dazzle you. Here&apos;s exactly how we keep this safe.
+                We&apos;re a small Sydney outfit, and we&apos;d rather earn your trust than dazzle you. Here&apos;s the honest version &mdash; what it costs, what it doesn&apos;t do, and what happens if it ever breaks.
               </p>
               <p style={{ fontSize: "0.85rem", color: "var(--color-text-faint)", lineHeight: 1.7 }}>
                 GrowVera · Sydney, Australia · ABN 50 329 139 726 · contact.basemmorkos@gmail.com
@@ -373,10 +373,10 @@ export default function HomePage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {[
-                { icon: Phone, title: "You approve every call recording before we go live", desc: "You hear exactly how it answers your phone. Nothing goes live until you've signed off on how it sounds." },
-                { icon: ArrowUUpLeft, title: "Forwarding is reversible in 30 seconds", desc: "It works through simple call forwarding on your existing number. Change your mind and you switch it off yourself in half a minute." },
-                { icon: ShieldCheck, title: "If our system's ever down, calls fall back to your phone", desc: "Exactly as before. There's no scenario where a customer can't reach you because of us." },
-                { icon: CheckCircle, title: "No lock-in games", desc: "A 3-month minimum so it has a fair run, then month to month. No fake logos, no invented reviews, no numbers we can't back up." },
+                { icon: Phone, title: "You approve every call recording before we go live", desc: "You hear exactly how it answers your phone, word for word. Nothing goes live until you've listened and said yes." },
+                { icon: ArrowUUpLeft, title: "Forwarding is reversible in 30 seconds", desc: "It runs through simple call forwarding on your existing number. Change your mind and you switch it off yourself, in about the time it took to read this." },
+                { icon: ShieldCheck, title: "If our system's ever down, calls fall back to your phone", desc: "Exactly as they do today. There's no version of this where a customer can't reach you because of something on our end." },
+                { icon: CheckCircle, title: "No lock-in games", desc: "A three-month minimum so it gets a fair run, then month to month. No fake logos, no invented reviews, no numbers we can't show you the source for." },
               ].map((f, i) => {
                 const Icon = f.icon;
                 return (
@@ -420,7 +420,7 @@ export default function HomePage() {
                   See what you&apos;re<br />losing. Free.
                 </h2>
                 <p style={{ fontSize: "1.05rem", color: "var(--color-on-dark-80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "2.25rem" }}>
-                  Two minutes with the audit tool shows you the number. A quick call shows you how to stop it. No obligation, no jargon.
+                  Two minutes with the audit shows you the number. A quick call shows you how to stop it. Start with one agent and keep the rest &mdash; no obligation, no jargon.
                 </p>
                 <a
                   href="/audit"
@@ -434,7 +434,7 @@ export default function HomePage() {
                 <div>
                   {[
                     "See what missed calls cost you — on the spot",
-                    "Your phone answered 24/7, humans first",
+                    "Answers only when you can't — you're first to pick up",
                     "You approve everything before it goes live",
                     "Receptionist from $990 setup + $650/mo",
                     "Reversible in 30 seconds, anytime",

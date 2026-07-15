@@ -8,7 +8,7 @@ const tier = getTierBySlug("quoting")!;
 export const metadata: Metadata = {
   title: "AI Quoting Agent — quotes done in seconds | GrowVera",
   description:
-    "GrowVera builds you an instant quoting tool wired to your own price lists, labour rates, and margins. Quotes that took 15 minutes take seconds. Custom build from $10,000 setup plus monthly care.",
+    "GrowVera builds your team an in-house quoting tool wired to your own price lists, rates and margins — only your staff use it. Quotes that ate 15 minutes take seconds. Custom build from $10,000 setup plus monthly care.",
 };
 
 export default function QuotingPage() {

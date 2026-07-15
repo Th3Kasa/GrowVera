@@ -6,24 +6,24 @@ import ScrollReveal from "@/components/ScrollReveal";
 export const metadata: Metadata = {
   title: "Marketing add-ons — websites, social & ads | GrowVera",
   description:
-    "GrowVera builds AI receptionists and quoting tools for trades — but we're a marketing agency too. Websites, social content and paid ads as add-ons for our clients. Ask us on your audit call.",
+    "GrowVera builds AI receptionists and in-house quoting for trades — and we're a marketing agency too. Websites, social content and paid ads, as add-ons for our clients. Ask on your free audit call.",
 };
 
 const addOns = [
   {
     icon: Globe,
     name: "Websites",
-    desc: "A clean, modern website built and hosted for you — the sort that makes a customer trust you before they even call. Need a change? Message us and it's done.",
+    desc: "A clean, modern website that makes a customer trust you before they've even called. We build it, host it, and when you need a change you message us — it's done.",
   },
   {
     icon: Megaphone,
     name: "Social content",
-    desc: "Regular posts and short videos so your business looks active and stays in front of local customers between jobs. Produced for you — you just approve.",
+    desc: "Regular posts and short videos so your business looks alive and stays in front of local customers between jobs. We produce it; you just approve.",
   },
   {
     icon: ChartLineUp,
     name: "Paid ads",
-    desc: "Facebook and Instagram ads that bring you enquiries — which your Speed-to-Lead Agent then rings back in seconds. We run them, you control the budget.",
+    desc: "Facebook and Instagram ads that bring in enquiries — which your Speed-to-Lead Agent then rings back in seconds, before they go cold. We run them; you control the budget.",
   },
 ];
 
@@ -44,7 +44,7 @@ export default function ServicesPage() {
               We&apos;re a marketing<br />agency too — just ask.
             </h1>
             <p style={{ color: "var(--color-text-muted)", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "540px", margin: "0 auto" }}>
-              Our main job is making sure you never miss a call or lose a job to a slow quote. But if you also need a website, social content or ads, we do those too — as add-ons for our clients. One team, one invoice.
+              Our main job is making sure you never miss a call or lose a job to a slow quote. But if you need a website, social content or ads on top, we handle those too &mdash; as add-ons for our clients. One team, one invoice, no chasing five suppliers.
             </p>
           </ScrollReveal>
         </div>
@@ -71,7 +71,7 @@ export default function ServicesPage() {
           </div>
           <ScrollReveal delay={0.2}>
             <p style={{ textAlign: "center", fontSize: "0.85rem", color: "var(--color-text-faint)", marginTop: "2rem", maxWidth: "40rem", marginInline: "auto", lineHeight: 1.6 }}>
-              Add-ons are priced per job and are for businesses already working with us. The best way to scope one is to mention it on your free audit call.
+              Add-ons are priced per job and are for businesses already working with us. The simplest way to scope one is to mention it on your free audit call.
             </p>
           </ScrollReveal>
         </div>

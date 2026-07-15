@@ -551,7 +551,7 @@ export default function QuotingDemo() {
         </AnimatePresence>
       </div>
 
-      {phase === "quote" && <Takeaway>A priced, itemised quote in seconds — while the lead is still on your website.</Takeaway>}
+      {phase === "quote" && <Takeaway>A priced, itemised quote in seconds — your team sends it the same day, not next week.</Takeaway>}
       <FictionLabel business="Harbourline Plumbing" />
       <AuditCTA prompt="Want instant quoting for YOUR business?" />
     </div>

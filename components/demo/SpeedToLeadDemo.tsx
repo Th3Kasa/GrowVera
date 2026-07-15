@@ -440,7 +440,7 @@ export default function SpeedToLeadDemo() {
         </div>
       )}
 
-      {ended && <Takeaway>You&apos;d have called back before the other quote even saw the enquiry.</Takeaway>}
+      {ended && <Takeaway>You&apos;d have rung back before the other quote even saw the enquiry.</Takeaway>}
       <FictionLabel business="Harbourline Plumbing" />
       <AuditCTA />
     </div>
