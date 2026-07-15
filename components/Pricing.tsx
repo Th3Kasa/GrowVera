@@ -62,7 +62,7 @@ export default function Pricing() {
                     fontSize: "0.875rem",
                     fontWeight: 700,
                     textDecoration: "none",
-                    border: featured ? "none" : "1px solid rgba(255,255,255,0.16)",
+                    border: featured ? "none" : "1px solid var(--color-border-strong)",
                     background: featured ? "var(--color-accent)" : "transparent",
                     color: featured ? "var(--color-on-accent)" : "var(--color-text)",
                     marginBottom: "0.6rem",

@@ -40,8 +40,8 @@ export default function AdminControls({ initialEnabled }: { initialEnabled: bool
         style={{
           display: "inline-flex", alignItems: "center", gap: "0.5rem",
           padding: "0.55rem 1rem", borderRadius: "999px", fontSize: "0.82rem", fontWeight: 700,
-          border: "1px solid " + (enabled ? "rgba(52,211,153,0.5)" : "rgba(248,113,113,0.5)"),
-          background: enabled ? "rgba(52,211,153,0.12)" : "var(--color-danger-soft)",
+          border: "1px solid " + (enabled ? "rgba(15,169,104,0.5)" : "rgba(220,38,38,0.5)"),
+          background: enabled ? "rgba(15,169,104,0.12)" : "var(--color-danger-soft)",
           color: enabled ? "var(--color-accent)" : "var(--color-danger)", cursor: busy ? "default" : "pointer",
         }}
       >

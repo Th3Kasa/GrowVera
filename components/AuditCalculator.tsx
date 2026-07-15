@@ -46,7 +46,7 @@ export default function AuditCalculator() {
   const field: React.CSSProperties = {
     width: "100%",
     background: "var(--color-bg-section)",
-    border: "1px solid var(--color-white-12)",
+    border: "1px solid var(--color-border-strong)",
     borderRadius: "0.75rem",
     padding: "0.8rem 1rem",
     color: "var(--color-text)",

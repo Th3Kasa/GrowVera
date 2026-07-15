@@ -84,7 +84,7 @@ export default function ServicesPage() {
             <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2.5rem)", letterSpacing: "-0.03em", color: "#fff", marginBottom: "14px" }}>
               Start with the audit.
             </h2>
-            <p style={{ color: "var(--color-white-80)", fontSize: "15px", lineHeight: 1.7, marginBottom: "28px", maxWidth: "420px", margin: "0 auto 28px" }}>
+            <p style={{ color: "var(--color-on-dark-80)", fontSize: "15px", lineHeight: 1.7, marginBottom: "28px", maxWidth: "420px", margin: "0 auto 28px" }}>
               First we make sure you&apos;re not losing jobs. Then, if you want the marketing side handled too, we sort it. Book your free AI audit and tell us what you need.
             </p>
             <Link

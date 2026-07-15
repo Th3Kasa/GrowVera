@@ -123,11 +123,11 @@ export default function HomePage() {
       </section>
 
       {/* MARQUEE */}
-      <section className="overflow-hidden" style={{ background: "var(--color-bg-section)", paddingTop: "3rem", paddingBottom: "3rem", borderTop: "1px solid var(--color-white-06)" }}>
+      <section className="overflow-hidden" style={{ background: "var(--color-bg-section)", paddingTop: "3rem", paddingBottom: "3rem", borderTop: "1px solid var(--color-hairline)" }}>
         <p style={{ textAlign: "center", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--color-text-faint)", marginBottom: "1.25rem", fontWeight: 600 }}>
           Built for the trades that live and die by the phone
         </p>
-        <Marquee items={marqueeItems} className="text-white/70" />
+        <Marquee items={marqueeItems} className="text-[color:var(--color-text-muted)]" />
       </section>
 
       {/* PAIN — before / after */}
@@ -175,7 +175,7 @@ export default function HomePage() {
                   className="group grid grid-cols-[52px_1fr] md:grid-cols-[80px_1fr] gap-5 md:gap-8"
                   style={{ borderTop: "1px solid var(--color-border)", padding: "2.25rem 0", alignItems: "start" }}
                 >
-                  <div style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.5rem, 7vw, 4.5rem)", fontWeight: 900, color: "var(--color-white-10)", lineHeight: 1, userSelect: "none" }}>
+                  <div style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.5rem, 7vw, 4.5rem)", fontWeight: 900, color: "var(--color-border)", lineHeight: 1, userSelect: "none" }}>
                     {row.step}
                   </div>
                   <div style={{ maxWidth: "44rem" }}>
@@ -354,7 +354,7 @@ export default function HomePage() {
                 const Icon = f.icon;
                 return (
                   <ScrollReveal key={f.title} delay={i * 0.05}>
-                    <div style={{ display: "flex", gap: "1.25rem", padding: "1.75rem 0", borderBottom: "1px solid var(--color-white-07)", alignItems: "flex-start" }}>
+                    <div style={{ display: "flex", gap: "1.25rem", padding: "1.75rem 0", borderBottom: "1px solid var(--color-hairline-strong)", alignItems: "flex-start" }}>
                       <div style={{ width: 38, height: 38, background: "var(--color-accent-soft)", borderRadius: "0.6rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <Icon size={18} weight="bold" style={{ color: "var(--color-accent)" }} />
                       </div>
@@ -388,11 +388,11 @@ export default function HomePage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 items-center">
               <ScrollReveal delay={0}>
-                <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.60)", marginBottom: "1.25rem" }}>Start today</p>
+                <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-on-dark-60)", marginBottom: "1.25rem" }}>Start today</p>
                 <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.98, marginBottom: "1.5rem" }}>
                   See what you&apos;re<br />losing. Free.
                 </h2>
-                <p style={{ fontSize: "1.05rem", color: "var(--color-white-80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "2.25rem" }}>
+                <p style={{ fontSize: "1.05rem", color: "var(--color-on-dark-80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "2.25rem" }}>
                   Two minutes with the audit tool shows you the number. A quick call shows you how to stop it. No obligation, no jargon.
                 </p>
                 <a
@@ -412,12 +412,12 @@ export default function HomePage() {
                     "Receptionist from $990 setup + $650/mo",
                     "Reversible in 30 seconds, anytime",
                   ].map((item) => (
-                    <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid var(--color-white-20)" }}>
+                    <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid var(--color-on-dark-20)" }}>
                       <CheckCircle size={18} weight="fill" style={{ color: "#fff", flexShrink: 0 }} />
-                      <span style={{ fontSize: "1rem", color: "rgba(255,255,255,0.92)", fontWeight: 500 }}>{item}</span>
+                      <span style={{ fontSize: "1rem", color: "var(--color-on-dark-92)", fontWeight: 500 }}>{item}</span>
                     </div>
                   ))}
-                  <div style={{ borderTop: "1px solid var(--color-white-20)" }} />
+                  <div style={{ borderTop: "1px solid var(--color-on-dark-20)" }} />
                 </div>
               </ScrollReveal>
             </div>

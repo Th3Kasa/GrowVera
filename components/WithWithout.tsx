@@ -37,9 +37,9 @@ export default function WithWithout({
 
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 18rem), 1fr))" }}>
         {/* Without */}
-        <div style={{ background: "var(--color-bg-card)", border: "1px solid rgba(248,113,113,0.20)", borderRadius: "1rem", padding: "1.5rem" }}>
+        <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-danger-border)", borderRadius: "1rem", padding: "1.5rem" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
-            <span style={{ width: 26, height: 26, borderRadius: 999, background: "rgba(248,113,113,0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ width: 26, height: 26, borderRadius: 999, background: "var(--color-danger-icon-bg)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <X size={14} weight="bold" style={{ color: "var(--color-danger)" }} />
             </span>
             <span style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, color: "var(--color-danger)" }}>Without</span>

@@ -44,7 +44,7 @@ export default function AdminLogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           autoFocus
-          style={{ width: "100%", padding: "0.75rem 1rem", borderRadius: "0.75rem", background: "var(--color-bg-section)", border: "1px solid var(--color-white-12)", color: "var(--color-text)", fontSize: "0.9rem", marginBottom: "0.85rem" }}
+          style={{ width: "100%", padding: "0.75rem 1rem", borderRadius: "0.75rem", background: "var(--color-bg-section)", border: "1px solid var(--color-border-strong)", color: "var(--color-text)", fontSize: "0.9rem", marginBottom: "0.85rem" }}
         />
         {error && <p style={{ fontSize: "0.8rem", color: "var(--color-danger)", marginBottom: "0.85rem" }}>{error}</p>}
         <button

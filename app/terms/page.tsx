@@ -10,15 +10,15 @@ const sections = [
     title: "1. Parties and Agreement",
     content: `These Terms of Service ("Terms") constitute a legally binding agreement between GrowVera (ABN 50 329 139 726), a business registered in New South Wales, Australia ("GrowVera", "we", "us", or "our") and the business entity or individual ("Client", "you", or "your") that engages GrowVera's services.
 
-By requesting a Pipeline Audit, executing a Statement of Work, paying an invoice, or otherwise using GrowVera's services, you agree to be bound by these Terms. If you do not agree, do not engage our services.`,
+By requesting an AI Audit, executing a Statement of Work, paying an invoice, or otherwise using GrowVera's services, you agree to be bound by these Terms. If you do not agree, do not engage our services.`,
   },
   {
     title: "2. Services",
     content: `GrowVera designs, builds, integrates, and maintains custom AI automation engines for mid-market businesses. Current service offerings include:
 
-(a) Speed-to-Lead Voice Agent (marketed as "Vera Reach") — an automated outbound call engine that triggers voice calls to leads captured via your website or CRM, qualifies prospects using a client-approved script, and facilitates calendar bookings.
+(a) Speed-to-Lead Agent (previously marketed as "Vera Reach") — an automated outbound call engine that triggers voice calls to leads captured via your website or CRM, qualifies prospects using a client-approved script, and facilitates calendar bookings.
 
-(b) Automated Internal Quoting Engine (marketed as "Vera Quote") — a staff-facing AI tool that retrieves live pricing from third-party supplier APIs, applies client-provided standard operating procedures (SOPs), labour rates, and margin rules to produce internal price guides.
+(b) AI Quoting Agent (previously marketed as "Vera Quote") — a staff-facing AI tool that retrieves live pricing from third-party supplier APIs, applies client-provided standard operating procedures (SOPs), labour rates, and margin rules to produce internal price guides.
 
 The specific scope, deliverables, integration requirements, and fees for each engagement are set out in a separate Statement of Work ("SOW") or proposal document agreed in writing between the parties. These Terms apply to all SOWs unless otherwise expressly stated.`,
   },
@@ -30,7 +30,7 @@ The specific scope, deliverables, integration requirements, and fees for each en
 
 (c) Payment Terms. Invoices are payable within 7 days of issue. GrowVera reserves the right to suspend services, including live engine functionality, if payment is more than 14 days overdue. Reinstatement following suspension may incur an additional fee.
 
-(d) GST. All fees are quoted exclusive of GST. GST will be added where applicable under the A New Tax System (Goods and Services Tax) Act 1999 (Cth).
+(d) GST. GrowVera is not currently registered for GST; no GST is charged or shown on invoices. If GrowVera becomes required to register for GST, GST will be added to taxable supplies as required by law, with prior notice.
 
 (e) Price Changes. GrowVera may adjust monthly retainer fees with 30 days written notice. Continued use of services after the notice period constitutes acceptance of revised fees.`,
   },
@@ -60,7 +60,7 @@ GrowVera's performance obligations are conditioned on the Client fulfilling thes
 
 (c) The Quoting Engine produces price guides based on data provided by third-party supplier APIs. GrowVera does not guarantee the accuracy or timeliness of supplier data. Prices returned by the engine should be reviewed by qualified staff before being communicated to customers as final binding quotes.
 
-(d) GrowVera makes no representation or warranty that the use of its engines will result in any specific increase in revenue, lead conversion rates, or operational efficiency. Any projected outcomes discussed during a Pipeline Audit or sales process are illustrative estimates only, not guarantees.
+(d) GrowVera makes no representation or warranty that the use of its engines will result in any specific increase in revenue, lead conversion rates, or operational efficiency. Any projected outcomes discussed during an AI Audit or sales process are illustrative estimates only, not guarantees.
 
 (e) You are solely responsible for reviewing engine outputs, ensuring compliance with applicable laws (including consumer law, pricing accuracy obligations, and Australian Consumer Law), and making final business decisions based on that output.`,
   },
@@ -148,7 +148,7 @@ Except as expressly stated in these Terms, all other warranties, conditions, and
 
 export default function TermsPage() {
   return (
-    <main style={{ background: "var(--color-text-brightest)" }}>
+    <main style={{ background: "var(--color-bg)" }}>
       <div
         className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
         style={{ paddingTop: "clamp(6rem, 12vw, 9rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)" }}

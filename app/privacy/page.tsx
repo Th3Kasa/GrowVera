@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     title: "1. About This Policy",
-    content: `This Privacy Policy explains how GrowVera (ABN 50 329 139 726) ("GrowVera", "we", "us", or "our") collects, uses, holds, and discloses personal information. It applies to all personal information collected through our website (growvera.com.au), our Pipeline Audit process, and the AI automation engines we build and operate for clients.
+    content: `This Privacy Policy explains how GrowVera (ABN 50 329 139 726) ("GrowVera", "we", "us", or "our") collects, uses, holds, and discloses personal information. It applies to all personal information collected through our website (growvera.com.au), our AI Audit process, and the AI automation engines we build and operate for clients.
 
 GrowVera is bound by the Australian Privacy Principles (APPs) contained in the Privacy Act 1988 (Cth). This policy is written to be clear and practical, not exhaustive legalese.
 
@@ -18,7 +18,7 @@ If you have questions about this policy or how we handle your information, conta
     title: "2. What Personal Information We Collect",
     content: `We collect personal information in two contexts:
 
-(a) Website visitors and audit enquiries. When you submit a Pipeline Audit request, we collect: your full name, business name, email address, phone number, suburb or region, and business type. We may also collect basic analytics data (browser type, referral source, page views) through privacy-respecting analytics tools.
+(a) Website visitors and audit enquiries. When you submit an AI Audit request, we collect: your full name, business name, email address, phone number, suburb or region, and business type. We may also collect basic analytics data (browser type, referral source, page views) through privacy-respecting analytics tools.
 
 (b) Client business operations. When we build and operate AI automation engines for a client, we may process personal information on behalf of that client in the course of delivering the service. This includes:
 - For the Speed-to-Lead Voice Agent: prospect names, phone numbers, call recordings (if enabled by the client and disclosed to prospects), and CRM data passed via webhook.
@@ -30,7 +30,7 @@ We do not collect sensitive information (as defined in the Privacy Act) and do n
     title: "3. How We Collect Personal Information",
     content: `We collect personal information:
 
-(a) directly from you when you complete the Pipeline Audit request form on our website, email us, or call us;
+(a) directly from you when you complete the AI Audit request form on our website, email us, or call us;
 
 (b) from our clients, when they share CRM data, lead records, or staff identifiers required to build or operate an engine;
 
@@ -42,7 +42,7 @@ We do not purchase, rent, or obtain personal information from data brokers or th
     title: "4. Why We Collect and Use Personal Information",
     content: `We use personal information for the following purposes:
 
-(a) To respond to Pipeline Audit enquiries and schedule calls with prospective clients.
+(a) To respond to AI Audit enquiries and schedule calls with prospective clients.
 
 (b) To build, configure, test, and maintain AI automation engines for clients who engage our services.
 
@@ -112,7 +112,7 @@ In the event of an eligible data breach under the Notifiable Data Breaches schem
     title: "9. Data Retention",
     content: `We retain personal information only for as long as necessary for the purposes described in this policy, and as required by law. Our general retention practices:
 
-(a) Pipeline Audit enquiries — contact details are retained for up to 24 months following the initial enquiry, or until you ask us to delete them.
+(a) AI Audit enquiries — contact details are retained for up to 24 months following the initial enquiry, or until you ask us to delete them.
 
 (b) Client engagement records — business contact details, SOW documentation, and invoice records are retained for 7 years from the end of the engagement, as required for tax and accounting purposes.
 
@@ -148,7 +148,7 @@ You can control cookies through your browser settings. Disabling cookies will no
   },
   {
     title: "12. Contact Information on Our Website",
-    content: `When you contact us via the Pipeline Audit form or by email, the information you provide is used only to respond to your enquiry and to follow up on the audit process. We will not add you to any mailing list or marketing database without your explicit consent.
+    content: `When you contact us via the AI Audit form or by email, the information you provide is used only to respond to your enquiry and to follow up on the audit process. We will not add you to any mailing list or marketing database without your explicit consent.
 
 We comply with the Spam Act 2003 (Cth). Any promotional communications we send will include an unsubscribe mechanism, and we will action unsubscribe requests promptly.`,
   },
@@ -173,7 +173,7 @@ We aim to respond to all privacy enquiries within 5 business days.`,
 
 export default function PrivacyPage() {
   return (
-    <main style={{ background: "var(--color-text-brightest)" }}>
+    <main style={{ background: "var(--color-bg)" }}>
       <div
         className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
         style={{ paddingTop: "clamp(6rem, 12vw, 9rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)" }}

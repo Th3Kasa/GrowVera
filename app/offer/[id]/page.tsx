@@ -52,7 +52,7 @@ export default async function OfferPage({ params }: PageProps) {
         <section style={{ paddingTop: "clamp(2rem, 4vw, 3rem)" }}>
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <div style={{ borderRadius: "1.25rem", overflow: "hidden", border: "1px solid var(--color-white-10)", background: "var(--color-bg-card)" }}>
+              <div style={{ borderRadius: "1.25rem", overflow: "hidden", border: "1px solid var(--color-border)", background: "var(--color-bg-card)" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1rem", borderBottom: "1px solid var(--color-border)" }}>
                   <span style={{ fontSize: "0.78rem", color: "var(--color-text-faint)" }}>Your live demo site</span>
                   <a href={demoUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8rem", color: "var(--color-accent)", textDecoration: "none", fontWeight: 600 }}>

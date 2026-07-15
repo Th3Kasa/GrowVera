@@ -45,12 +45,12 @@ export default function Navbar() {
             background: scrolled ? "var(--color-glass-strong)" : "var(--color-glass)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            border: "1px solid var(--color-white-10)",
-            boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.50)" : "0 8px 32px rgba(0,0,0,0.30)",
+            border: "1px solid var(--color-border)",
+            boxShadow: scrolled ? "0 8px 32px rgba(21,24,26,0.14)" : "0 8px 32px rgba(21,24,26,0.08)",
             transition: "all 0.3s ease",
           }}
         >
-          <a href="/" aria-label="GrowVera home"><Logo size="sm" /></a>
+          <a href="/" aria-label="GrowVera home"><Logo size="sm" dark /></a>
 
           <div className="hidden md:flex items-center gap-5">
             {navLinks.map((link) => (
@@ -59,7 +59,7 @@ export default function Navbar() {
                 href={link.href}
                 className="text-sm font-medium transition-colors duration-200"
                 style={{ color: "var(--color-text-muted)" }}
-                onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "#FFFFFF")}
+                onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "var(--color-text-brightest)")}
                 onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "var(--color-text-muted)")}
               >{link.label}</a>
             ))}

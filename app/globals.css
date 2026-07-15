@@ -1,66 +1,90 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark premium base */
-  --color-bg:            #08080A;
-  --color-bg-section:    #0E0E11;
-  --color-bg-subtle:     #16161B;
-  --color-bg-card:       #131318;
-  --color-text:          #F4F4F1;
-  --color-text-muted:    #A2A2A0;
-  --color-text-faint:    #6E6E72;
-  --color-accent:        #34D399;
-  --color-accent-hover:  #10B981;
+  /* Light premium base (Gate 2) */
+  --color-bg:            #FAFAF7;
+  --color-bg-section:    #F1F2EE;
+  --color-bg-subtle:     #ECEEE9;
+  --color-bg-card:       #FFFFFF;
+  --color-text:          #15181A;
+  --color-text-muted:    #5A5F5C;
+  --color-text-faint:    #6C716D;
+  --color-accent:        #0A8555;
+  --color-accent-hover:  #076B43;
   --color-accent-deep:   #1A5C3A;
-  --color-accent-soft:   rgba(52,211,153,0.10);
-  --color-border:        rgba(255,255,255,0.08);
-  --color-border-strong: rgba(255,255,255,0.14);
+  --color-accent-soft:   rgba(15,169,104,0.09);
+  --color-border:        rgba(21,24,26,0.10);
+  --color-border-strong: rgba(21,24,26,0.16);
 
-  /* extended tokens (gate 1 tokenize) — values preserved 1:1, visual no-op */
+  /* extended tokens (gate 1 tokenize, re-lit for gate 2) */
   /* neutral text ramp */
-  --color-text-bright:     #E4E4E1;
-  --color-text-brightest:  #FAFAF8;
-  --color-text-soft:       #C9C9C6;
-  --color-text-muted-alt:  #9E9E9A;
-  --color-text-dim:        #6B6B68;
+  --color-text-bright:     #2A2E2B;
+  --color-text-brightest:  #0D0F0E;
+  --color-text-soft:       #454A47;
+  --color-text-muted-alt:  #6A6F6B;
+  --color-text-dim:        #6E736F;
   --color-text-on-light:   #0D0D0B;
 
   /* accent family */
-  --color-accent-muted:         #8A9A92;
-  --color-on-accent:            #06180F;
-  --color-accent-card:          #15211B;
+  --color-accent-muted:         #3F6B56;
+  --color-on-accent:            #FFFFFF;
+  --color-accent-card:          #EAF7F0;
   --color-accent-deepest:       #0D2A1B;
-  --color-accent-tint:          rgba(52,211,153,0.14);
-  --color-accent-glow:          rgba(52,211,153,0.20);
-  --color-accent-ring:          rgba(52,211,153,0.25);
-  --color-accent-border-soft:   rgba(52,211,153,0.30);
-  --color-accent-border:        rgba(52,211,153,0.35);
-  --color-accent-border-strong: rgba(52,211,153,0.40);
-  --color-accent-border-vivid:  rgba(52,211,153,0.45);
+  --color-accent-tint:          rgba(15,169,104,0.14);
+  --color-accent-glow:          rgba(15,169,104,0.20);
+  --color-accent-ring:          rgba(15,169,104,0.25);
+  --color-accent-border-soft:   rgba(15,169,104,0.30);
+  --color-accent-border:        rgba(15,169,104,0.35);
+  --color-accent-border-strong: rgba(15,169,104,0.40);
+  --color-accent-border-vivid:  rgba(15,169,104,0.45);
 
-  /* white overlays (hairlines / fills) */
-  --color-white-05: rgba(255,255,255,0.05);
-  --color-white-06: rgba(255,255,255,0.06);
-  --color-white-07: rgba(255,255,255,0.07);
-  --color-white-10: rgba(255,255,255,0.10);
-  --color-white-12: rgba(255,255,255,0.12);
-  --color-white-18: rgba(255,255,255,0.18);
-  --color-white-20: rgba(255,255,255,0.20);
-  --color-white-30: rgba(255,255,255,0.30);
-  --color-white-80: rgba(255,255,255,0.80);
+  /* light neutral overlays — dark-on-light hairlines/fills for the light UI.
+     Most weights reuse --color-border / --color-border-strong; these four
+     fill the gaps that need a distinct weight. */
+  --color-fill-subtle:     rgba(21,24,26,0.05);
+  --color-hairline:        rgba(21,24,26,0.06);
+  --color-hairline-strong: rgba(21,24,26,0.07);
+  --color-overlay-strong:  rgba(21,24,26,0.18);
 
-  /* navbar glass */
-  --color-glass-strong: rgba(18,18,22,0.85);
-  --color-glass:        rgba(18,18,22,0.65);
+  /* navbar glass (light) */
+  --color-glass-strong: rgba(255,255,255,0.88);
+  --color-glass:        rgba(255,255,255,0.72);
 
-  /* danger (WithWithout comparison) */
-  --color-danger:       #F87171;
-  --color-danger-light: #FCA5A5;
-  --color-danger-soft:  rgba(248,113,113,0.10);
+  /* danger — rebased for light (WithWithout, form errors, admin warnings) */
+  --color-danger:               #DC2626;
+  --color-danger-light:         #B91C1C;
+  --color-danger-soft:          rgba(220,38,38,0.08);
+  --color-danger-border:        rgba(220,38,38,0.20);
+  --color-danger-icon-bg:       rgba(220,38,38,0.12);
+  --color-danger-border-strong: rgba(220,38,38,0.25);
+
+  /* on-dark tokens — scoped strictly to the three deliberate dark anchors:
+     Footer, the final CTA band, and ReviewAgentDemo's phone frame. Do not
+     use these outside those contexts. */
+  --color-on-dark-92: rgba(255,255,255,0.92);
+  --color-on-dark-80: rgba(255,255,255,0.80);
+  --color-on-dark-60: rgba(255,255,255,0.60);
+  --color-on-dark-30: rgba(255,255,255,0.30);
+  --color-on-dark-25: rgba(255,255,255,0.25);
+  --color-on-dark-20: rgba(255,255,255,0.20);
+  --color-on-dark-18: rgba(255,255,255,0.18);
+  --color-on-dark-12: rgba(255,255,255,0.12);
+  --color-on-dark-10: rgba(255,255,255,0.10);
+  --color-on-dark-07: rgba(255,255,255,0.07);
+  --color-on-dark-06: rgba(255,255,255,0.06);
+  --color-on-dark-05: rgba(255,255,255,0.05);
+  --color-on-dark-text:          #F4F4F1;
+  --color-on-dark-text-muted:    #A2A2A0;
+  --color-on-dark-text-faint:    #6E6E72;
+  --color-on-dark-text-bright:   #E4E4E1;
+  --color-on-dark-danger:        #F87171;
+  --color-on-dark-danger-soft:   rgba(248,113,113,0.10);
+  --color-on-dark-danger-border: rgba(248,113,113,0.35);
+  --color-on-dark-danger-text:   #F4C7C7;
 
   /* gradients */
   --gradient-cta:           linear-gradient(135deg, #16A34A 0%, #1A5C3A 100%);
-  --gradient-card-featured: linear-gradient(180deg, #15211B 0%, #121218 100%);
+  --gradient-card-featured: linear-gradient(180deg, #EAF7F0 0%, #FFFFFF 100%);
 
   --background:    var(--color-bg);
   --foreground:    var(--color-text);
@@ -71,18 +95,18 @@
 }
 
 @theme {
-  --color-gv-bg:           #08080A;
-  --color-gv-bg-section:   #0E0E11;
-  --color-gv-bg-subtle:    #16161B;
-  --color-gv-bg-card:      #131318;
-  --color-gv-text:         #F4F4F1;
-  --color-gv-muted:        #A2A2A0;
-  --color-gv-faint:        #6E6E72;
-  --color-gv-accent:       #34D399;
-  --color-gv-accent-hover: #10B981;
+  --color-gv-bg:           #FAFAF7;
+  --color-gv-bg-section:   #F1F2EE;
+  --color-gv-bg-subtle:    #ECEEE9;
+  --color-gv-bg-card:      #FFFFFF;
+  --color-gv-text:         #15181A;
+  --color-gv-muted:        #5A5F5C;
+  --color-gv-faint:        #6C716D;
+  --color-gv-accent:       #0A8555;
+  --color-gv-accent-hover: #076B43;
   --color-gv-accent-deep:  #1A5C3A;
-  --color-gv-border:       rgba(255,255,255,0.08);
-  --color-gv-border-strong:rgba(255,255,255,0.14);
+  --color-gv-border:       rgba(21,24,26,0.10);
+  --color-gv-border-strong:rgba(21,24,26,0.16);
 
   --font-family-cabinet: var(--font-cabinet), Outfit, sans-serif;
   --font-family-satoshi:  var(--font-satoshi), 'DM Sans', sans-serif;
@@ -107,14 +131,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-cabinet), Outfit, system-ui, sans-serif;
 }
 
-/* Fine film-grain over the dark base */
+/* Fine film-grain over the base — dialled back for the light theme so it
+   reads as texture, not noise, on near-white backgrounds. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-size: 128px 128px;
 }
@@ -134,10 +159,12 @@ body::before {
 
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(21,24,26,0.20); border-radius: 4px; }
 
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
-::selection { background: rgba(52,211,153,0.22); color: #fff; }
+::selection { background: rgba(15,169,104,0.25); color: var(--color-text-brightest); }
 
-.footer-link { color: var(--color-text-faint); text-decoration: none; transition: color 0.2s ease; }
+/* Used only inside the dark Footer — keep on the on-dark scale, not the
+   light-theme text tokens. */
+.footer-link { color: var(--color-on-dark-text-faint); text-decoration: none; transition: color 0.2s ease; }
 .footer-link:hover { color: #ffffff; }

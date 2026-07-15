@@ -53,20 +53,20 @@ export default function ReviewAgentDemo() {
       <div
         style={{
           background: "#0B0B0E",
-          border: "1px solid var(--color-white-10)",
+          border: "1px solid var(--color-on-dark-10)",
           borderRadius: "1.75rem",
           padding: "0.85rem",
           boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
         }}
       >
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", padding: "0.4rem 0.6rem 0.85rem", borderBottom: "1px solid var(--color-white-07)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", padding: "0.4rem 0.6rem 0.85rem", borderBottom: "1px solid var(--color-on-dark-07)" }}>
           <div style={{ width: 34, height: 34, borderRadius: 999, background: "var(--color-accent-tint)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Star size={16} weight="fill" style={{ color: "var(--color-accent)" }} />
           </div>
           <div>
-            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)", lineHeight: 1.1 }}>Sample Plumbing Co</p>
-            <p style={{ fontSize: "0.68rem", color: "var(--color-text-faint)" }}>Review Agent · text message</p>
+            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.1 }}>Sample Plumbing Co</p>
+            <p style={{ fontSize: "0.68rem", color: "var(--color-on-dark-text-faint)" }}>Review Agent · text message</p>
           </div>
         </div>
 
@@ -83,8 +83,8 @@ export default function ReviewAgentDemo() {
                     transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
                     style={{
                       alignSelf: "stretch",
-                      background: "var(--color-danger-soft)",
-                      border: "1px solid rgba(248,113,113,0.35)",
+                      background: "var(--color-on-dark-danger-soft)",
+                      border: "1px solid var(--color-on-dark-danger-border)",
                       borderRadius: "0.9rem",
                       padding: "0.7rem 0.85rem",
                       display: "flex",
@@ -93,8 +93,8 @@ export default function ReviewAgentDemo() {
                       marginTop: "0.4rem",
                     }}
                   >
-                    <BellRinging size={16} weight="fill" style={{ color: "var(--color-danger)", flexShrink: 0, marginTop: "0.1rem" }} />
-                    <span style={{ fontSize: "0.78rem", color: "#F4C7C7", lineHeight: 1.5 }}>{m.text}</span>
+                    <BellRinging size={16} weight="fill" style={{ color: "var(--color-on-dark-danger)", flexShrink: 0, marginTop: "0.1rem" }} />
+                    <span style={{ fontSize: "0.78rem", color: "var(--color-on-dark-danger-text)", lineHeight: 1.5 }}>{m.text}</span>
                   </motion.div>
                 );
               }
@@ -110,7 +110,7 @@ export default function ReviewAgentDemo() {
                   <div
                     style={{
                       background: isBiz ? "#1C1C22" : "var(--color-accent)",
-                      color: isBiz ? "var(--color-text-bright)" : "var(--color-on-accent)",
+                      color: isBiz ? "var(--color-on-dark-text-bright)" : "var(--color-on-accent)",
                       borderRadius: "1rem",
                       borderBottomLeftRadius: isBiz ? "0.3rem" : "1rem",
                       borderBottomRightRadius: isBiz ? "1rem" : "0.3rem",
