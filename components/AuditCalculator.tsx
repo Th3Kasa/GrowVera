@@ -45,20 +45,20 @@ export default function AuditCalculator() {
 
   const field: React.CSSProperties = {
     width: "100%",
-    background: "#0E0E11",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: "var(--color-bg-section)",
+    border: "1px solid var(--color-white-12)",
     borderRadius: "0.75rem",
     padding: "0.8rem 1rem",
-    color: "#F4F4F1",
+    color: "var(--color-text)",
     fontSize: "0.95rem",
     outline: "none",
   };
-  const label: React.CSSProperties = { fontSize: "0.78rem", color: "#A2A2A0", marginBottom: "0.35rem", display: "block" };
+  const label: React.CSSProperties = { fontSize: "0.78rem", color: "var(--color-text-muted)", marginBottom: "0.35rem", display: "block" };
 
   const canCalc = missedNum > 0 && jobNum > 0;
 
   return (
-    <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.25rem", padding: "clamp(1.5rem, 4vw, 2.25rem)" }}>
+    <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "clamp(1.5rem, 4vw, 2.25rem)" }}>
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 13rem), 1fr))" }}>
         <div>
           <label style={label} htmlFor="calc-trade">What do you do?</label>
@@ -108,7 +108,7 @@ export default function AuditCalculator() {
           <label style={{ ...label, marginBottom: 0 }} htmlFor="calc-close">
             How many of those would you actually win?
           </label>
-          <span style={{ color: "#34D399", fontWeight: 700, fontSize: "0.95rem" }}>{closeRate}%</span>
+          <span style={{ color: "var(--color-accent)", fontWeight: 700, fontSize: "0.95rem" }}>{closeRate}%</span>
         </div>
         <input
           id="calc-close"
@@ -118,9 +118,9 @@ export default function AuditCalculator() {
           step={5}
           value={closeRate}
           onChange={(e) => setCloseRate(Number(e.target.value))}
-          style={{ width: "100%", accentColor: "#34D399" }}
+          style={{ width: "100%", accentColor: "var(--color-accent)" }}
         />
-        <p style={{ fontSize: "0.72rem", color: "#6E6E72", marginTop: "0.35rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "var(--color-text-faint)", marginTop: "0.35rem" }}>
           Most local businesses close 30–50% of the jobs they actually get to. Slide it to what feels right for you.
         </p>
       </div>
@@ -138,8 +138,8 @@ export default function AuditCalculator() {
           fontSize: "0.9rem",
           fontWeight: 700,
           border: "none",
-          background: canCalc ? "#34D399" : "rgba(52,211,153,0.25)",
-          color: "#06180F",
+          background: canCalc ? "var(--color-accent)" : "var(--color-accent-ring)",
+          color: "var(--color-on-accent)",
           cursor: canCalc ? "pointer" : "not-allowed",
         }}
       >
@@ -151,14 +151,14 @@ export default function AuditCalculator() {
         <div
           style={{
             marginTop: "1.75rem",
-            background: "linear-gradient(180deg, #15211B 0%, #121218 100%)",
-            border: "1px solid rgba(52,211,153,0.35)",
+            background: "var(--gradient-card-featured)",
+            border: "1px solid var(--color-accent-border)",
             borderRadius: "1rem",
             padding: "clamp(1.5rem, 4vw, 2rem)",
             textAlign: "center",
           }}
         >
-          <p style={{ fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#34D399", fontWeight: 700, marginBottom: "0.75rem" }}>
+          <p style={{ fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--color-accent)", fontWeight: 700, marginBottom: "0.75rem" }}>
             Roughly what missed calls could be costing you
           </p>
           <p
@@ -166,7 +166,7 @@ export default function AuditCalculator() {
               fontFamily: "var(--font-cabinet), Outfit, sans-serif",
               fontSize: "clamp(2.5rem, 8vw, 4rem)",
               fontWeight: 900,
-              color: "#F4F4F1",
+              color: "var(--color-text)",
               letterSpacing: "-0.03em",
               lineHeight: 1,
               marginBottom: "0.4rem",
@@ -174,8 +174,8 @@ export default function AuditCalculator() {
           >
             {formatAud(lostPerYear)}
           </p>
-          <p style={{ fontSize: "0.85rem", color: "#A2A2A0" }}>a year</p>
-          <p style={{ fontSize: "0.82rem", color: "#8A9A92", lineHeight: 1.6, marginTop: "1.25rem", maxWidth: "34rem", marginInline: "auto" }}>
+          <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>a year</p>
+          <p style={{ fontSize: "0.82rem", color: "var(--color-accent-muted)", lineHeight: 1.6, marginTop: "1.25rem", maxWidth: "34rem", marginInline: "auto" }}>
             This is only an estimate from the numbers you put in ({missedNum} missed calls/week × {closeRate}% won × {formatAud(jobNum)} × 52 weeks). It&apos;s not a promise — we&apos;ll work out your real numbers together on the audit call. An AI receptionist catches the calls behind a figure like this.
           </p>
         </div>

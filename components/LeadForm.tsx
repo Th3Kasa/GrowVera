@@ -45,22 +45,22 @@ export default function LeadForm() {
 
   const field: React.CSSProperties = {
     width: "100%",
-    background: "#0E0E11",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: "var(--color-bg-section)",
+    border: "1px solid var(--color-white-12)",
     borderRadius: "0.75rem",
     padding: "0.8rem 1rem",
-    color: "#F4F4F1",
+    color: "var(--color-text)",
     fontSize: "0.95rem",
     outline: "none",
   };
-  const label: React.CSSProperties = { fontSize: "0.78rem", color: "#A2A2A0", marginBottom: "0.35rem", display: "block" };
+  const label: React.CSSProperties = { fontSize: "0.78rem", color: "var(--color-text-muted)", marginBottom: "0.35rem", display: "block" };
 
   if (status === "done") {
     return (
-      <div style={{ background: "#131318", border: "1px solid rgba(52,211,153,0.35)", borderRadius: "1.25rem", padding: "2.5rem", textAlign: "center" }}>
-        <CheckCircle size={40} weight="fill" style={{ color: "#34D399", marginBottom: "1rem" }} />
-        <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "#F4F4F1", marginBottom: "0.5rem" }}>You&apos;re in. 🎉</h3>
-        <p style={{ color: "#A2A2A0", fontSize: "0.95rem", lineHeight: 1.6 }}>
+      <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-accent-border)", borderRadius: "1.25rem", padding: "2.5rem", textAlign: "center" }}>
+        <CheckCircle size={40} weight="fill" style={{ color: "var(--color-accent)", marginBottom: "1rem" }} />
+        <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "var(--color-text)", marginBottom: "0.5rem" }}>You&apos;re in. 🎉</h3>
+        <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>
           Taking you to the calendar to book your free call…
         </p>
       </div>
@@ -68,7 +68,7 @@ export default function LeadForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.25rem", padding: "clamp(1.5rem, 4vw, 2.25rem)" }}>
+    <form onSubmit={onSubmit} style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "clamp(1.5rem, 4vw, 2.25rem)" }}>
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 13rem), 1fr))" }}>
         <div>
           <label style={label} htmlFor="name">Your name *</label>
@@ -100,17 +100,17 @@ export default function LeadForm() {
         <input style={field} id="website" name="website" placeholder="https://" />
       </div>
 
-      {error && <p style={{ color: "#FCA5A5", fontSize: "0.85rem", marginTop: "1rem" }}>{error}</p>}
+      {error && <p style={{ color: "var(--color-danger-light)", fontSize: "0.85rem", marginTop: "1rem" }}>{error}</p>}
 
       <button
         type="submit"
         disabled={status === "submitting"}
         className="inline-flex items-center justify-center gap-2"
-        style={{ width: "100%", marginTop: "1.5rem", padding: "0.95rem 1.25rem", borderRadius: 999, fontSize: "0.9rem", fontWeight: 700, border: "none", background: "#34D399", color: "#06180F", cursor: status === "submitting" ? "wait" : "pointer" }}
+        style={{ width: "100%", marginTop: "1.5rem", padding: "0.95rem 1.25rem", borderRadius: 999, fontSize: "0.9rem", fontWeight: 700, border: "none", background: "var(--color-accent)", color: "var(--color-on-accent)", cursor: status === "submitting" ? "wait" : "pointer" }}
       >
         {status === "submitting" ? "Sending…" : <>Book my free audit call <ArrowRight size={15} weight="bold" /></>}
       </button>
-      <p style={{ fontSize: "0.72rem", color: "#6E6E72", textAlign: "center", marginTop: "0.85rem" }}>
+      <p style={{ fontSize: "0.72rem", color: "var(--color-text-faint)", textAlign: "center", marginTop: "0.85rem" }}>
         No obligation. We comply with the Australian Spam Act 2003.
       </p>
     </form>

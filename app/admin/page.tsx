@@ -20,10 +20,10 @@ function pct(n: number): string {
 
 function Card({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.25rem" }}>
-      <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#6E6E72", marginBottom: "0.5rem" }}>{label}</p>
-      <p style={{ fontFamily: "var(--font-cabinet)", fontSize: "1.9rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1 }}>{value}</p>
-      {sub && <p style={{ fontSize: "0.78rem", color: "#8A9A92", marginTop: "0.4rem" }}>{sub}</p>}
+    <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1rem", padding: "1.25rem" }}>
+      <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--color-text-faint)", marginBottom: "0.5rem" }}>{label}</p>
+      <p style={{ fontFamily: "var(--font-cabinet)", fontSize: "1.9rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1 }}>{value}</p>
+      {sub && <p style={{ fontSize: "0.78rem", color: "var(--color-accent-muted)", marginTop: "0.4rem" }}>{sub}</p>}
     </div>
   );
 }
@@ -80,20 +80,20 @@ export default async function AdminDashboard() {
   const stages = Object.keys(s.leadsByStage).sort((a, b) => rank(a) - rank(b));
 
   return (
-    <div style={{ background: "#08080A", minHeight: "100vh", paddingTop: "clamp(5rem,8vw,6rem)", paddingBottom: "4rem" }}>
+    <div style={{ background: "var(--color-bg)", minHeight: "100vh", paddingTop: "clamp(5rem,8vw,6rem)", paddingBottom: "4rem" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "2rem" }}>
           <div>
-            <h1 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#F4F4F1", letterSpacing: "-0.03em" }}>Business summary</h1>
-            <p style={{ fontSize: "0.9rem", color: "#A2A2A0", marginTop: "0.4rem" }}>Your agency at a glance — revenue, pipeline, and the autonomous engine.</p>
+            <h1 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.03em" }}>Business summary</h1>
+            <p style={{ fontSize: "0.9rem", color: "var(--color-text-muted)", marginTop: "0.4rem" }}>Your agency at a glance — revenue, pipeline, and the autonomous engine.</p>
           </div>
           <AdminControls initialEnabled={s.outreachEnabled} />
         </div>
 
         {/* Config warnings */}
         {(!s.configured.stripe || !s.configured.airtable) && (
-          <div style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.25)", borderRadius: "0.85rem", padding: "0.85rem 1.1rem", marginBottom: "1.5rem", fontSize: "0.82rem", color: "#FCA5A5" }}>
+          <div style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.25)", borderRadius: "0.85rem", padding: "0.85rem 1.1rem", marginBottom: "1.5rem", fontSize: "0.82rem", color: "var(--color-danger-light)" }}>
             {!s.configured.stripe && <div>Stripe not connected — revenue shows 0. Set STRIPE_SECRET_KEY.</div>}
             {!s.configured.airtable && <div>Airtable not connected — pipeline shows 0. Set AIRTABLE_API_KEY + AIRTABLE_BASE_ID.</div>}
           </div>
@@ -108,16 +108,16 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Pipeline by stage */}
-        <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.25rem" }}>
-          <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#6E6E72", marginBottom: "1rem" }}>Pipeline by stage</p>
+        <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.25rem" }}>
+          <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--color-text-faint)", marginBottom: "1rem" }}>Pipeline by stage</p>
           {stages.length === 0 ? (
-            <p style={{ fontSize: "0.85rem", color: "#8A9A92" }}>No leads yet. Run the pipeline to start filling this.</p>
+            <p style={{ fontSize: "0.85rem", color: "var(--color-accent-muted)" }}>No leads yet. Run the pipeline to start filling this.</p>
           ) : (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               {stages.map((st) => (
-                <div key={st} style={{ background: "#0E0E11", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.75rem", padding: "0.75rem 1rem", minWidth: "7rem" }}>
-                  <p style={{ fontFamily: "var(--font-cabinet)", fontSize: "1.4rem", fontWeight: 800, color: "#34D399" }}>{s.leadsByStage[st]}</p>
-                  <p style={{ fontSize: "0.78rem", color: "#A2A2A0" }}>{STAGE_LABEL[st] ?? st}</p>
+                <div key={st} style={{ background: "var(--color-bg-section)", border: "1px solid var(--color-white-06)", borderRadius: "0.75rem", padding: "0.75rem 1rem", minWidth: "7rem" }}>
+                  <p style={{ fontFamily: "var(--font-cabinet)", fontSize: "1.4rem", fontWeight: 800, color: "var(--color-accent)" }}>{s.leadsByStage[st]}</p>
+                  <p style={{ fontSize: "0.78rem", color: "var(--color-text-muted)" }}>{STAGE_LABEL[st] ?? st}</p>
                 </div>
               ))}
             </div>
@@ -126,26 +126,26 @@ export default async function AdminDashboard() {
 
         {/* Action queue — phone-only leads ready for founder outreach */}
         {queue.length > 0 && (
-          <div style={{ background: "#131318", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.25rem" }}>
-            <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#34D399", marginBottom: "0.4rem" }}>Action queue — your 10-min daily list</p>
-            <p style={{ fontSize: "0.78rem", color: "#8A9A92", marginBottom: "1rem" }}>These leads have no email — send them a quick DM or call using the pitch below.</p>
+          <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-accent-glow)", borderRadius: "1rem", padding: "1.25rem", marginBottom: "1.25rem" }}>
+            <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--color-accent)", marginBottom: "0.4rem" }}>Action queue — your 10-min daily list</p>
+            <p style={{ fontSize: "0.78rem", color: "var(--color-accent-muted)", marginBottom: "1rem" }}>These leads have no email — send them a quick DM or call using the pitch below.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {queue.map((l) => (
-                <div key={l.id} style={{ background: "#0E0E11", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.75rem", padding: "1rem" }}>
+                <div key={l.id} style={{ background: "var(--color-bg-section)", border: "1px solid var(--color-white-06)", borderRadius: "0.75rem", padding: "1rem" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.6rem" }}>
                     <div>
-                      <span style={{ fontSize: "0.92rem", color: "#F4F4F1", fontWeight: 700 }}>{l.name}</span>
-                      {l.region && <span style={{ fontSize: "0.78rem", color: "#6E6E72", marginLeft: "0.5rem" }}>{l.region}</span>}
+                      <span style={{ fontSize: "0.92rem", color: "var(--color-text)", fontWeight: 700 }}>{l.name}</span>
+                      {l.region && <span style={{ fontSize: "0.78rem", color: "var(--color-text-faint)", marginLeft: "0.5rem" }}>{l.region}</span>}
                     </div>
                     <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                      <a href={`tel:${l.phone}`} style={{ fontSize: "0.78rem", color: "#34D399", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none", fontWeight: 600 }}>{l.phone}</a>
-                      {l.offerUrl && <a href={l.offerUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.78rem", color: "#A2A2A0", background: "rgba(255,255,255,0.05)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none" }}>View offer page →</a>}
+                      <a href={`tel:${l.phone}`} style={{ fontSize: "0.78rem", color: "var(--color-accent)", background: "rgba(52,211,153,0.08)", border: "1px solid var(--color-accent-glow)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none", fontWeight: 600 }}>{l.phone}</a>
+                      {l.offerUrl && <a href={l.offerUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.78rem", color: "var(--color-text-muted)", background: "var(--color-white-05)", padding: "0.25rem 0.65rem", borderRadius: "999px", textDecoration: "none" }}>View offer page →</a>}
                     </div>
                   </div>
                   {l.pitch && (
                     <details style={{ marginTop: "0.4rem" }}>
-                      <summary style={{ fontSize: "0.78rem", color: "#6E6E72", cursor: "pointer", userSelect: "none" }}>Show pitch</summary>
-                      <pre style={{ fontSize: "0.78rem", color: "#C4C4BE", whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: "0.5rem", background: "#131318", padding: "0.75rem", borderRadius: "0.5rem", lineHeight: 1.5 }}>{l.pitch}</pre>
+                      <summary style={{ fontSize: "0.78rem", color: "var(--color-text-faint)", cursor: "pointer", userSelect: "none" }}>Show pitch</summary>
+                      <pre style={{ fontSize: "0.78rem", color: "#C4C4BE", whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: "0.5rem", background: "var(--color-bg-card)", padding: "0.75rem", borderRadius: "0.5rem", lineHeight: 1.5 }}>{l.pitch}</pre>
                     </details>
                   )}
                 </div>
@@ -155,21 +155,21 @@ export default async function AdminDashboard() {
         )}
 
         {/* Recent leads */}
-        <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.25rem" }}>
-          <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#6E6E72", marginBottom: "1rem" }}>Recent leads</p>
+        <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1rem", padding: "1.25rem" }}>
+          <p style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--color-text-faint)", marginBottom: "1rem" }}>Recent leads</p>
           {leads.length === 0 ? (
-            <p style={{ fontSize: "0.85rem", color: "#8A9A92" }}>No leads yet.</p>
+            <p style={{ fontSize: "0.85rem", color: "var(--color-accent-muted)" }}>No leads yet.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {leads.map((l, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.55rem 0.75rem", borderRadius: "0.6rem", background: "#0E0E11" }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.55rem 0.75rem", borderRadius: "0.6rem", background: "var(--color-bg-section)" }}>
                   <div style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: "0.88rem", color: "#F4F4F1", fontWeight: 600 }}>{l.name}</span>
-                    {l.region && <span style={{ fontSize: "0.78rem", color: "#6E6E72", marginLeft: "0.5rem" }}>{l.region}</span>}
+                    <span style={{ fontSize: "0.88rem", color: "var(--color-text)", fontWeight: 600 }}>{l.name}</span>
+                    {l.region && <span style={{ fontSize: "0.78rem", color: "var(--color-text-faint)", marginLeft: "0.5rem" }}>{l.region}</span>}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexShrink: 0 }}>
-                    {l.demo && <span style={{ fontSize: "0.7rem", color: "#34D399" }}>demo ✓</span>}
-                    <span style={{ fontSize: "0.74rem", color: "#A2A2A0", textTransform: "capitalize", background: "rgba(255,255,255,0.05)", padding: "0.2rem 0.55rem", borderRadius: "999px" }}>{STAGE_LABEL[l.status.toLowerCase()] ?? l.status}</span>
+                    {l.demo && <span style={{ fontSize: "0.7rem", color: "var(--color-accent)" }}>demo ✓</span>}
+                    <span style={{ fontSize: "0.74rem", color: "var(--color-text-muted)", textTransform: "capitalize", background: "var(--color-white-05)", padding: "0.2rem 0.55rem", borderRadius: "999px" }}>{STAGE_LABEL[l.status.toLowerCase()] ?? l.status}</span>
                   </div>
                 </div>
               ))}

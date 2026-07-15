@@ -173,18 +173,18 @@ We aim to respond to all privacy enquiries within 5 business days.`,
 
 export default function PrivacyPage() {
   return (
-    <main style={{ background: "#FAFAF8" }}>
+    <main style={{ background: "var(--color-text-brightest)" }}>
       <div
         className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
         style={{ paddingTop: "clamp(6rem, 12vw, 9rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)" }}
       >
         <h1
-          style={{ fontFamily: "var(--font-cabinet)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3rem)", letterSpacing: "-0.03em", color: "#0D0D0B", marginBottom: "10px" }}
+          style={{ fontFamily: "var(--font-cabinet)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3rem)", letterSpacing: "-0.03em", color: "var(--color-text-on-light)", marginBottom: "10px" }}
         >
           Privacy Policy
         </h1>
-        <p style={{ color: "#9E9E9A", fontSize: "14px", marginBottom: "8px" }}>Last updated: June 2026</p>
-        <p style={{ color: "#6B6B68", fontSize: "14px", lineHeight: 1.7, marginBottom: "48px", maxWidth: "36rem" }}>
+        <p style={{ color: "var(--color-text-muted-alt)", fontSize: "14px", marginBottom: "8px" }}>Last updated: June 2026</p>
+        <p style={{ color: "var(--color-text-dim)", fontSize: "14px", lineHeight: 1.7, marginBottom: "48px", maxWidth: "36rem" }}>
           GrowVera is committed to handling personal information responsibly and in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles.
         </p>
 
@@ -192,12 +192,12 @@ export default function PrivacyPage() {
           {sections.map((s) => (
             <div key={s.title}>
               <h2
-                style={{ fontFamily: "var(--font-cabinet)", fontWeight: 700, fontSize: "18px", color: "#0D0D0B", letterSpacing: "-0.02em", marginBottom: "12px" }}
+                style={{ fontFamily: "var(--font-cabinet)", fontWeight: 700, fontSize: "18px", color: "var(--color-text-on-light)", letterSpacing: "-0.02em", marginBottom: "12px" }}
               >
                 {s.title}
               </h2>
               {s.content.split("\n\n").map((para, i) => (
-                <p key={i} style={{ color: "#6B6B68", fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
+                <p key={i} style={{ color: "var(--color-text-dim)", fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
                   {para}
                 </p>
               ))}

@@ -31,22 +31,22 @@ export default async function SuccessPage({
   }
 
   return (
-    <main style={{ background: "#08080A", minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", padding: "6rem 1.5rem" }}>
-      <div style={{ maxWidth: "34rem", width: "100%", textAlign: "center", background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 3.5rem)" }}>
+    <main style={{ background: "var(--color-bg)", minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", padding: "6rem 1.5rem" }}>
+      <div style={{ maxWidth: "34rem", width: "100%", textAlign: "center", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 3.5rem)" }}>
         <div style={{ display: "inline-flex", marginBottom: "1.5rem" }}>
-          <CheckCircle size={48} weight="fill" style={{ color: "#34D399" }} />
+          <CheckCircle size={48} weight="fill" style={{ color: "var(--color-accent)" }} />
         </div>
-        <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
+        <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
           You&apos;re in. Welcome aboard.
         </h1>
-        <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "2rem" }}>
-          {email ? <>We&apos;ve sent your onboarding details to <strong style={{ color: "#F4F4F1" }}>{email}</strong>. </> : null}
+        <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "2rem" }}>
+          {email ? <>We&apos;ve sent your onboarding details to <strong style={{ color: "var(--color-text)" }}>{email}</strong>. </> : null}
           We&apos;re getting your setup ready. We&apos;ll be in touch shortly to walk through how it works and get your approval before anything goes live.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
           <Link
             href="/"
-            style={{ background: "#34D399", color: "#06180F", padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}
+            style={{ background: "var(--color-accent)", color: "var(--color-on-accent)", padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}
           >
             Back to home
           </Link>

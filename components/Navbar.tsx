@@ -42,10 +42,10 @@ export default function Navbar() {
         <div
           className="flex items-center gap-6 px-6 py-3 rounded-full"
           style={{
-            background: scrolled ? "rgba(18,18,22,0.85)" : "rgba(18,18,22,0.65)",
+            background: scrolled ? "var(--color-glass-strong)" : "var(--color-glass)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            border: "1px solid rgba(255,255,255,0.10)",
+            border: "1px solid var(--color-white-10)",
             boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.50)" : "0 8px 32px rgba(0,0,0,0.30)",
             transition: "all 0.3s ease",
           }}
@@ -58,9 +58,9 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 className="text-sm font-medium transition-colors duration-200"
-                style={{ color: "#A2A2A0" }}
+                style={{ color: "var(--color-text-muted)" }}
                 onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "#FFFFFF")}
-                onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "#A2A2A0")}
+                onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "var(--color-text-muted)")}
               >{link.label}</a>
             ))}
           </div>
@@ -69,7 +69,7 @@ export default function Navbar() {
             <MagneticButton
               as="a" href="/audit"
               className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200"
-              style={{ background: "#34D399", color: "#06180F", "--hover-bg": "#10B981" } as React.CSSProperties}
+              style={{ background: "var(--color-accent)", color: "var(--color-on-accent)", "--hover-bg": "var(--color-accent-hover)" } as React.CSSProperties}
             >
               Free AI audit
             </MagneticButton>
@@ -77,7 +77,7 @@ export default function Navbar() {
 
           <button
             className="md:hidden flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-            style={{ color: "#F4F4F1" }}
+            style={{ color: "var(--color-text)" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -103,7 +103,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 md:hidden flex flex-col"
-            style={{ background: "#08080A" }}
+            style={{ background: "var(--color-bg)" }}
           >
             <div className="flex flex-col items-center justify-center flex-1 gap-2">
               {[...navLinks, { label: "Free AI audit", href: "/audit" }].map((link, i) => (
@@ -113,12 +113,12 @@ export default function Navbar() {
                   transition={{ duration: 0.4, delay: 0.05 + i * 0.07, ease: [0.32, 0.72, 0, 1] }}
                   onClick={() => setMenuOpen(false)}
                   className="text-4xl font-bold py-3 px-6 rounded-2xl transition-colors"
-                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: link.label === "Free AI audit" ? "#34D399" : "#F4F4F1" }}
+                  style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", color: link.label === "Free AI audit" ? "var(--color-accent)" : "var(--color-text)" }}
                 >{link.label}</motion.a>
               ))}
             </div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="pb-10 text-center">
-              <p className="text-sm" style={{ color: "#A2A2A0" }}>contact.basemmorkos@gmail.com</p>
+              <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>contact.basemmorkos@gmail.com</p>
             </motion.div>
           </motion.div>
         )}

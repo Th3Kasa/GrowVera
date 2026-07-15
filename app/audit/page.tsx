@@ -13,25 +13,25 @@ export const metadata: Metadata = {
 
 export default function AuditPage() {
   return (
-    <div style={{ background: "#08080A" }}>
+    <div style={{ background: "var(--color-bg)" }}>
 
       {/* HEADER */}
-      <section style={{ background: "#0E0E11" }}>
+      <section style={{ background: "var(--color-bg-section)" }}>
         <div
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
           style={{ paddingTop: "clamp(6rem, 12vw, 9rem)", paddingBottom: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "1rem" }}>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "1rem" }}>
               Free AI Audit · No obligation · 2 minutes
             </p>
             <h1
-              style={{ fontFamily: "var(--font-cabinet)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.035em", color: "#F4F4F1", lineHeight: 1.05, marginBottom: "1rem" }}
+              style={{ fontFamily: "var(--font-cabinet)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.035em", color: "var(--color-text)", lineHeight: 1.05, marginBottom: "1rem" }}
             >
               See what missed calls<br />
-              <span style={{ color: "#34D399" }}>are costing you.</span>
+              <span style={{ color: "var(--color-accent)" }}>are costing you.</span>
             </h1>
-            <p style={{ color: "#A2A2A0", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
+            <p style={{ color: "var(--color-text-muted)", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
               Put in a few numbers below and we&apos;ll show you, on the spot, roughly what jobs you&apos;re losing each year. Then book a quick call and we&apos;ll work out the real figure together.
             </p>
           </ScrollReveal>
@@ -43,8 +43,8 @@ export default function AuditPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-              <Calculator size={18} weight="bold" style={{ color: "#34D399" }} />
-              <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "#34D399" }}>Your quick audit</p>
+              <Calculator size={18} weight="bold" style={{ color: "var(--color-accent)" }} />
+              <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "var(--color-accent)" }}>Your quick audit</p>
             </div>
             <AuditCalculator />
           </ScrollReveal>
@@ -78,14 +78,14 @@ export default function AuditPage() {
                   <div
                     key={point.title}
                     className="flex items-start gap-3 px-5 py-4 rounded-2xl"
-                    style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)" }}
+                    style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
                   >
-                    <div style={{ width: 32, height: 32, background: "rgba(52,211,153,0.10)", borderRadius: "0.5rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <Icon size={15} weight="bold" style={{ color: "#34D399" }} />
+                    <div style={{ width: 32, height: 32, background: "var(--color-accent-soft)", borderRadius: "0.5rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <Icon size={15} weight="bold" style={{ color: "var(--color-accent)" }} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold mb-0.5" style={{ color: "#F4F4F1" }}>{point.title}</p>
-                      <p className="text-xs leading-relaxed" style={{ color: "#A2A2A0" }}>{point.body}</p>
+                      <p className="text-sm font-semibold mb-0.5" style={{ color: "var(--color-text)" }}>{point.title}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{point.body}</p>
                     </div>
                   </div>
                 );
@@ -100,10 +100,10 @@ export default function AuditPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div style={{ textAlign: "center", marginBottom: "1.75rem" }}>
-              <h2 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.6rem, 3.5vw, 2.3rem)", fontWeight: 800, color: "#F4F4F1", letterSpacing: "-0.03em", marginBottom: "0.6rem" }}>
+              <h2 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.6rem, 3.5vw, 2.3rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.03em", marginBottom: "0.6rem" }}>
                 Book your free 15-minute audit.
               </h2>
-              <p style={{ fontSize: "0.95rem", color: "#A2A2A0", maxWidth: "34rem", marginInline: "auto", lineHeight: 1.6 }}>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", maxWidth: "34rem", marginInline: "auto", lineHeight: 1.6 }}>
                 Pick a time that suits. We&apos;ll go through your real numbers and show you the simplest way to stop losing jobs.
               </p>
             </div>
@@ -117,10 +117,10 @@ export default function AuditPage() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-              <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "0.75rem" }}>
+              <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "0.75rem" }}>
                 Rather we reach out?
               </p>
-              <h3 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 800, color: "#F4F4F1", letterSpacing: "-0.02em" }}>
+              <h3 style={{ fontFamily: "var(--font-cabinet)", fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.02em" }}>
                 Leave your details and we&apos;ll call you.
               </h3>
             </div>
@@ -136,8 +136,8 @@ export default function AuditPage() {
                   "Receptionist from $990 setup + $650/mo",
                 ].map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <CheckCircle size={14} weight="fill" style={{ color: "#34D399", flexShrink: 0 }} />
-                    <span style={{ fontSize: "0.82rem", color: "#A2A2A0" }}>{item}</span>
+                    <CheckCircle size={14} weight="fill" style={{ color: "var(--color-accent)", flexShrink: 0 }} />
+                    <span style={{ fontSize: "0.82rem", color: "var(--color-text-muted)" }}>{item}</span>
                   </div>
                 ))}
               </div>

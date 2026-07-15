@@ -16,6 +16,52 @@
   --color-border:        rgba(255,255,255,0.08);
   --color-border-strong: rgba(255,255,255,0.14);
 
+  /* extended tokens (gate 1 tokenize) — values preserved 1:1, visual no-op */
+  /* neutral text ramp */
+  --color-text-bright:     #E4E4E1;
+  --color-text-brightest:  #FAFAF8;
+  --color-text-soft:       #C9C9C6;
+  --color-text-muted-alt:  #9E9E9A;
+  --color-text-dim:        #6B6B68;
+  --color-text-on-light:   #0D0D0B;
+
+  /* accent family */
+  --color-accent-muted:         #8A9A92;
+  --color-on-accent:            #06180F;
+  --color-accent-card:          #15211B;
+  --color-accent-deepest:       #0D2A1B;
+  --color-accent-tint:          rgba(52,211,153,0.14);
+  --color-accent-glow:          rgba(52,211,153,0.20);
+  --color-accent-ring:          rgba(52,211,153,0.25);
+  --color-accent-border-soft:   rgba(52,211,153,0.30);
+  --color-accent-border:        rgba(52,211,153,0.35);
+  --color-accent-border-strong: rgba(52,211,153,0.40);
+  --color-accent-border-vivid:  rgba(52,211,153,0.45);
+
+  /* white overlays (hairlines / fills) */
+  --color-white-05: rgba(255,255,255,0.05);
+  --color-white-06: rgba(255,255,255,0.06);
+  --color-white-07: rgba(255,255,255,0.07);
+  --color-white-10: rgba(255,255,255,0.10);
+  --color-white-12: rgba(255,255,255,0.12);
+  --color-white-18: rgba(255,255,255,0.18);
+  --color-white-20: rgba(255,255,255,0.20);
+  --color-white-30: rgba(255,255,255,0.30);
+  --color-white-80: rgba(255,255,255,0.80);
+
+  /* navbar glass */
+  --color-glass-strong: rgba(18,18,22,0.85);
+  --color-glass:        rgba(18,18,22,0.65);
+
+  /* danger (WithWithout comparison) */
+  --color-danger:       #F87171;
+  --color-danger-light: #FCA5A5;
+  --color-danger-soft:  rgba(248,113,113,0.10);
+
+  /* gradients */
+  --gradient-cta:           linear-gradient(135deg, #16A34A 0%, #1A5C3A 100%);
+  --gradient-card-featured: linear-gradient(180deg, #15211B 0%, #121218 100%);
+
   --background:    var(--color-bg);
   --foreground:    var(--color-text);
   --accent:        var(--color-accent);

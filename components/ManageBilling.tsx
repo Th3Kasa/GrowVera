@@ -25,7 +25,7 @@ export default function ManageBilling({ customerId }: { customerId: string }) {
     <button
       onClick={open}
       disabled={loading}
-      style={{ background: "transparent", color: "#34D399", border: "1px solid rgba(52,211,153,0.4)", padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.85rem", fontWeight: 600, cursor: loading ? "wait" : "pointer" }}
+      style={{ background: "transparent", color: "var(--color-accent)", border: "1px solid var(--color-accent-border-strong)", padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.85rem", fontWeight: 600, cursor: loading ? "wait" : "pointer" }}
     >
       {loading ? "Opening…" : "Manage billing"}
     </button>
