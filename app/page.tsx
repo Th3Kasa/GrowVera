@@ -244,8 +244,8 @@ export default function HomePage() {
                     <div style={{ width: 40, height: 40, background: "var(--color-accent-soft)", borderRadius: "0.6rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <Icon size={19} weight="bold" style={{ color: "var(--color-accent)" }} />
                     </div>
-                    <div>
-                      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", marginBottom: "0.3rem" }}>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0.25rem 0.75rem", marginBottom: "0.3rem" }}>
                         <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text)" }}>{a.name}</h3>
                         <span style={{ fontSize: "0.78rem", color: "var(--color-text-faint)", whiteSpace: "nowrap" }}>{a.price}</span>
                       </div>
