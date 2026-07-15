@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PackageLanding from "@/components/PackageLanding";
+import QuotingDemo from "@/components/demo/QuotingDemo";
 import { getTierBySlug } from "@/lib/tiers";
 
 const tier = getTierBySlug("quoting")!;
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function QuotingPage() {
-  return <PackageLanding tier={tier} />;
+  return <PackageLanding tier={tier} demo={<QuotingDemo />} />;
 }

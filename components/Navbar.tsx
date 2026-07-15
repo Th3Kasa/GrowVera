@@ -8,6 +8,7 @@ import Logo from "./Logo";
 
 const navLinks = [
   { label: "Grow Agents", href: "/#services" },
+  { label: "Demos", href: "/#demos" },
   { label: "Pricing", href: "/#pricing" },
 ];
 

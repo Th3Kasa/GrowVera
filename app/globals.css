@@ -82,6 +82,16 @@
   --color-on-dark-danger-border: rgba(248,113,113,0.35);
   --color-on-dark-danger-text:   #F4C7C7;
 
+  /* dark phone-frame anchors (interactive demos) — the phone UIs are
+     deliberate dark surfaces on the light page, pairing with the on-dark
+     text/border family above. Solid fills + shadows are tokenised here so the
+     demo components stay strictly colour-token-only. */
+  --color-phone-shell:       #0B0B0E;
+  --color-phone-screen:      #121217;
+  --color-phone-bubble:      #1C1C22;
+  --color-phone-shadow:      rgba(0,0,0,0.45);
+  --color-phone-shadow-soft: rgba(0,0,0,0.30);
+
   /* gradients */
   --gradient-cta:           linear-gradient(135deg, #16A34A 0%, #1A5C3A 100%);
   --gradient-card-featured: linear-gradient(180deg, #EAF7F0 0%, #FFFFFF 100%);

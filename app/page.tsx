@@ -17,8 +17,9 @@ import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
 import Pricing from "@/components/Pricing";
 import WithWithout from "@/components/WithWithout";
-import ReviewAgentDemo from "@/components/ReviewAgentDemo";
-import { TIERS, formatAud } from "@/lib/tiers";
+import ReviewAgentDemo from "@/components/demo/ReviewAgentDemo";
+import DemosHub from "@/components/demo/DemosHub";
+import { TIERS, ADDONS, formatAud } from "@/lib/tiers";
 
 const marqueeItems = [
   "Plumbers", "Electricians", "Solar Installers", "Landscapers", "Builders",
@@ -55,20 +56,19 @@ const productIcons: Record<string, typeof Phone> = {
   quoting: Receipt,
 };
 
-const alsoAvailable = [
-  {
-    icon: Star,
-    name: "Google Review Agent",
-    desc: "Automatically asks happy customers for a review, and pings you the second a bad one lands — so you can fix it fast.",
-    price: "from $500/mo + setup",
-  },
-  {
-    icon: ArrowCounterClockwise,
-    name: "Lead Reactivation Agent",
-    desc: "Works through your old, dead lead list and wakes up the ones still worth a job — money you've already paid for.",
-    price: "from $1,000/mo + setup",
-  },
-];
+// Icons for the add-on agents, keyed by their name in lib/tiers ADDONS
+// (the single source of truth for add-on copy + pricing).
+const addonIcons: Record<string, typeof Phone> = {
+  "Google Review Agent": Star,
+  "Lead Reactivation Agent": ArrowCounterClockwise,
+};
+
+const alsoAvailable = ADDONS.map((a) => ({
+  icon: addonIcons[a.name] ?? Star,
+  name: a.name,
+  desc: a.desc,
+  price: `${formatAud(a.setupFee)} setup + from ${formatAud(a.priceMonthly)}/mo`,
+}));
 
 export default function HomePage() {
   return (
@@ -256,6 +256,24 @@ export default function HomePage() {
                 );
               })}
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* DEMOS HUB — try them yourself */}
+      <section id="demos" style={{ background: "var(--color-bg)", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)", borderTop: "1px solid var(--color-hairline)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "1rem" }}>Try them yourself</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
+              Don&apos;t take our word for it —<br />press play.
+            </h2>
+            <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "38rem" }}>
+              Four working demos, right here in your browser. Hear a call, watch a callback, build a quote. Each one is a scripted example on a fictional business — but it&apos;s exactly how the real thing behaves.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.08}>
+            <DemosHub />
           </ScrollReveal>
         </div>
       </section>

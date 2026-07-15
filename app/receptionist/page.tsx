@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PackageLanding from "@/components/PackageLanding";
+import ReceptionistCallDemo from "@/components/demo/ReceptionistCallDemo";
 import { getTierBySlug } from "@/lib/tiers";
 
 const tier = getTierBySlug("receptionist")!;
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReceptionistPage() {
-  return <PackageLanding tier={tier} />;
+  return <PackageLanding tier={tier} demo={<ReceptionistCallDemo />} />;
 }

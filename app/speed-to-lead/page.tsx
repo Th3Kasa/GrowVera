@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PackageLanding from "@/components/PackageLanding";
+import SpeedToLeadDemo from "@/components/demo/SpeedToLeadDemo";
 import { getTierBySlug } from "@/lib/tiers";
 
 const tier = getTierBySlug("speed-to-lead")!;
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function SpeedToLeadPage() {
-  return <PackageLanding tier={tier} />;
+  return <PackageLanding tier={tier} demo={<SpeedToLeadDemo />} />;
 }

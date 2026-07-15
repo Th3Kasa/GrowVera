@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { CheckCircle, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import ScrollReveal from "@/components/ScrollReveal";
 import WithWithout from "@/components/WithWithout";
@@ -8,7 +9,7 @@ import { formatAud, type Tier } from "@/lib/tiers";
  * /growth-partner). Renders entirely from a single Tier record so all copy lives
  * in lib/tiers.ts. Plain-language, one clear outcome, value-first.
  */
-export default function PackageLanding({ tier }: { tier: Tier }) {
+export default function PackageLanding({ tier, demo }: { tier: Tier; demo?: ReactNode }) {
   return (
     <main style={{ background: "var(--color-bg)" }}>
       {/* HERO */}
@@ -125,6 +126,21 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
             </div>
           </section>
         </ScrollReveal>
+
+        {/* INTERACTIVE DEMO (optional) */}
+        {demo && (
+          <ScrollReveal>
+            <section style={{ marginBottom: "clamp(2.5rem, 5vw, 4rem)" }}>
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontWeight: 800, fontSize: "clamp(1.4rem, 3.2vw, 2rem)", color: "var(--color-text)", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>
+                See it in action
+              </h2>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1.6, marginBottom: "1.5rem", maxWidth: "34rem" }}>
+                A scripted demo on a fictional business — press play and watch it work.
+              </p>
+              {demo}
+            </section>
+          </ScrollReveal>
+        )}
 
         {/* FAQ */}
         <ScrollReveal>

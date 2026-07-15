@@ -74,6 +74,37 @@ export interface Tier {
 /** Free-trial days for self-serve checkout (Phase 2). 0 = no trial. */
 export const TRIAL_DAYS = 0;
 
+/**
+ * Optional add-on agents — sold alongside the three core TIERS but priced and
+ * presented separately. Deliberately NOT part of the TierId union or Stripe
+ * wiring: these are call-first (route to /audit), so they carry no billing keys.
+ * Single source of truth for the "Also available" cards and the Pricing add-on row.
+ */
+export interface Addon {
+  name: string;
+  desc: string;
+  setupFee: number;
+  priceMonthly: number;
+  priceNote: string;
+}
+
+export const ADDONS: Addon[] = [
+  {
+    name: "Google Review Agent",
+    desc: "Automatically asks happy customers for a review, and pings you the second a bad one lands — so you can fix it fast.",
+    setupFee: 490,
+    priceMonthly: 500,
+    priceNote: "$490 one-off setup · month to month",
+  },
+  {
+    name: "Lead Reactivation Agent",
+    desc: "Works through your old, dead lead list and wakes up the ones still worth a job — money you've already paid for.",
+    setupFee: 990,
+    priceMonthly: 1000,
+    priceNote: "$990 one-off setup · month to month",
+  },
+];
+
 export const TIERS: Tier[] = [
   {
     id: "starter",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CheckCircle, ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { TIERS, formatAud } from "@/lib/tiers";
+import { TIERS, ADDONS, formatAud } from "@/lib/tiers";
 
 /**
  * Pricing section — founding phase is call-first: each card links to its package
@@ -85,6 +85,44 @@ export default function Pricing() {
               </div>
             );
           })}
+        </div>
+
+        {/* Add-on agents — subordinate to the three core tiers */}
+        <div style={{ marginTop: "3rem" }}>
+          <p style={{ textAlign: "center", fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 700, color: "var(--color-text-faint)", marginBottom: "1.25rem" }}>
+            Add-on agents
+          </p>
+          <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))", maxWidth: "52rem", margin: "0 auto" }}>
+            {ADDONS.map((addon) => (
+              <div
+                key={addon.name}
+                style={{
+                  background: "var(--color-bg-card)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "1rem",
+                  padding: "1.4rem 1.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", marginBottom: "0.4rem" }}>
+                  <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text)" }}>{addon.name}</p>
+                  <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)", whiteSpace: "nowrap" }}>
+                    from {formatAud(addon.priceMonthly)}<span style={{ fontSize: "0.72rem", color: "var(--color-text-faint)", fontWeight: 400 }}>/mo</span>
+                  </span>
+                </div>
+                <p style={{ fontSize: "0.83rem", color: "var(--color-text-muted)", lineHeight: 1.55, marginBottom: "0.75rem" }}>{addon.desc}</p>
+                <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", marginBottom: "1.1rem" }}>{addon.priceNote}</p>
+                <Link
+                  href="/audit"
+                  className="inline-flex items-center gap-1.5 transition-all duration-200"
+                  style={{ marginTop: "auto", fontSize: "0.82rem", fontWeight: 600, color: "var(--color-accent)", textDecoration: "none" }}
+                >
+                  Add it on a free audit <ArrowRight size={13} weight="bold" />
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
 
         <p style={{ textAlign: "center", marginTop: "2.5rem", fontSize: "0.85rem", color: "var(--color-text-faint)" }}>
