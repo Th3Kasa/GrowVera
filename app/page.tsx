@@ -60,13 +60,13 @@ const alsoAvailable = [
     icon: Star,
     name: "Google Review Agent",
     desc: "Automatically asks happy customers for a review, and pings you the second a bad one lands — so you can fix it fast.",
-    price: "from $500/mo",
+    price: "from $500/mo + setup",
   },
   {
     icon: ArrowCounterClockwise,
     name: "Lead Reactivation Agent",
     desc: "Works through your old, dead lead list and wakes up the ones still worth a job — money you've already paid for.",
-    price: "from $1,000/mo",
+    price: "from $1,000/mo + setup",
   },
 ];
 
@@ -111,7 +111,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$650</p>
-                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>from, per month —<br />no setup fee</p>
+                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>from, per month +<br />one-off setup</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -409,7 +409,7 @@ export default function HomePage() {
                     "See what missed calls cost you — on the spot",
                     "Your phone answered 24/7, humans first",
                     "You approve everything before it goes live",
-                    "Receptionist from $650/mo, no setup fee",
+                    "Receptionist from $990 setup + $650/mo",
                     "Reversible in 30 seconds, anytime",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid rgba(255,255,255,0.20)" }}>

@@ -133,7 +133,7 @@ export default function AuditPage() {
                 {[
                   "Free, no obligation",
                   "Answers when you can't — you stay in control",
-                  "Receptionist from $650/mo, no setup fee",
+                  "Receptionist from $990 setup + $650/mo",
                 ].map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     <CheckCircle size={14} weight="fill" style={{ color: "#34D399", flexShrink: 0 }} />

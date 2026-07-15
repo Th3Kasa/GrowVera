@@ -7,9 +7,7 @@ import MagneticButton from "./MagneticButton";
 import Logo from "./Logo";
 
 const navLinks = [
-  { label: "Receptionist", href: "/receptionist" },
-  { label: "Speed-to-Lead", href: "/speed-to-lead" },
-  { label: "Quoting", href: "/quoting" },
+  { label: "Grow Agents", href: "/#services" },
   { label: "Pricing", href: "/#pricing" },
 ];
 

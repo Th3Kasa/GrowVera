@@ -21,14 +21,14 @@ const satoshi = DM_Sans({
 export const metadata: Metadata = {
   title: "GrowVera — Never miss a call. Never lose a job.",
   description:
-    "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds — humans still answer when you're free. Receptionist from $650/mo, no setup fee.",
+    "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds — humans still answer when you're free. Receptionist from $650/mo + one-off setup.",
   keywords:
     "AI receptionist Australia, missed call service for tradies, 24/7 call answering for trades, speed to lead agent, instant quoting tool for trades, AI phone answering Sydney, GrowVera",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
     title: "GrowVera — Never miss a call. Never lose a job.",
     description:
-      "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds. From $650/mo, no setup fee.",
+      "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds. From $650/mo + one-off setup.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",

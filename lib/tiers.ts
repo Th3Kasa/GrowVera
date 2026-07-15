@@ -67,7 +67,7 @@ export interface Tier {
   highlight?: boolean;
   /** Detailed inclusions (used on landing pages / pricing). */
   features: string[];
-  /** Short price note shown under the price (e.g. "No setup fee"). */
+  /** Short price note shown under the price (e.g. "$990 one-off setup"). */
   priceNote: string;
 }
 
@@ -82,8 +82,8 @@ export const TIERS: Tier[] = [
     outcome: "Never miss a call — even when you're on the tools.",
     tagline: "Your phone answered 24/7, so no job slips past.",
     priceMonthly: 650,
-    setupFee: 0,
-    setupWaiverNote: "Entry product — no setup fee, sold hard on the audit call",
+    setupFee: 990,
+    setupWaiverNote: "Entry product — $990 setup, waivable as a closing lever for founding clients on the audit call",
     pickThisIf: "You miss calls when you're on a job, on a break, or after hours.",
     forWho: [
       "You can't answer the phone with your hands full on a job.",
@@ -107,7 +107,7 @@ export const TIERS: Tier[] = [
     ],
     faqs: [
       { q: "Does it replace me or my staff?", a: "No. It only answers when you can't. When you or your team are free, you pick up as normal — it's a safety net, not a replacement." },
-      { q: "What's the commitment?", a: "From $650/mo with no setup fee. Three-month minimum so it has a fair run, then month to month." },
+      { q: "What's the commitment?", a: "$990 one-off setup, then from $650/mo. Three-month minimum so it has a fair run, then month to month." },
       { q: "Will callers know it's not a person?", a: "It's upfront and natural. You hear and approve exactly how it answers before it goes live." },
       { q: "What if the system ever goes down?", a: "Calls fall straight back to your phone exactly as they do today. You're never worse off than before." },
     ],
@@ -122,7 +122,7 @@ export const TIERS: Tier[] = [
       "You approve the script and voice before go-live",
       "Set up in days — no new phone, no new number",
     ],
-    priceNote: "No setup fee · 3-month minimum, then month to month",
+    priceNote: "$990 one-off setup · 3-month minimum, then month to month",
   },
   {
     id: "pro",
@@ -131,7 +131,7 @@ export const TIERS: Tier[] = [
     outcome: "Call every web lead back in 20 seconds — before they call anyone else.",
     tagline: "Beat the other quote to the phone, every time.",
     priceMonthly: 2000,
-    setupFee: 0,
+    setupFee: 1490,
     setupWaiverNote: "Bundle discount available on the audit call if paired with Receptionist",
     pickThisIf: "You get website or form enquiries but don't always ring them back fast enough.",
     forWho: [
@@ -173,7 +173,7 @@ export const TIERS: Tier[] = [
       "Connects to your existing form and calendar",
       "Script written for you — you approve before go-live",
     ],
-    priceNote: "No setup fee · 3-month minimum, then month to month",
+    priceNote: "$1,490 one-off setup · 3-month minimum, then month to month",
   },
   {
     id: "agency",
