@@ -37,11 +37,11 @@ export default async function SuccessPage({
           <CheckCircle size={48} weight="fill" style={{ color: "#34D399" }} />
         </div>
         <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
-          You&apos;re in. Your trial is live.
+          You&apos;re in. Welcome aboard.
         </h1>
         <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "2rem" }}>
-          {email ? <>We&apos;ve sent setup details to <strong style={{ color: "#F4F4F1" }}>{email}</strong>. </> : null}
-          Your autonomous agency is being provisioned — tell us your first target region and it starts finding, building, and pitching tonight.
+          {email ? <>We&apos;ve sent your onboarding details to <strong style={{ color: "#F4F4F1" }}>{email}</strong>. </> : null}
+          We&apos;re getting your setup ready. We&apos;ll be in touch shortly to walk through how it works and get your approval before anything goes live.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
           <Link

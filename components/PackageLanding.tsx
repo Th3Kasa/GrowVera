@@ -25,13 +25,13 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
               {tier.outcome}
             </h1>
             <p style={{ color: "#A2A2A0", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "520px", margin: "0 auto 2rem" }}>
-              {tier.pickThisIf} We build it and run it for you — from {formatAud(tier.priceMonthly)}/month.
+              {tier.pickThisIf} We build it for you — from {formatAud(tier.priceMonthly)}/month.
             </p>
             <a
               href="/audit"
               style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#34D399", color: "#06180F", padding: "0.95rem 1.9rem", borderRadius: "2rem", fontSize: "0.9rem", fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 24px rgba(52,211,153,0.25)" }}
             >
-              Book your free call <ArrowRight size={15} weight="bold" />
+              Get my free AI audit <ArrowRight size={15} weight="bold" />
             </a>
           </ScrollReveal>
         </div>
@@ -90,9 +90,9 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
             </h2>
             <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 14rem), 1fr))" }}>
               {[
-                { n: "1", t: "Free sample", d: "We build a real sample for your business — see the quality before you pay." },
-                { n: "2", t: "Quick call", d: "A 15-minute call to align on goals. No jargon, no pressure." },
-                { n: "3", t: "We run it", d: "We build and run everything. You approve from your phone." },
+                { n: "1", t: "Free AI audit", d: "Tell us your numbers and we show you what missed jobs are costing you." },
+                { n: "2", t: "We build it", d: "We set it up for your business — you approve exactly how it works." },
+                { n: "3", t: "It goes live", d: "It runs quietly in the background. Nothing changes for you until you say go." },
               ].map((s) => (
                 <div key={s.n} style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.4rem" }}>
                   <div style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.5rem", fontWeight: 900, color: "#34D399", lineHeight: 1, marginBottom: "0.6rem" }}>{s.n}</div>
@@ -114,13 +114,13 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
                 <span style={{ fontSize: "0.9rem", color: "#6E6E72" }}>/month</span>
               </div>
               <p style={{ fontSize: "0.82rem", color: "#A2A2A0", marginBottom: "1.5rem" }}>
-                AUD, GST inclusive · one-off onboarding &amp; build · cancel anytime
+                AUD, GST inclusive · {tier.priceNote}
               </p>
               <a
                 href="/audit"
                 style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#34D399", color: "#06180F", padding: "0.95rem 1.9rem", borderRadius: "2rem", fontSize: "0.9rem", fontWeight: 700, textDecoration: "none" }}
               >
-                Book your free call <ArrowRight size={15} weight="bold" />
+                Get my free AI audit <ArrowRight size={15} weight="bold" />
               </a>
             </div>
           </section>
@@ -147,7 +147,7 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
         <ScrollReveal>
           <p style={{ textAlign: "center", marginTop: "2.5rem", fontSize: "0.85rem", color: "#6E6E72" }}>
             Not sure this is the right fit?{" "}
-            <a href="/services" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Compare all packages →</a>
+            <a href="/audit" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Get a free audit and we&apos;ll tell you →</a>
           </p>
         </ScrollReveal>
       </div>

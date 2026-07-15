@@ -19,16 +19,16 @@ const satoshi = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "GrowVera — Your AI growth team. Sydney.",
+  title: "GrowVera — Never miss a call. Never lose a job.",
   description:
-    "GrowVera is a done-for-you AI growth agency in Sydney. We build and run websites, content and ads for local businesses and creators — agency-quality work at a fraction of the price. Retainers from $390/mo AUD.",
+    "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds — humans still answer when you're free. Receptionist from $500/mo, no setup fee.",
   keywords:
-    "AI digital agency Sydney, done-for-you web design Sydney, social media management Sydney, AI content creation Australia, managed paid ads Sydney, small business marketing Sydney, GrowVera",
+    "AI receptionist Australia, missed call service for tradies, 24/7 call answering for trades, speed to lead agent, instant quoting tool for trades, AI phone answering Sydney, GrowVera",
   metadataBase: new URL("https://growvera.com.au"),
   openGraph: {
-    title: "GrowVera — Your AI growth team. Sydney.",
+    title: "GrowVera — Never miss a call. Never lose a job.",
     description:
-      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $390/mo AUD.",
+      "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds. From $500/mo, no setup fee.",
     url: "https://growvera.com.au",
     siteName: "GrowVera",
     locale: "en_AU",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GrowVera — Your AI growth team. Sydney.",
+    title: "GrowVera — Never miss a call. Never lose a job.",
     description:
-      "Websites, content and ads — done for you, for a fraction of what an agency charges. Retainers from $390/mo AUD.",
+      "AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds.",
   },
   robots: {
     index: true,

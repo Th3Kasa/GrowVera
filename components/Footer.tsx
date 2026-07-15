@@ -8,13 +8,13 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="md:col-span-1">
             <a href="/" className="inline-block mb-3" aria-label="GrowVera home"><Logo size="lg" /></a>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>Your AI growth team. We build and run websites, content and ads for Sydney small businesses — done for you, at a fraction of agency rates.</p>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#9E9E9A" }}>AI receptionists and instant quoting for Australian trades and local services. Your phone answered 24/7, your quotes done in seconds — so you never miss a call or lose a job.</p>
             <div className="mt-6"><a href="mailto:admin@growvera.com.au" className="footer-link text-sm font-medium transition-colors">admin@growvera.com.au</a></div>
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: "rgba(255,255,255,0.3)" }}>Navigate</p>
             <ul className="space-y-3">
-              {[{ label: "Packages", href: "/services" }, { label: "Pricing", href: "/#pricing" }, { label: "Free sample site", href: "/free-sample" }, { label: "Book a call", href: "/audit" }].map((link) => (
+              {[{ label: "AI Receptionist", href: "/receptionist" }, { label: "Speed-to-Lead", href: "/speed-to-lead" }, { label: "AI Quoting", href: "/quoting" }, { label: "Marketing add-ons", href: "/services" }, { label: "Pricing", href: "/#pricing" }, { label: "Free AI audit", href: "/audit" }].map((link) => (
                 <li key={link.label}><a href={link.href} className="footer-link text-sm transition-colors duration-200">{link.label}</a></li>
               ))}
             </ul>

@@ -1,17 +1,21 @@
 /**
- * Retainer tiers for GrowVera — the done-for-you AI growth agency.
+ * Product tiers for GrowVera — AI receptionists and instant quoting for
+ * Australian trades & local services.
  *
  * Single source of truth for: pricing, Stripe wiring, AND the plain-language
- * content rendered on the package landing pages + comparison page. Each tier is
- * one clear OUTCOME so a visitor instantly knows which to pick:
- *   Presence → get found · Engine → get seen · Growth Partner → get customers.
+ * content rendered on the product landing pages + the audit/pricing surfaces.
+ * Each tier is one clear OUTCOME a tradie instantly gets:
+ *   Receptionist → never miss a call · Speed-to-Lead → beat the other quote
+ *   in · Quoting → quotes done in seconds.
  *
- * Pricing is monthly recurring (MRR) in AUD, GST-inclusive. Tier IDs
- * (starter/pro/agency) stay stable as the billing keys; client-facing names are
- * Presence / Engine / Growth Partner.
+ * Prices are in AUD, GST-inclusive. Tier IDs (starter/pro/agency) stay stable
+ * as the billing keys so existing billing/checkout code keeps working; the
+ * client-facing names are Receptionist / Speed-to-Lead / Quoting Agent.
  *
- * Phase 1 (live): NEXT_PUBLIC_STRIPE_PAYMENT_LINK_<TIER> → Subscribe links out.
- * Phase 2: STRIPE_PRICE_ID_<TIER> → /api/checkout Checkout Session.
+ * Stripe: STRIPE_PRICE_ID_<TIER> → /api/checkout Checkout Session (Phase 2).
+ * paymentLink is intentionally "" for now — new Stripe links are created after
+ * launch. Consumers should treat an empty paymentLink as "no self-serve yet"
+ * and route the button to /audit (the Free AI Audit funnel) instead.
  */
 
 export type TierId = "starter" | "pro" | "agency";
@@ -28,28 +32,27 @@ export interface Faq {
 
 export interface Tier {
   id: TierId;
-  /** URL slug for the landing page, e.g. /presence */
+  /** URL slug for the landing page, e.g. /receptionist */
   slug: string;
   name: string;
-  /** Short, plain-English promise — the one reason to pick this package. */
+  /** Short, plain-English promise — the one reason to pick this product. */
   outcome: string;
   tagline: string;
-  priceMonthly: number; // AUD, GST-inclusive — recurring retainer
-  /** One-off onboarding & build fee (AUD), charged on the first invoice. */
+  priceMonthly: number; // AUD, GST-inclusive — monthly
+  /** One-off setup/build fee (AUD). 0 = no setup fee. */
   setupFee: number;
-  /** Internal sales-playbook note: how the setup fee can be waived on the
-   * discovery call (a closing lever — deliberately NOT shown on the site). */
+  /** Internal sales-playbook note (deliberately NOT shown on the site). */
   setupWaiverNote: string;
-  /** "Pick this if you…" — the self-selection line on the comparison page. */
+  /** "Pick this if you…" — the self-selection line. */
   pickThisIf: string;
-  /** "Is this you?" — pain points in the client's own words. */
+  /** "Is this you?" — pain points in the owner's own words. */
   forWho: string[];
   /** What we do for you — jargon-free, no tool names. */
   plainGet: string[];
   /** The value contrast shown on the landing page. */
   without: string;
   withGV: string;
-  /** Headline statistic that justifies the package (real, sourced). */
+  /** Headline statistic that justifies the product (real, sourced). */
   stat: string;
   sources: Source[];
   faqs: Faq[];
@@ -57,182 +60,181 @@ export interface Tier {
   stripePriceIdEnv: string;
   /** env var holding a hosted Stripe Payment Link URL (Phase 1) */
   paymentLinkEnv: string;
-  /** Hosted Stripe Payment Link (public URL). Source of truth in code so a
-   * missing/empty env var can never break self-serve; a consumer should prefer
-   * process.env[paymentLinkEnv] || paymentLink. Updated 2026-06-30 with the
-   * lowered-price links. */
+  /** Hosted Stripe Payment Link (public URL). Empty until new links are created
+   * post-launch. When empty, consumers link the button to /audit instead of
+   * self-serve checkout, so a missing link can never break the page. */
   paymentLink: string;
   highlight?: boolean;
-  /** Detailed inclusions (used on landing pages / internal reference). */
+  /** Detailed inclusions (used on landing pages / pricing). */
   features: string[];
+  /** Short price note shown under the price (e.g. "No setup fee"). */
+  priceNote: string;
 }
 
-/** Free-trial days for self-serve checkout (Phase 2). 0 = no trial, which is
- * the model for done-for-you retainers (setup fee instead). */
+/** Free-trial days for self-serve checkout (Phase 2). 0 = no trial. */
 export const TRIAL_DAYS = 0;
 
 export const TIERS: Tier[] = [
   {
     id: "starter",
-    slug: "presence",
-    name: "Presence",
-    outcome: "Look professional and get found online.",
-    tagline: "Get found, look the part, stay current.",
-    priceMonthly: 390,
-    setupFee: 390,
-    setupWaiverNote: "Setup waived on 6-month prepay",
-    pickThisIf: "You have no website, or an old one you're embarrassed by.",
+    slug: "receptionist",
+    name: "24/7 AI Receptionist",
+    outcome: "Never miss a call — even when you're on the tools.",
+    tagline: "Your phone answered 24/7, so no job slips past.",
+    priceMonthly: 500,
+    setupFee: 0,
+    setupWaiverNote: "Entry product — no setup fee, sold hard on the audit call",
+    pickThisIf: "You miss calls when you're on a job, on a break, or after hours.",
     forWho: [
-      "You don't have a website — or the one you have looks dated.",
-      "Customers can't find you on Google.",
-      "You don't have time to keep anything updated.",
+      "You can't answer the phone with your hands full on a job.",
+      "Calls after hours go to voicemail — and you never hear back.",
+      "You're losing work to whoever picks up first.",
     ],
-    // priceMonthly/setupFee lowered 2026-06-30 per market research: the no-website
-    // sole-traders we prospect won't pay $890/mo+$990 setup. New floor 390/390.
     plainGet: [
-      "A modern website, built for you and hosted — nothing to manage.",
-      "Any change you want, just message us and it's done.",
-      "Your Google listing set up properly so locals find you.",
-      "A few posts a month so your business looks active.",
-      "A simple monthly report.",
+      "A friendly AI receptionist answers every call you can't take.",
+      "It only picks up when you don't — you still answer when you're free.",
+      "It captures the job, books it in, and texts you a summary.",
+      "Works after hours, weekends, and while you're on another call.",
+      "You approve exactly how it sounds before it ever goes live.",
     ],
     without:
-      "An old or missing website makes customers doubt you — most click straight to your competitor.",
+      "A call goes to voicemail, the customer hangs up, rings the next tradie, and you never even knew they called.",
     withGV:
-      "A clean, modern site makes you look established and gets you the call.",
-    stat: "75% of customers judge your business by its website, and 62% skip businesses with no real web presence.",
+      "Every call gets answered, the job gets captured and booked, and you get a text — so nothing slips past you.",
+    stat: "When a call goes to voicemail, about 80% of people hang up without leaving a message — and 62% of them just ring the next business.",
     sources: [
-      { label: "Made For Web", url: "https://www.madeforweb.co.uk/blog/75-of-consumers-judge-a-companys-credibility-by-its-website" },
-      { label: "Network Solutions", url: "https://www.networksolutions.com/blog/small-business-website-statistics/" },
+      { label: "AIRA (411 Locals, PATLive, Dialzara data)", url: "https://www.getaira.io/blog/missed-business-calls-statistics" },
     ],
     faqs: [
-      { q: "What's the commitment?", a: "Month to month after a one-off onboarding & build. Cancel anytime." },
-      { q: "Do I need to do anything?", a: "Just send us your logo and a few photos. We handle the rest, and you approve from your phone." },
-      { q: "How fast is it live?", a: "Your site is typically built and live within the first week." },
+      { q: "Does it replace me or my staff?", a: "No. It only answers when you can't. When you or your team are free, you pick up as normal — it's a safety net, not a replacement." },
+      { q: "What's the commitment?", a: "From $500/mo with no setup fee. Three-month minimum so it has a fair run, then month to month." },
+      { q: "Will callers know it's not a person?", a: "It's upfront and natural. You hear and approve exactly how it answers before it goes live." },
+      { q: "What if the system ever goes down?", a: "Calls fall straight back to your phone exactly as they do today. You're never worse off than before." },
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_STARTER",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_STARTER",
-    paymentLink: "https://buy.stripe.com/eVqfZj5JDbQidMa8nj08g03",
+    paymentLink: "",
     features: [
-      "Bespoke website, designed + hosted for you",
-      "Unlimited site edits — just message us",
-      "8 social posts / month (carousels + clips)",
-      "Google Business Profile kept sharp",
-      "Monthly performance report",
-      "Email + chat support",
+      "Answers every call you can't take, 24/7",
+      "Only picks up when you don't — you stay in control",
+      "Captures the job and books it straight in",
+      "Texts you a summary of every call",
+      "You approve the script and voice before go-live",
+      "Set up in days — no new phone, no new number",
     ],
+    priceNote: "No setup fee · 3-month minimum, then month to month",
   },
   {
     id: "pro",
-    slug: "engine",
-    name: "Engine",
-    outcome: "Stay visible and grow — without lifting a finger.",
-    tagline: "A full content engine, run for you.",
-    priceMonthly: 890,
-    setupFee: 690,
-    setupWaiverNote: "Setup waived on 6-month prepay",
-    pickThisIf: "You have a site but no time to post and stay visible.",
+    slug: "speed-to-lead",
+    name: "Speed-to-Lead Agent",
+    outcome: "Call every web lead back in 20 seconds — before they call anyone else.",
+    tagline: "Beat the other quote to the phone, every time.",
+    priceMonthly: 2000,
+    setupFee: 0,
+    setupWaiverNote: "Bundle discount available on the audit call if paired with Receptionist",
+    pickThisIf: "You get website or form enquiries but don't always ring them back fast enough.",
     forWho: [
-      "You know you should be posting, but never have the time.",
-      "Your social pages have gone quiet.",
-      "Competitors with worse work get noticed more than you.",
+      "Leads come in through your website or a form and sit for hours.",
+      "By the time you call back, they've already booked someone else.",
+      "You're busy on the tools when the good enquiries land.",
     ],
     plainGet: [
-      "Everything in Presence.",
-      "A steady stream of posts and short videos every week.",
-      "Posted across your channels for you — you just approve.",
-      "A presenter-style video series featuring your brand.",
-      "A clear monthly report on reach and results.",
+      "The moment a lead fills in your form, we call them back — in about 20 seconds.",
+      "A natural-sounding agent qualifies them and answers the basics.",
+      "It books the job straight into your calendar.",
+      "You get the lead's details and a summary by text.",
+      "Every enquiry gets chased fast — not whenever you next check your phone.",
     ],
     without:
-      "Go quiet on social and customers forget you between jobs — you're invisible in the feed.",
+      "A lead fills in your form, waits, hears nothing, and books the first business that actually rings back.",
     withGV:
-      "Fresh posts and video every week keep you top-of-mind, so referrals and enquiries keep coming.",
-    stat: "Short videos get 2.5× more engagement and 12× more shares, and 78% of people prefer short video to learn about a business.",
+      "You're the first call they get — inside 20 seconds — so you're the one who wins the job.",
+    stat: "78% of customers buy from the business that responds first. Reply within an hour and you're 7× more likely to win the job — yet the average business takes over a day.",
     sources: [
-      { label: "Teleprompter", url: "https://www.teleprompter.com/blog/social-media-video-statistics" },
-      { label: "Sprout Social", url: "https://sproutsocial.com/insights/social-media-video-statistics/" },
+      { label: "Harvard Business Review — The Short Life of Online Sales Leads", url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
+      { label: "LeadResponse — Speed-to-Lead Statistics", url: "https://leadresponse.co/blog/speed-to-lead-statistics" },
     ],
     faqs: [
-      { q: "What's the commitment?", a: "Month to month after onboarding. Cancel anytime." },
-      { q: "When do I see results?", a: "Consistency compounds — most clients see meaningful engagement lift within 60–90 days." },
-      { q: "Do I need to film anything?", a: "No. We produce everything for you; you simply approve each batch from your phone." },
+      { q: "How fast does it actually call?", a: "Within about 20 seconds of the lead hitting your form — while they're still on your website thinking about it." },
+      { q: "What does it say?", a: "A short, friendly qualifying call in your business's voice — we write and you approve the script before it goes live." },
+      { q: "What's the commitment?", a: "From $2,000/mo. Three-month minimum so it has time to prove itself, then month to month." },
+      { q: "Do I need new software?", a: "No. We connect it to your existing website form and calendar. Nothing for you to install." },
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_PRO",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_PRO",
-    paymentLink: "https://buy.stripe.com/bJe6oJ7RL6vYazY7jf08g04",
+    paymentLink: "",
     highlight: true,
     features: [
-      "Everything in Presence",
-      "16–20 posts / month + 4 short videos",
-      "Presenter-style (talking-head) video series",
-      "Lead-capture landing pages",
-      "Competitor-tracked content strategy",
-      "Priority delivery + monthly strategy call",
+      "Calls every web-form lead back in ~20 seconds",
+      "Qualifies the lead and answers the basics",
+      "Books the job into your calendar",
+      "Texts you the lead's details and a call summary",
+      "Connects to your existing form and calendar",
+      "Script written for you — you approve before go-live",
     ],
+    priceNote: "No setup fee · 3-month minimum, then month to month",
   },
   {
     id: "agency",
-    slug: "growth-partner",
-    name: "Growth Partner",
-    outcome: "Turn attention into booked customers.",
-    tagline: "We run your paid growth end to end.",
-    priceMonthly: 1990,
-    setupFee: 990,
-    setupWaiverNote: "Setup waived on 12-month commitment",
-    pickThisIf: "You're ready to spend on ads and want a steady flow of leads.",
+    slug: "quoting",
+    name: "AI Quoting Agent",
+    outcome: "Quotes that took 15 minutes, done in seconds.",
+    tagline: "Your price lists and rates, built into an instant quoting tool.",
+    priceMonthly: 1500,
+    setupFee: 10000,
+    setupWaiverNote: "Flagship build — priced per business on the audit call",
+    pickThisIf: "You quote a lot, and putting each one together eats your evenings.",
     forWho: [
-      "Word-of-mouth alone isn't filling your calendar.",
-      "You want more enquiries, predictably.",
-      "You've tried ads before and wasted money.",
+      "Every quote means digging through price lists and doing the maths.",
+      "Quotes pile up for after hours — and the slow ones lose the job.",
+      "You want quotes out the door the same day, not next week.",
     ],
     plainGet: [
-      "Everything in Engine.",
-      "We create and run your Facebook & Instagram ads.",
-      "We test the ad before spending, so budget only goes to what works.",
-      "Leads delivered straight to you.",
-      "Weekly reporting in plain English (you control the ad budget).",
+      "We build you a quoting tool wired to your own price lists and labour rates.",
+      "Punch in the job, and it produces a priced quote in seconds.",
+      "It uses your margins and your rules — not a generic template.",
+      "You review and send — every quote is still yours to approve.",
+      "Quotes that used to take 10–15 minutes take moments.",
     ],
     without:
-      "Without a lead system it's feast-or-famine — and ad money gets burned on guesses.",
+      "Quotes stack up for the weekend, take days to send, and the customer's already gone with whoever quoted first.",
     withGV:
-      "We generate the leads and help you respond fast, turning attention into booked jobs.",
-    stat: "Businesses that reply to a new lead within 5 minutes are up to 21× more likely to win it, and 78% of buyers go with whoever responds first.",
+      "You send a proper, accurate quote the same day — often while you're still standing on the job.",
+    stat: "35–50% of jobs go to the business that quotes first. When a quote takes days, the fast quote down the road wins the work.",
     sources: [
-      { label: "Casey Response", url: "https://caseyresponse.com/blog/lead-response-time-statistics" },
-      { label: "LeadResponse", url: "https://leadresponse.co/blog/speed-to-lead-statistics" },
+      { label: "Google / Corporate Executive Board (via Lift AI)", url: "https://www.lift-ai.com/blog/50-percent-of-sales-go-to-the-first-company-to-respond-heres-how-to-beat-them-all" },
+      { label: "Harvard Business Review — The Short Life of Online Sales Leads", url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
     ],
     faqs: [
-      { q: "Is ad spend included?", a: "No — your ad budget is separate and paid directly to the platforms. You stay in full control of it." },
-      { q: "What's the commitment?", a: "We recommend at least 3 months so the ads have time to optimise. Cancel anytime after." },
-      { q: "What budget do I need?", a: "We'll recommend a starting ad budget on the call based on your goals and market." },
+      { q: "How is this priced?", a: "It's a custom build — from $10,000 setup to wire it to your price lists and rules, then monthly care to keep it accurate. We scope the exact number on the audit call." },
+      { q: "Is it accurate to my business?", a: "Yes — it's built on your actual price lists, labour rates, and margin rules. It's not a generic calculator." },
+      { q: "Do I still check quotes before they go out?", a: "Always. It does the heavy lifting in seconds; you review and send. Every quote stays under your control." },
+      { q: "How long does the build take?", a: "It depends on how your pricing is structured. We map it all out on the audit call and give you a clear timeline." },
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_AGENCY",
     paymentLinkEnv: "NEXT_PUBLIC_STRIPE_PAYMENT_LINK_AGENCY",
-    paymentLink: "https://buy.stripe.com/dRm28t1tn07A0Zo8nj08g05",
+    paymentLink: "",
     features: [
-      "Everything in Engine",
-      "Managed Meta / Instagram ads (ad spend separate)",
-      "Ad creative tested before we spend",
-      "Leads delivered to you",
-      "Dedicated strategist + weekly reporting",
-      "Quarterly growth roadmap",
+      "Quoting tool built on your own price lists + rates",
+      "Priced quotes produced in seconds",
+      "Uses your margins and your rules",
+      "You review and send — quotes stay yours",
+      "Custom build from $10,000 setup",
+      "Ongoing care to keep pricing accurate",
     ],
+    priceNote: "Custom build from $10,000 setup + monthly care",
   },
 ];
 
-/** Plain-language capability matrix for the comparison table (no tool names). */
+/** Plain-language capability matrix (kept for any comparison surface). */
 export const CAPABILITIES: { label: string; tiers: Record<TierId, boolean> }[] = [
-  { label: "Modern website, built + hosted", tiers: { starter: true, pro: true, agency: true } },
-  { label: "Unlimited edits — just message us", tiers: { starter: true, pro: true, agency: true } },
-  { label: "Google Business Profile sorted", tiers: { starter: true, pro: true, agency: true } },
-  { label: "Social posts every month", tiers: { starter: true, pro: true, agency: true } },
-  { label: "Weekly short-form video", tiers: { starter: false, pro: true, agency: true } },
-  { label: "Presenter-style video series", tiers: { starter: false, pro: true, agency: true } },
-  { label: "Lead-capture landing pages", tiers: { starter: false, pro: true, agency: true } },
-  { label: "Managed Facebook & Instagram ads", tiers: { starter: false, pro: false, agency: true } },
-  { label: "Leads delivered to you", tiers: { starter: false, pro: false, agency: true } },
-  { label: "Monthly performance report", tiers: { starter: true, pro: true, agency: true } },
+  { label: "Answers calls you can't take, 24/7", tiers: { starter: true, pro: false, agency: false } },
+  { label: "Calls web-form leads back in ~20 seconds", tiers: { starter: false, pro: true, agency: false } },
+  { label: "Books jobs straight into your calendar", tiers: { starter: true, pro: true, agency: false } },
+  { label: "Texts you a summary of every call", tiers: { starter: true, pro: true, agency: false } },
+  { label: "Instant quotes from your own price lists", tiers: { starter: false, pro: false, agency: true } },
+  { label: "You approve before anything goes live", tiers: { starter: true, pro: true, agency: true } },
 ];
 
 export function getTier(id: string): Tier | undefined {

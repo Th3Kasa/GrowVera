@@ -14,10 +14,10 @@ export default function Pricing() {
         <div style={{ textAlign: "center", maxWidth: "44rem", margin: "0 auto" }}>
           <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "0.9rem" }}>Pricing</p>
           <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4.5vw, 3.25rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1rem" }}>
-            Pick the result you want.
+            Simple pricing. Real numbers.
           </h2>
           <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "0.5rem" }}>
-            A one-off onboarding &amp; build, then a simple monthly retainer. Cancel anytime. Prices in AUD, GST inclusive.
+            Start with a free AI audit — we&apos;ll show you what missed calls are costing you first. Prices in AUD, GST inclusive.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default function Pricing() {
                   <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>/month</span>
                 </div>
                 <p style={{ fontSize: "0.78rem", color: "#A2A2A0", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-                  + {formatAud(tier.setupFee)}{" "}one-off onboarding &amp; build
+                  {tier.priceNote}
                 </p>
 
                 <Link
@@ -68,7 +68,7 @@ export default function Pricing() {
                     marginBottom: "0.6rem",
                   }}
                 >
-                  Book a call <ArrowRight size={15} weight="bold" />
+                  Get my free audit <ArrowRight size={15} weight="bold" />
                 </Link>
                 <Link href={`/${tier.slug}`} style={{ textAlign: "center", fontSize: "0.8rem", color: "#8A9A92", textDecoration: "none", marginBottom: "1.4rem" }}>
                   See {tier.name} details →
@@ -88,7 +88,7 @@ export default function Pricing() {
         </div>
 
         <p style={{ textAlign: "center", marginTop: "2.5rem", fontSize: "0.85rem", color: "#6E6E72" }}>
-          Not sure which fits? <a href="/services" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Compare packages →</a>
+          Not sure which fits? <a href="/audit" style={{ color: "#34D399", textDecoration: "none", fontWeight: 600 }}>Start with a free audit →</a>
         </p>
       </div>
     </section>

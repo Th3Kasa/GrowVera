@@ -1,55 +1,74 @@
-import type React from "react";
 import {
   CheckCircle,
   ArrowRight,
-  Globe,
-  Megaphone,
-  ChartLineUp,
   Phone,
+  Lightning,
+  Receipt,
   Star,
-  Buildings,
+  ArrowCounterClockwise,
+  ShieldCheck,
+  ArrowUUpLeft,
+  PhoneDisconnect,
+  Calculator,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import Marquee from "@/components/Marquee";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
 import Pricing from "@/components/Pricing";
+import WithWithout from "@/components/WithWithout";
+import ReviewAgentDemo from "@/components/ReviewAgentDemo";
 import { TIERS, formatAud } from "@/lib/tiers";
 
 const marqueeItems = [
   "Plumbers", "Electricians", "Solar Installers", "Landscapers", "Builders",
-  "Real Estate Agents", "Roofers", "Mechanics", "Coaches", "Cleaners", "Cafés", "Painters",
+  "Real Estate Agents", "Roofers", "Mechanics", "HVAC", "Cleaners", "Locksmiths", "Painters",
 ];
 
 const steps = [
   {
     step: "01",
-    name: "Free sample",
-    icon: Globe,
-    title: "We build your site before you pay a cent",
-    desc: "We find your business online, pull your real photos and details, and build a bespoke AI website for you — live at a real URL. You see exactly what you're getting before you commit to anything.",
+    name: "Free AI audit",
+    icon: Calculator,
+    title: "We show you what missed calls are costing you",
+    desc: "Put in a few numbers — how many calls you miss, your average job value — and we show you, on the spot, roughly what's walking past your phone each year. Then a quick call to work out the real figure. No jargon, no pressure.",
   },
   {
     step: "02",
-    name: "15-min call",
-    icon: Phone,
-    title: "One short call to align on goals",
-    desc: "We walk through the sample site together, understand your business, and map a plan. No jargon, no sales pressure. If it's a fit, we scope the retainer and you're onboarded the same week.",
+    name: "We build it",
+    icon: ShieldCheck,
+    title: "We set it up for your business — you approve every bit",
+    desc: "We build your AI receptionist or quoting tool around how you actually work. You hear exactly how it answers, or see exactly how it quotes, and you sign off before anything is switched on.",
   },
   {
     step: "03",
-    name: "We run it",
-    icon: Star,
-    title: "We build and run everything — you just approve",
-    desc: "Your website goes live. Content drops weekly. If you need an edit, send us a message and it's done the same day. Monthly report lands in your inbox. You focus on the work — we handle the growth.",
+    name: "You approve, then it goes live",
+    icon: Phone,
+    title: "It runs quietly in the background",
+    desc: "Once you're happy, it goes live. Calls get answered, leads get chased, quotes get done — while you stay on the tools. If the system's ever down, calls fall back to your phone exactly as before.",
   },
 ];
 
-const pillarIcons: Record<string, typeof Globe> = {
-  presence: Globe,
-  engine: Megaphone,
-  "growth-partner": ChartLineUp,
+const productIcons: Record<string, typeof Phone> = {
+  receptionist: Phone,
+  "speed-to-lead": Lightning,
+  quoting: Receipt,
 };
+
+const alsoAvailable = [
+  {
+    icon: Star,
+    name: "Google Review Agent",
+    desc: "Automatically asks happy customers for a review, and pings you the second a bad one lands — so you can fix it fast.",
+    price: "from $500/mo",
+  },
+  {
+    icon: ArrowCounterClockwise,
+    name: "Lead Reactivation Agent",
+    desc: "Works through your old, dead lead list and wakes up the ones still worth a job — money you've already paid for.",
+    price: "from $1,000/mo",
+  },
+];
 
 export default function HomePage() {
   return (
@@ -65,34 +84,34 @@ export default function HomePage() {
           <div className="max-w-4xl">
             <ScrollReveal delay={0}>
               <p style={{ color: "#34D399", fontSize: "11px", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, marginBottom: "1.5rem" }}>
-                Sydney · Done-for-you AI agency
+                For Australian trades &amp; local services
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
-              <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(3rem, 7vw, 6.5rem)", fontWeight: 900, lineHeight: 0.92, letterSpacing: "-0.04em", marginBottom: "2rem", color: "#F4F4F1" }}>
-                <span style={{ display: "block" }}>Your AI</span>
-                <span style={{ display: "block", WebkitTextStroke: "2px #34D399", color: "transparent" }}>growth team.</span>
+              <h1 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.75rem, 6.5vw, 6rem)", fontWeight: 900, lineHeight: 0.94, letterSpacing: "-0.04em", marginBottom: "2rem", color: "#F4F4F1" }}>
+                <span style={{ display: "block" }}>Never miss a call.</span>
+                <span style={{ display: "block", WebkitTextStroke: "2px #34D399", color: "transparent" }}>Never lose a job.</span>
               </h1>
             </ScrollReveal>
             <ScrollReveal delay={0.14}>
-              <p style={{ fontSize: "1.15rem", color: "#A2A2A0", lineHeight: 1.7, maxWidth: "38rem", marginBottom: "2rem" }}>
-                Websites, content and ads — done for you, for a fraction of what an agency charges. Built and run by AI, overseen by humans. We handle everything so you can focus on your work.
+              <p style={{ fontSize: "1.15rem", color: "#A2A2A0", lineHeight: 1.7, maxWidth: "40rem", marginBottom: "2rem" }}>
+                AI receptionists and instant quoting for Australian trades and local services — your phone answered 24/7, your quotes done in seconds. Humans still answer when you&apos;re free. This just catches everything you can&apos;t.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.18}>
               <div style={{ height: "1px", background: "rgba(255,255,255,0.08)", marginBottom: "1.5rem" }} />
               <div className="grid grid-cols-3 gap-8 mb-8" style={{ maxWidth: "36rem" }}>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>3-in-1</p>
-                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>website, content<br />and ads, one team</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>24/7</p>
+                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>your phone answered,<br />even after hours</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>59%</p>
-                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>of AU small businesses<br />have no website at all</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>20s</p>
+                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>every web lead<br />called back, fast</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$390</p>
-                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>starting retainer —<br />fraction of agency rates</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$500</p>
+                  <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>from, per month —<br />no setup fee</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -106,21 +125,45 @@ export default function HomePage() {
       {/* MARQUEE */}
       <section className="overflow-hidden" style={{ background: "#0E0E11", paddingTop: "3rem", paddingBottom: "3rem", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <p style={{ textAlign: "center", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#6E6E72", marginBottom: "1.25rem", fontWeight: 600 }}>
-          Built for the local businesses that need it most
+          Built for the trades that live and die by the phone
         </p>
         <Marquee items={marqueeItems} className="text-white/70" />
       </section>
 
+      {/* PAIN — before / after */}
+      <section style={{ background: "#08080A", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "0.75rem" }}>The real problem</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "34rem", marginBottom: "1.25rem" }}>
+              It&apos;s not your work.<br />It&apos;s the calls you can&apos;t get to.
+            </h2>
+            <p style={{ fontSize: "0.975rem", color: "#A2A2A0", lineHeight: 1.7, maxWidth: "36rem", marginBottom: "3rem" }}>
+              You&apos;re under a sink or up a ladder when the phone rings. It goes to voicemail. And most people don&apos;t leave one — they just ring the next tradie.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.06}>
+            <WithWithout
+              stat="When a call goes to voicemail, about 80% of people hang up without leaving a message — and 62% of them just ring the next business."
+              without="A call goes to voicemail, the customer hangs up, rings the next tradie, and you never even knew they called."
+              withGV="Every call gets answered, the job gets captured and booked, and you get a text — so nothing slips past you."
+              sources={[{ label: "AIRA (411 Locals, PATLive, Dialzara data)", url: "https://www.getaira.io/blog/missed-business-calls-statistics" }]}
+              packageName="GrowVera"
+            />
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
-      <section id="how-it-works" style={{ background: "#08080A", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+      <section id="how-it-works" style={{ background: "#0E0E11", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "0.75rem" }}>How it works</p>
             <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "30rem", marginBottom: "1.25rem" }}>
-              Three steps.<br />Almost none of them yours.
+              Three steps.<br />You approve before anything goes live.
             </h2>
             <p style={{ fontSize: "0.975rem", color: "#A2A2A0", lineHeight: 1.7, maxWidth: "34rem", marginBottom: "4rem" }}>
-              We build a real sample site for your business before you commit. Then we run the whole thing for you every month.
+              We do the setup. You stay in control the whole way — nothing switches on until you&apos;ve heard it and said yes.
             </p>
           </ScrollReveal>
 
@@ -151,22 +194,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SERVICE PILLARS */}
-      <section id="services" style={{ background: "#0E0E11", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+      {/* PRODUCTS */}
+      <section id="services" style={{ background: "#08080A", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "1rem" }}>What we do</p>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "1rem" }}>What we build</p>
             <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
-              The whole growth stack,<br />done for you.
+              Three ways to stop<br />losing jobs.
             </h2>
             <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "36rem" }}>
-              Three simple packages. Pick the one that matches what you need most right now — each builds on the last.
+              Start with the receptionist so you never miss a call. Add speed-to-lead and instant quoting when you&apos;re ready. Pick what hurts most right now.
             </p>
           </ScrollReveal>
 
           <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))" }}>
             {TIERS.map((tier, i) => {
-              const Icon = pillarIcons[tier.slug] ?? Globe;
+              const Icon = productIcons[tier.slug] ?? Phone;
               const featured = !!tier.highlight;
               return (
                 <ScrollReveal key={tier.id} delay={i * 0.07}>
@@ -182,7 +225,7 @@ export default function HomePage() {
                       </p>
                       <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <span style={{ fontSize: "0.85rem", color: "#6E6E72" }}>from <span style={{ color: "#F4F4F1", fontWeight: 700 }}>{formatAud(tier.priceMonthly)}</span>/mo</span>
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "#34D399", fontSize: "0.82rem", fontWeight: 600 }}>See {tier.name} <ArrowRight size={13} weight="bold" /></span>
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "#34D399", fontSize: "0.82rem", fontWeight: 600 }}>See how it works <ArrowRight size={13} weight="bold" /></span>
                       </div>
                     </div>
                   </Link>
@@ -191,45 +234,122 @@ export default function HomePage() {
             })}
           </div>
 
-          <ScrollReveal delay={0.2}>
-            <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
-              <a
-                href="/services"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: "#34D399", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}
-              >
-                Compare all packages <ArrowRight size={14} weight="bold" />
-              </a>
+          {/* Also available */}
+          <ScrollReveal delay={0.15}>
+            <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 700, color: "#6E6E72", marginTop: "3.5rem", marginBottom: "1.25rem" }}>Also available</p>
+            <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))" }}>
+              {alsoAvailable.map((a) => {
+                const Icon = a.icon;
+                return (
+                  <div key={a.name} style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.25rem", padding: "1.75rem", display: "flex", gap: "1.1rem", alignItems: "flex-start" }}>
+                    <div style={{ width: 40, height: 40, background: "rgba(52,211,153,0.10)", borderRadius: "0.6rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <Icon size={19} weight="bold" style={{ color: "#34D399" }} />
+                    </div>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.75rem", marginBottom: "0.3rem" }}>
+                        <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "#F4F4F1" }}>{a.name}</h3>
+                        <span style={{ fontSize: "0.78rem", color: "#6E6E72", whiteSpace: "nowrap" }}>{a.price}</span>
+                      </div>
+                      <p style={{ fontSize: "0.88rem", color: "#A2A2A0", lineHeight: 1.6 }}>{a.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* WHY GROWVERA */}
+      {/* ROI CALCULATOR TEASER */}
+      <section style={{ background: "#0E0E11", paddingTop: "clamp(3rem, 7vw, 7rem)", paddingBottom: "clamp(3rem, 7vw, 7rem)" }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div style={{ background: "#131318", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 3.5rem)", display: "grid", gap: "2rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 18rem), 1fr))", alignItems: "center" }}>
+              <div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                  <PhoneDisconnect size={18} weight="bold" style={{ color: "#34D399" }} />
+                  <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "#34D399" }}>Free AI audit</p>
+                </div>
+                <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1rem" }}>
+                  What are missed calls actually costing you?
+                </h2>
+                <p style={{ fontSize: "0.975rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+                  Put in your own numbers and see a rough figure on the spot — no email needed. It&apos;s an honest estimate from your inputs, and we&apos;ll check the real numbers together on a quick call.
+                </p>
+                <a
+                  href="/audit"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#34D399", color: "#06180F", padding: "0.9rem 1.9rem", borderRadius: "2rem", fontSize: "0.9rem", fontWeight: 700, textDecoration: "none" }}
+                >
+                  Get my free audit <ArrowRight size={15} weight="bold" />
+                </a>
+              </div>
+              <div style={{ background: "linear-gradient(180deg, #15211B 0%, #121218 100%)", border: "1px solid rgba(52,211,153,0.30)", borderRadius: "1.25rem", padding: "2rem", textAlign: "center" }}>
+                <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.14em", color: "#8A9A92", fontWeight: 700, marginBottom: "0.75rem" }}>Example</p>
+                <p style={{ fontSize: "0.85rem", color: "#A2A2A0", lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                  15 missed calls a week, 40% you&apos;d win, $1,300 a job
+                </p>
+                <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 7vw, 3.25rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1 }}>
+                  {formatAud(15 * 0.4 * 1300 * 52)}
+                </p>
+                <p style={{ fontSize: "0.8rem", color: "#6E6E72", marginTop: "0.4rem" }}>walking past the phone each year</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* REVIEW AGENT DEMO */}
       <section style={{ background: "#08080A", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-16 items-center">
             <ScrollReveal>
-              <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "1rem" }}>Why GrowVera</p>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+                <Star size={18} weight="fill" style={{ color: "#34D399" }} />
+                <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "#34D399" }}>Google Review Agent</p>
+              </div>
               <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
-                Agency quality.<br />AI economics.
+                More 5-star reviews. No bad ones by surprise.
               </h2>
-              <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "2rem" }}>
-                A traditional Sydney agency charges $3,400–$4,800 a month for one slice of this. We deliver the whole stack for a fraction of that — because AI does the labour.
+              <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                After every job, it politely asks your happy customers for a Google review — the thing that actually wins you the next one. And the moment a low rating comes in, it alerts you so you can sort it before the world sees it.
               </p>
-              <a
-                href="/audit"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "#34D399", color: "#06180F", padding: "0.875rem 1.75rem", borderRadius: "2rem", fontSize: "0.875rem", fontWeight: 700, textDecoration: "none" }}
-              >
-                Book your free strategy call <ArrowRight size={15} weight="bold" />
-              </a>
+              <p style={{ fontSize: "0.9rem", color: "#8A9A92", lineHeight: 1.7 }}>
+                81% of people check Google reviews before they pick a local business.{" "}
+                <a href="https://www.brightlocal.com/research/local-consumer-review-survey-2025/" target="_blank" rel="noopener noreferrer" style={{ color: "#8A9A92", textDecoration: "underline" }}>
+                  BrightLocal, 2025
+                </a>
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <ReviewAgentDemo />
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* HONEST TRUST */}
+      <section style={{ background: "#0E0E11", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-16 items-start">
+            <ScrollReveal>
+              <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "#34D399", marginBottom: "1rem" }}>No smoke, no mirrors</p>
+              <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#F4F4F1", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
+                Built so you&apos;re never worse off.
+              </h2>
+              <p style={{ fontSize: "1rem", color: "#A2A2A0", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                We&apos;re a small Sydney outfit and we&apos;d rather earn your trust than dazzle you. Here&apos;s exactly how we keep this safe.
+              </p>
+              <p style={{ fontSize: "0.85rem", color: "#6E6E72", lineHeight: 1.7 }}>
+                GrowVera · Sydney, Australia · ABN 50 329 139 726 · admin@growvera.com.au
+              </p>
             </ScrollReveal>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {[
-                { icon: Buildings, title: "Proof before you pay", desc: "We build a sample site for your real business before you commit. You see the quality firsthand — no leap of faith." },
-                { icon: Globe, title: "Everything under one roof", desc: "Website, content, and ads — coordinated and consistent. No more briefing three different agencies and hoping they align." },
-                { icon: Star, title: "You approve from your phone", desc: "One message to approve an edit or a content piece. We handle the rest. No back-and-forth, no project management overhead." },
-                { icon: ChartLineUp, title: "Cancel anytime", desc: "Month-to-month by default. No lock-in contracts, no six-month minimums. We earn your retainer every month." },
+                { icon: Phone, title: "You approve every call recording before we go live", desc: "You hear exactly how it answers your phone. Nothing goes live until you've signed off on how it sounds." },
+                { icon: ArrowUUpLeft, title: "Forwarding is reversible in 30 seconds", desc: "It works through simple call forwarding on your existing number. Change your mind and you switch it off yourself in half a minute." },
+                { icon: ShieldCheck, title: "If our system's ever down, calls fall back to your phone", desc: "Exactly as before. There's no scenario where a customer can't reach you because of us." },
+                { icon: CheckCircle, title: "No lock-in games", desc: "A 3-month minimum so it has a fair run, then month to month. No fake logos, no invented reviews, no numbers we can't back up." },
               ].map((f, i) => {
                 const Icon = f.icon;
                 return (
@@ -270,27 +390,27 @@ export default function HomePage() {
               <ScrollReveal delay={0}>
                 <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "rgba(255,255,255,0.60)", marginBottom: "1.25rem" }}>Start today</p>
                 <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.98, marginBottom: "1.5rem" }}>
-                  Book your free<br />strategy call.
+                  See what you&apos;re<br />losing. Free.
                 </h2>
                 <p style={{ fontSize: "1.05rem", color: "rgba(255,255,255,0.80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "2.25rem" }}>
-                  We&apos;ll audit your current online presence, show you a free sample site, and map a clear plan. No obligation — and no agency waffle.
+                  Two minutes with the audit tool shows you the number. A quick call shows you how to stop it. No obligation, no jargon.
                 </p>
                 <a
                   href="/audit"
                   className="inline-flex items-center gap-2 rounded-full text-sm font-bold transition-all duration-200 hover:shadow-xl"
                   style={{ background: "#fff", color: "#0D2A1B", padding: "1rem 2rem", boxShadow: "0 4px 24px rgba(0,0,0,0.25)" }}
                 >
-                  Book your free strategy call &rarr;
+                  Get my free AI audit &rarr;
                 </a>
               </ScrollReveal>
               <ScrollReveal delay={0.12}>
                 <div>
                   {[
-                    "Free sample site built for your real business",
-                    "No obligation — see the quality before you commit",
-                    "Websites, content and ads under one retainer",
-                    "From $390/mo — fraction of traditional agency rates",
-                    "Cancel anytime, month to month",
+                    "See what missed calls cost you — on the spot",
+                    "Your phone answered 24/7, humans first",
+                    "You approve everything before it goes live",
+                    "Receptionist from $500/mo, no setup fee",
+                    "Reversible in 30 seconds, anytime",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid rgba(255,255,255,0.20)" }}>
                       <CheckCircle size={18} weight="fill" style={{ color: "#fff", flexShrink: 0 }} />

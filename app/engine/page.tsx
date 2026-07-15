@@ -1,15 +1,7 @@
-import type { Metadata } from "next";
-import PackageLanding from "@/components/PackageLanding";
-import { getTierBySlug } from "@/lib/tiers";
+import { redirect } from "next/navigation";
 
-const tier = getTierBySlug("engine")!;
-
-export const metadata: Metadata = {
-  title: `Engine — ${tier.outcome} | GrowVera`,
-  description:
-    "Engine by GrowVera: a full done-for-you content machine — posts and short videos every week, posted across your channels — from $890/mo. You just approve.",
-};
-
-export default function EnginePage() {
-  return <PackageLanding tier={tier} />;
+// Old "Engine" content package retired in the AI-agents reposition.
+// Permanently redirect to the closest new product (the Speed-to-Lead Agent).
+export default function EngineRedirect() {
+  redirect("/speed-to-lead");
 }

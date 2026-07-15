@@ -108,7 +108,7 @@ export default function LeadForm() {
         className="inline-flex items-center justify-center gap-2"
         style={{ width: "100%", marginTop: "1.5rem", padding: "0.95rem 1.25rem", borderRadius: 999, fontSize: "0.9rem", fontWeight: 700, border: "none", background: "#34D399", color: "#06180F", cursor: status === "submitting" ? "wait" : "pointer" }}
       >
-        {status === "submitting" ? "Sending…" : <>Get my free sample site <ArrowRight size={15} weight="bold" /></>}
+        {status === "submitting" ? "Sending…" : <>Book my free audit call <ArrowRight size={15} weight="bold" /></>}
       </button>
       <p style={{ fontSize: "0.72rem", color: "#6E6E72", textAlign: "center", marginTop: "0.85rem" }}>
         No obligation. We comply with the Australian Spam Act 2003.

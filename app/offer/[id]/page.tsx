@@ -100,7 +100,7 @@ export default async function OfferPage({ params }: PageProps) {
                     <span style={{ fontFamily: "var(--font-cabinet)", fontSize: "1.9rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1 }}>{formatAud(tier.priceMonthly)}</span>
                     <span style={{ fontSize: "0.8rem", color: "#6E6E72" }}>/mo</span>
                   </div>
-                  <p style={{ fontSize: "0.74rem", color: "#8A9A92", marginTop: "0.4rem" }}>+ {formatAud(tier.setupFee)} one-off setup</p>
+                  <p style={{ fontSize: "0.74rem", color: "#8A9A92", marginTop: "0.4rem" }}>{tier.priceNote}</p>
                 </div>
               ))}
             </div>
