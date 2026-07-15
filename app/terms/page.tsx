@@ -14,7 +14,7 @@ By requesting an AI Audit, executing a Statement of Work, paying an invoice, or 
   },
   {
     title: "2. Services",
-    content: `GrowVera designs, builds, integrates, and maintains custom AI automation engines for mid-market businesses. Current service offerings include:
+    content: `GrowVera designs, builds, integrates, and maintains custom AI automation engines for small and mid-sized businesses. Current service offerings include:
 
 (a) Speed-to-Lead Agent (previously marketed as "Vera Reach") — an automated outbound call engine that triggers voice calls to leads captured via your website or CRM, qualifies prospects using a client-approved script, and facilitates calendar bookings.
 
