@@ -8,7 +8,7 @@
  *   Receptionist → never miss a call · Speed-to-Lead → beat the other quote
  *   in · Quoting → quotes done in seconds.
  *
- * Prices are in AUD, GST-inclusive. Tier IDs (starter/pro/agency) stay stable
+ * Prices are in AUD (no GST charged — Growvera is not GST-registered). Tier IDs (starter/pro/agency) stay stable
  * as the billing keys so existing billing/checkout code keeps working; the
  * client-facing names are Receptionist / Speed-to-Lead / Quoting Agent.
  *
@@ -38,7 +38,7 @@ export interface Tier {
   /** Short, plain-English promise — the one reason to pick this product. */
   outcome: string;
   tagline: string;
-  priceMonthly: number; // AUD, GST-inclusive — monthly
+  priceMonthly: number; // AUD — monthly (no GST while not GST-registered)
   /** One-off setup/build fee (AUD). 0 = no setup fee. */
   setupFee: number;
   /** Internal sales-playbook note (deliberately NOT shown on the site). */

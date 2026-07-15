@@ -114,7 +114,7 @@ export default function PackageLanding({ tier }: { tier: Tier }) {
                 <span style={{ fontSize: "0.9rem", color: "var(--color-text-faint)" }}>/month</span>
               </div>
               <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", marginBottom: "1.5rem" }}>
-                AUD, GST inclusive · {tier.priceNote}
+                Prices in AUD · {tier.priceNote}
               </p>
               <a
                 href="/audit"

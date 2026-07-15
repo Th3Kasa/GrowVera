@@ -87,7 +87,7 @@ export default async function OfferPage({ params }: PageProps) {
                 Done-for-you, from {formatAud(TIERS[0].priceMonthly)}/month.
               </h2>
               <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", marginTop: "0.75rem", maxWidth: "40rem", marginInline: "auto", lineHeight: 1.6 }}>
-                A one-off setup &amp; build, then a simple monthly retainer. We run it all for you. Cancel anytime. AUD, GST inclusive.
+                A one-off setup &amp; build, then a simple monthly retainer. We run it all for you. Cancel anytime. Prices in AUD.
               </p>
             </div>
             <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 16rem), 1fr))" }}>

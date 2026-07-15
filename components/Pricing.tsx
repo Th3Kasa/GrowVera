@@ -17,7 +17,7 @@ export default function Pricing() {
             Simple pricing. Real numbers.
           </h2>
           <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "0.5rem" }}>
-            Start with a free AI audit — we&apos;ll show you what missed calls are costing you first. Prices in AUD, GST inclusive.
+            Start with a free AI audit — we&apos;ll show you what missed calls are costing you first. Prices in AUD.
           </p>
         </div>
 
