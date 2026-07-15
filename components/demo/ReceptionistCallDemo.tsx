@@ -1,30 +1,41 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Play, ArrowClockwise, SpeakerHigh, SpeakerSlash, ChatText } from "@phosphor-icons/react";
+import {
+  Phone,
+  PhoneDisconnect,
+  Play,
+  ArrowClockwise,
+  SpeakerHigh,
+  SpeakerSlash,
+  ChatText,
+  MicrophoneSlash,
+  GridFour,
+  SpeakerSimpleHigh,
+} from "@phosphor-icons/react";
 import { buildCues, useCallPlayback, type CueLine } from "./useCallPlayback";
 import { RECEPTIONIST_CUES } from "./callCues.generated";
-import { FictionLabel, AuditCTA } from "./DemoChrome";
+import { FictionLabel, AuditCTA, StatusChip, Takeaway, DemoHeader } from "./DemoChrome";
+import { PhoneFrame, Monogram, RingPulse, Waveform, CallBubble, CallGlyph } from "./CallUI";
+import { useDemoMotion, useChatAutoScroll, callLength, clockAt, mmss } from "./motion";
 
 /**
  * "Hear it take a real call" — Demo 1.
- * A dark phone (a deliberate dark anchor on the light page) shows an after-hours
- * incoming-call screen; on Play the call plays with the transcript animating in.
- * Audio-optional: tries /demos/receptionist-call.mp3, otherwise transcript-only.
- * Dialogue transcribed verbatim from ops/demo-call-scripts.md (Dialogue 1).
+ * A full smartphone shows an after-hours incoming call from Harbourline Plumbing;
+ * Answer starts playback and the call plays with a live waveform + transcript,
+ * then the owner's SMS summary slides in as a notification banner. Audio-optional:
+ * tries /demos/receptionist-call.mp3, otherwise a transcript-only fallback.
  *
- * Cues: RECEPTIONIST_CUES (components/demo/callCues.generated.ts) carries the
- * EXACT startSec/dur measured from the generated MP3 — used whenever it's
- * available. LINES + buildCues() below is the transcript-only fallback,
- * used only if the generated cues are ever missing (should not happen now
- * that the audio has been generated); it keeps working exactly as before.
+ * Cues: RECEPTIONIST_CUES (callCues.generated.ts) carry the EXACT startSec/dur
+ * measured from the generated MP3 — used whenever available. LINES + buildCues()
+ * is the transcript-only fallback used only if the generated cues go missing.
  */
 
 const AUDIO_SRC = "/demos/receptionist-call.mp3";
 
 const LINES: CueLine[] = [
-  { speaker: "ai", text: "Good evening, you've reached Sample Plumbing's after-hours assistant. I can take your details and get you booked in — what's going on tonight?" },
+  { speaker: "ai", text: "Good evening, you've reached Harbourline Plumbing's after-hours assistant. I can take your details and get you booked in — what's going on tonight?" },
   { speaker: "caller", text: "Yeah, hi — I've got a tap under the kitchen sink that's leaking, and it's sort of getting worse. There's water pooling in the cupboard now." },
   { speaker: "ai", text: "Okay, water in the cupboard — let's sort that. First things, have you been able to shut the water off to it, or is it still running?" },
   { speaker: "caller", text: "Ah — there's a little valve under there, I think I turned it. It's slowed right down but it's still dripping." },
@@ -42,266 +53,207 @@ const LINES: CueLine[] = [
 ];
 
 const CUES = RECEPTIONIST_CUES?.length ? RECEPTIONIST_CUES : buildCues(LINES);
+const TOTAL = callLength(CUES);
 
 export default function ReceptionistCallDemo() {
   const pb = useCallPlayback(CUES, AUDIO_SRC);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [pb.index, pb.status]);
+  const m = useDemoMotion();
+  const chat = useChatAutoScroll(`${pb.index}-${pb.status}`, !m.reduce);
+  const [declined, setDeclined] = useState(false);
 
   const replay = () => {
     pb.reset();
     requestAnimationFrame(() => pb.start());
   };
 
+  const answer = () => {
+    setDeclined(false);
+    pb.start();
+  };
+
   const shown = pb.index >= 0 ? CUES.slice(0, pb.index + 1) : [];
   const isIdle = pb.status === "idle";
+  const ended = pb.status === "ended";
+  const elapsed = pb.progress * TOTAL;
+  const activeSpeaker: "ai" | "caller" | null = ended ? null : pb.status === "playing" ? (CUES[Math.max(0, pb.index)]?.speaker ?? "ai") : null;
 
   return (
-    <div style={{ maxWidth: "24rem", margin: "0 auto", width: "100%" }}>
-      {/* Hidden audio element — attempts to load; silently ignored if absent. */}
+    <div style={{ maxWidth: "22rem", margin: "0 auto", width: "100%" }}>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <audio ref={pb.audioRef} src={AUDIO_SRC} preload="none" />
 
-      {/* Phone shell */}
-      <div
-        style={{
-          background: "var(--color-phone-shell)",
-          border: "1px solid var(--color-on-dark-10)",
-          borderRadius: "1.9rem",
-          padding: "0.7rem",
-          boxShadow: "0 24px 60px var(--color-phone-shadow)",
-        }}
-      >
-        {/* Notch */}
-        <div style={{ display: "flex", justifyContent: "center", paddingBottom: "0.5rem" }}>
-          <div style={{ width: 74, height: 5, borderRadius: 999, background: "var(--color-on-dark-12)" }} />
+      {/* Comprehension chip */}
+      <DemoHeader>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {isIdle && <StatusChip tone="live">After-hours call incoming</StatusChip>}
+          {pb.status === "playing" && <StatusChip tone="live">On the call — {mmss(elapsed)}</StatusChip>}
+          {ended && <StatusChip tone="success">Booked ✓ · call ended {mmss(TOTAL)}</StatusChip>}
         </div>
+      </DemoHeader>
 
-        <div
-          style={{
-            background: "var(--color-phone-screen)",
-            borderRadius: "1.4rem",
-            overflow: "hidden",
-            height: "440px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          {isIdle ? (
-            /* ── Incoming-call screen ── */
-            <div
-              style={{
-                flex: 1,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "2rem 1.5rem 1.75rem",
-                textAlign: "center",
-              }}
-            >
-              <div style={{ marginTop: "0.5rem" }}>
-                <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-faint)", letterSpacing: "0.02em" }}>Incoming call · 9:04 PM</p>
+      <PhoneFrame time="9:04 pm">
+        {isIdle ? (
+          /* ── Incoming-call screen ── */
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", padding: "1.5rem 1.5rem 1.75rem", textAlign: "center" }}>
+            <p style={{ fontSize: "0.74rem", color: "var(--color-on-dark-text-faint)", letterSpacing: "0.03em" }}>Incoming call</p>
+
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+              <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {!m.reduce && <RingPulse size={96} />}
+                <Monogram size={96} label="HP" wiggle={!m.reduce} />
               </div>
+              <div>
+                <p style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.2 }}>Harbourline Plumbing</p>
+                <p style={{ fontSize: "0.82rem", color: "var(--color-on-dark-text-muted)", marginTop: "0.2rem" }}>After Hours</p>
+                <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-faint)", marginTop: "0.1rem" }}>mobile · Sydney</p>
+              </div>
+            </div>
 
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem" }}>
-                <motion.div
-                  animate={{ scale: [1, 1.06, 1] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                  style={{
-                    width: 92,
-                    height: 92,
-                    borderRadius: 999,
-                    background: "var(--color-accent-tint)",
-                    border: "1px solid var(--color-accent-border)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+            <div style={{ width: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem" }}>
+                <button
+                  onClick={() => setDeclined(true)}
+                  aria-label="Decline call"
+                  style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: "0.35rem", background: "transparent", border: "none", cursor: "pointer" }}
                 >
-                  <Phone size={38} weight="fill" style={{ color: "var(--color-accent)" }} />
-                </motion.div>
-                <div>
-                  <p style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.2 }}>Sample Plumbing Co</p>
-                  <p style={{ fontSize: "0.8rem", color: "var(--color-on-dark-text-muted)", marginTop: "0.15rem" }}>After Hours · mobile</p>
-                </div>
+                  <span style={{ width: 56, height: 56, borderRadius: 999, background: "var(--color-call-decline)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px var(--color-phone-shadow-soft)" }}>
+                    <PhoneDisconnect size={26} weight="fill" style={{ color: "var(--color-on-accent)" }} />
+                  </span>
+                  <span style={{ fontSize: "0.68rem", color: "var(--color-on-dark-text-muted)", fontWeight: 600 }}>Decline</span>
+                </button>
+                <button
+                  onClick={answer}
+                  style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: "0.35rem", background: "transparent", border: "none", cursor: "pointer" }}
+                >
+                  <motion.span
+                    animate={m.reduce ? undefined : { scale: [1, 1.08, 1] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ width: 56, height: 56, borderRadius: 999, background: "var(--color-call-accept)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 22px var(--color-accent-glow)" }}
+                  >
+                    <Phone size={26} weight="fill" style={{ color: "var(--color-on-accent)" }} />
+                  </motion.span>
+                  <span style={{ fontSize: "0.68rem", color: "var(--color-on-dark-text)", fontWeight: 700 }}>Answer</span>
+                </button>
               </div>
-
+              <AnimatePresence>
+                {declined && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-muted)", marginTop: "0.9rem", lineHeight: 1.5 }}
+                  >
+                    That&apos;s the call you&apos;d miss — tap <span style={{ color: "var(--color-accent)", fontWeight: 700 }}>Answer</span> to hear it caught.
+                  </motion.p>
+                )}
+              </AnimatePresence>
               <button
-                onClick={pb.start}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.55rem",
-                  background: "var(--color-accent)",
-                  color: "var(--color-on-accent)",
-                  border: "none",
-                  borderRadius: "2rem",
-                  padding: "0.85rem 1.75rem",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
+                onClick={answer}
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", marginTop: "1rem", background: "var(--color-on-dark-07)", color: "var(--color-on-dark-text)", border: "1px solid var(--color-on-dark-10)", borderRadius: "2rem", padding: "0.5rem 1rem", fontSize: "0.74rem", fontWeight: 600, cursor: "pointer" }}
               >
-                <Play size={16} weight="fill" /> Play the call
+                <Play size={13} weight="fill" /> Play the call
               </button>
             </div>
-          ) : (
-            /* ── Live transcript ── */
-            <>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                  padding: "0.85rem 0.9rem",
-                  borderBottom: "1px solid var(--color-on-dark-07)",
-                  flexShrink: 0,
-                }}
-              >
-                <div style={{ width: 30, height: 30, borderRadius: 999, background: "var(--color-accent-tint)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Phone size={15} weight="fill" style={{ color: "var(--color-accent)" }} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.1 }}>Sample Plumbing Co</p>
-                  <p style={{ fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)" }}>After-hours assistant · live call</p>
-                </div>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.66rem", color: "var(--color-accent)", fontWeight: 600 }}>
-                  <span className="gv-pulse" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--color-accent)", display: "inline-block" }} />
-                  {pb.status === "ended" ? "Ended" : "9:04"}
-                </span>
-              </div>
-
-              <div
-                ref={scrollRef}
-                style={{ flex: 1, overflowY: "auto", padding: "0.85rem 0.7rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}
-              >
-                <AnimatePresence initial={false}>
-                  {shown.map((c, i) => {
-                    const isAi = c.speaker === "ai";
-                    return (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-                        style={{ alignSelf: isAi ? "flex-start" : "flex-end", maxWidth: "82%" }}
-                      >
-                        <div
-                          style={{
-                            background: isAi ? "var(--color-accent-tint)" : "var(--color-phone-bubble)",
-                            border: isAi ? "1px solid var(--color-accent-border)" : "1px solid var(--color-on-dark-07)",
-                            color: isAi ? "var(--color-on-dark-text)" : "var(--color-on-dark-text-bright)",
-                            borderRadius: "1rem",
-                            borderBottomLeftRadius: isAi ? "0.3rem" : "1rem",
-                            borderBottomRightRadius: isAi ? "1rem" : "0.3rem",
-                            padding: "0.55rem 0.75rem",
-                            fontSize: "0.8rem",
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          <span style={{ display: "block", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: isAi ? "var(--color-accent)" : "var(--color-on-dark-text-faint)", marginBottom: "0.2rem" }}>
-                            {isAi ? "AI receptionist" : "Caller"}
-                          </span>
-                          {c.text}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-
-                {/* SMS summary card, after the call ends */}
-                <AnimatePresence>
-                  {pb.status === "ended" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.25, ease: [0.32, 0.72, 0, 1] }}
-                      style={{ marginTop: "0.5rem" }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem", justifyContent: "center" }}>
-                        <ChatText size={13} weight="fill" style={{ color: "var(--color-on-dark-text-faint)" }} />
-                        <span style={{ fontSize: "0.64rem", color: "var(--color-on-dark-text-faint)" }}>sent to the owner 9:07pm</span>
-                      </div>
-                      <div
-                        style={{
-                          background: "var(--color-accent-tint)",
-                          border: "1px solid var(--color-accent-border)",
-                          borderRadius: "0.9rem",
-                          padding: "0.85rem 0.9rem",
-                        }}
-                      >
-                        <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--color-on-dark-text)", marginBottom: "0.4rem" }}>New after-hours booking — Sample Plumbing Co</p>
-                        <p style={{ fontSize: "0.74rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.5 }}>Dave · Marrickville · Leaking kitchen tap, water pooling in cupboard (valve shut, slow drip)</p>
-                        <div style={{ height: 1, background: "var(--color-on-dark-10)", margin: "0.55rem 0" }} />
-                        <p style={{ fontSize: "0.74rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.6 }}>Urgency: Medium — contained overnight</p>
-                        <p style={{ fontSize: "0.74rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.6 }}>Booked: Tomorrow 8:00am</p>
-                        <p style={{ fontSize: "0.74rem", color: "var(--color-accent)", fontWeight: 600, lineHeight: 1.6 }}>Customer confirmed via text.</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Progress hairline */}
-              <div style={{ height: 2, background: "var(--color-on-dark-07)", flexShrink: 0 }}>
-                <div style={{ height: "100%", width: `${pb.progress * 100}%`, background: "var(--color-accent)", transition: "width 0.1s linear" }} />
-              </div>
-
-              {/* Controls */}
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.7rem 0.9rem", flexShrink: 0 }}>
-                <button
-                  onClick={replay}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                    background: "var(--color-on-dark-10)",
-                    color: "var(--color-on-dark-text)",
-                    border: "none",
-                    borderRadius: "2rem",
-                    padding: "0.5rem 1rem",
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
+          </div>
+        ) : (
+          /* ── In-call screen ── */
+          <>
+            {/* SMS notification banner (slides from the top on call end) */}
+            <AnimatePresence>
+              {ended && (
+                <motion.div
+                  initial={m.banner.initial}
+                  animate={m.banner.animate}
+                  transition={{ ...m.banner.transition, delay: 0.5 }}
+                  style={{ position: "absolute", top: "2.4rem", left: "0.55rem", right: "0.55rem", zIndex: 5, background: "var(--color-phone-bubble)", border: "1px solid var(--color-accent-border)", borderRadius: "1.1rem", padding: "0.75rem 0.85rem", boxShadow: "0 16px 34px var(--color-phone-shadow)" }}
                 >
-                  <ArrowClockwise size={14} weight="bold" /> {pb.status === "ended" ? "Replay" : "Restart"}
-                </button>
-                {pb.usingAudio && (
-                  <button
-                    onClick={pb.toggleMute}
-                    aria-label={pb.muted ? "Unmute" : "Mute"}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: 34,
-                      height: 34,
-                      background: "var(--color-on-dark-10)",
-                      color: "var(--color-on-dark-text)",
-                      border: "none",
-                      borderRadius: 999,
-                      cursor: "pointer",
-                    }}
-                  >
-                    {pb.muted ? <SpeakerSlash size={15} weight="fill" /> : <SpeakerHigh size={15} weight="fill" />}
-                  </button>
-                )}
-                <span style={{ marginLeft: "auto", fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)" }}>
-                  {pb.usingAudio ? "Audio + transcript" : "Transcript demo"}
-                </span>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem" }}>
+                    <ChatText size={13} weight="fill" style={{ color: "var(--color-accent)" }} />
+                    <span style={{ fontSize: "0.62rem", fontWeight: 700, color: "var(--color-on-dark-text-muted)", letterSpacing: "0.03em" }}>MESSAGES · now</span>
+                  </div>
+                  <p style={{ fontSize: "0.76rem", fontWeight: 700, color: "var(--color-on-dark-text)", marginBottom: "0.3rem" }}>New after-hours booking</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.5 }}>Dave · Marrickville · Leaking kitchen tap, water pooling (valve shut, slow drip)</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Booked: tomorrow 8:00am · call-out from $120</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-accent)", fontWeight: 600, lineHeight: 1.55 }}>Customer confirmed via text.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-      <FictionLabel business="Sample Plumbing Co" />
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.25rem 0.9rem 0.7rem", borderBottom: "1px solid var(--color-on-dark-07)", flexShrink: 0 }}>
+              <Monogram size={32} label="HP" />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--color-on-dark-text)", lineHeight: 1.15 }}>Harbourline Plumbing</p>
+                <p style={{ fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)" }}>After-hours assistant</p>
+              </div>
+              <span style={{ fontSize: "0.72rem", fontWeight: 700, color: ended ? "var(--color-on-dark-text-muted)" : "var(--color-accent)", fontVariantNumeric: "tabular-nums" }}>
+                {ended ? `Ended ${mmss(TOTAL)}` : mmss(elapsed)}
+              </span>
+            </div>
+
+            {/* Waveform + decorative controls */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem", padding: "0.6rem 0.9rem 0.5rem", flexShrink: 0 }}>
+              <Waveform active={activeSpeaker} reduce={m.reduce} />
+              <div style={{ display: "flex", gap: "1.4rem" }}>
+                <CallGlyph label="Mute"><MicrophoneSlash size={17} /></CallGlyph>
+                <CallGlyph label="Keypad"><GridFour size={17} /></CallGlyph>
+                <CallGlyph label="Speaker"><SpeakerSimpleHigh size={17} /></CallGlyph>
+              </div>
+            </div>
+
+            {/* Transcript (internal scroll) */}
+            <div
+              ref={chat.ref}
+              onScroll={chat.onScroll}
+              style={{ flex: 1, overflowY: "auto", padding: "0.6rem 0.7rem 0.4rem", display: "flex", flexDirection: "column", gap: "0.45rem", minHeight: 0 }}
+            >
+              <AnimatePresence initial={false}>
+                {shown.map((c, i) => (
+                  <CallBubble
+                    key={i}
+                    ai={c.speaker === "ai"}
+                    label={c.speaker === "ai" ? "AI receptionist" : "Caller"}
+                    text={c.text}
+                    time={clockAt(9, 4, "pm", c.startSec)}
+                    motionProps={m.bubble}
+                  />
+                ))}
+              </AnimatePresence>
+              {ended && (
+                <p style={{ textAlign: "center", fontSize: "0.66rem", color: "var(--color-on-dark-text-faint)", marginTop: "0.4rem" }}>Call ended · {mmss(TOTAL)}</p>
+              )}
+            </div>
+
+            {/* Progress hairline */}
+            <div style={{ height: 2, background: "var(--color-on-dark-07)", flexShrink: 0 }}>
+              <div style={{ height: "100%", width: `${pb.progress * 100}%`, background: "var(--color-accent)", transition: "width 0.1s linear" }} />
+            </div>
+
+            {/* Controls */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 0.9rem", flexShrink: 0 }}>
+              <button
+                onClick={replay}
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "var(--color-on-dark-10)", color: "var(--color-on-dark-text)", border: "none", borderRadius: "2rem", padding: "0.45rem 0.95rem", fontSize: "0.76rem", fontWeight: 600, cursor: "pointer" }}
+              >
+                <ArrowClockwise size={13} weight="bold" /> {ended ? "Replay" : "Restart"}
+              </button>
+              {pb.usingAudio && (
+                <button
+                  onClick={pb.toggleMute}
+                  aria-label={pb.muted ? "Unmute" : "Mute"}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, background: "var(--color-on-dark-10)", color: "var(--color-on-dark-text)", border: "none", borderRadius: 999, cursor: "pointer" }}
+                >
+                  {pb.muted ? <SpeakerSlash size={14} weight="fill" /> : <SpeakerHigh size={14} weight="fill" />}
+                </button>
+              )}
+              <span style={{ marginLeft: "auto", fontSize: "0.64rem", color: "var(--color-on-dark-text-faint)" }}>{pb.usingAudio ? "Audio + transcript" : "Transcript demo"}</span>
+            </div>
+          </>
+        )}
+      </PhoneFrame>
+
+      {ended && <Takeaway>That&apos;s a 9pm call captured that would&apos;ve gone to voicemail.</Takeaway>}
+      <FictionLabel business="Harbourline Plumbing" />
       <AuditCTA />
     </div>
   );

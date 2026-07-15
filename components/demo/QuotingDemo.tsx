@@ -2,17 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wrench, ArrowClockwise, CaretDown, Receipt } from "@phosphor-icons/react";
+import { ArrowClockwise, CaretDown, FileText, GridFour, ChatText, Gear } from "@phosphor-icons/react";
 import { formatAud } from "@/lib/tiers";
-import { FictionLabel, AuditCTA } from "./DemoChrome";
+import { FictionLabel, AuditCTA, StatusChip, Takeaway, DemoHeader } from "./DemoChrome";
+import { Monogram } from "./CallUI";
+import { useDemoMotion, useChatAutoScroll, FRAME_H } from "./motion";
 
 /**
- * "Get a sample quote yourself" — Demo 3.
- * Fully deterministic, no LLM. A scripted decision-tree chat for the fictional
- * "Sample Plumbing Co" internal quoting tool: pick job type → job detail →
- * urgency, then the agent chat-types an itemised quote computed purely from the
- * visible mock PRICE_LIST below. Every number the card shows is derived from
- * that table, so the demo can never quote something the price list doesn't back.
+ * "Build a quote yourself" — Demo 3.
+ * A deterministic, no-LLM quoting tool rendered as a desktop app window for the
+ * fictional Harbourline Plumbing: pick job type → detail → urgency, then the
+ * agent chat-types and "prints" an itemised quote onto a document sheet. Every
+ * number is derived purely from the visible mock PRICE_LIST below, so the demo
+ * can never quote something the price list doesn't back. The maths (LABOUR_RATE,
+ * CALL_OUT_FEE, PRIORITY_SURCHARGE, JOB_TYPES, URGENCY, buildQuote) is unchanged
+ * — 12 deterministic totals.
  */
 
 const LABOUR_RATE = 110; // $/hour
@@ -24,14 +28,10 @@ type UrgencyId = "standard" | "priority";
 
 type Variant = {
   id: string;
-  /** Button label shown in step 2. */
   name: string;
-  /** Line label used on the quote card + price list for the part/unit. */
   itemLabel: string;
-  /** Cost of the part or unit (0 = no part line, e.g. drain clears). */
   partCost: number;
   labourHours: number;
-  /** Extra equipment surcharge (0 = none). */
   equipment: number;
   equipmentLabel?: string;
 };
@@ -90,22 +90,33 @@ function buildQuote(jobType: JobType, variant: Variant, urgency: UrgencyId): Quo
   return { variant, labourCost, callOut: CALL_OUT_FEE, priority, total };
 }
 
-type Msg = { role: "agent" | "user"; text: string };
+type Msg = { role: "agent" | "user"; text: string; at: string };
 type Phase = "job" | "detail" | "urgency" | "typing" | "quote";
 
 const INITIAL_LOG: Msg[] = [
-  { role: "agent", text: "Hi — this is the Sample Plumbing Co quoting tool. Tell me a couple of things and I'll price the job on the spot." },
-  { role: "agent", text: "First up — what's the job?" },
+  { role: "agent", text: "Hi — this is the Harbourline Plumbing quoting tool. Tell me a couple of things and I'll price the job on the spot.", at: "now" },
+  { role: "agent", text: "First up — what's the job?", at: "now" },
 ];
 
+const typingDelay = () => 500 + Math.round(Math.random() * 300); // 500–800ms cadence
+
+function nowLabel() {
+  const d = new Date();
+  let h = d.getHours();
+  const mer = h >= 12 ? "pm" : "am";
+  h = h % 12 || 12;
+  return `${h}:${d.getMinutes().toString().padStart(2, "0")} ${mer}`;
+}
+
 export default function QuotingDemo() {
+  const m = useDemoMotion();
   const [log, setLog] = useState<Msg[]>(INITIAL_LOG);
   const [phase, setPhase] = useState<Phase>("job");
   const [jobType, setJobType] = useState<JobType | null>(null);
   const [variant, setVariant] = useState<Variant | null>(null);
   const [urgency, setUrgency] = useState<UrgencyId | null>(null);
   const [showPrices, setShowPrices] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const chat = useChatAutoScroll(`${log.length}-${phase}`, !m.reduce);
   const timers = useRef<number[]>([]);
 
   const clearTimers = () => {
@@ -114,19 +125,14 @@ export default function QuotingDemo() {
   };
   useEffect(() => () => clearTimers(), []);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [log, phase]);
-
   const advance = (userText: string, agentText: string, nextPhase: Phase) => {
-    setLog((l) => [...l, { role: "user", text: userText }]);
+    setLog((l) => [...l, { role: "user", text: userText, at: nowLabel() }]);
     setPhase("typing");
     timers.current.push(
       window.setTimeout(() => {
-        setLog((l) => [...l, { role: "agent", text: agentText }]);
+        setLog((l) => [...l, { role: "agent", text: agentText, at: nowLabel() }]);
         setPhase(nextPhase);
-      }, 480)
+      }, typingDelay())
     );
   };
 
@@ -143,13 +149,13 @@ export default function QuotingDemo() {
   const pickUrgency = (u: UrgencyId) => {
     setUrgency(u);
     const name = URGENCY.find((x) => x.id === u)!.name;
-    setLog((l) => [...l, { role: "user", text: name }]);
+    setLog((l) => [...l, { role: "user", text: name, at: nowLabel() }]);
     setPhase("typing");
     timers.current.push(
       window.setTimeout(() => {
-        setLog((l) => [...l, { role: "agent", text: "Done — here's your itemised quote:" }]);
+        setLog((l) => [...l, { role: "agent", text: "Done — here's your itemised quote:", at: nowLabel() }]);
         setPhase("quote");
-      }, 620)
+      }, typingDelay())
     );
   };
 
@@ -177,162 +183,202 @@ export default function QuotingDemo() {
     width: "100%",
   };
 
+  // Document-sheet line items (printed staggered).
+  const sheetRows: { label: string; value: string }[] = [];
+  if (quote && variant) {
+    if (variant.partCost > 0) sheetRows.push({ label: variant.itemLabel, value: formatAud(variant.partCost) });
+    sheetRows.push({ label: `Labour (${variant.labourHours}h × ${formatAud(LABOUR_RATE)}/h)`, value: formatAud(quote.labourCost) });
+    sheetRows.push({ label: "Call-out fee", value: formatAud(quote.callOut) });
+    if (variant.equipment > 0) sheetRows.push({ label: variant.equipmentLabel ?? "Equipment", value: `+${formatAud(variant.equipment)}` });
+    if (quote.priority > 0) sheetRows.push({ label: "Priority same-day surcharge", value: `+${formatAud(quote.priority)}` });
+  }
+
   return (
     <div style={{ maxWidth: "27rem", margin: "0 auto", width: "100%" }}>
-      <div
-        style={{
-          background: "var(--color-bg-card)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "1.25rem",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "460px",
-        }}
-      >
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.85rem 1rem", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
-          <div style={{ width: 32, height: 32, borderRadius: "0.6rem", background: "var(--color-accent-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Wrench size={17} weight="fill" style={{ color: "var(--color-accent)" }} />
-          </div>
-          <div>
-            <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)", lineHeight: 1.1 }}>Sample Plumbing Co</p>
-            <p style={{ fontSize: "0.66rem", color: "var(--color-text-faint)" }}>Internal quoting tool</p>
-          </div>
+      {/* Comprehension chip */}
+      <DemoHeader>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {phase === "quote" ? <StatusChip tone="success">Quote ready ✓</StatusChip> : <StatusChip tone="muted">Pick a job — priced in seconds</StatusChip>}
+        </div>
+      </DemoHeader>
+
+      {/* Desktop app window */}
+      <div style={{ height: FRAME_H, background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "0.9rem", overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: "0 20px 50px var(--color-phone-shadow-soft)" }}>
+        {/* Title bar */}
+        <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.6rem 0.8rem", background: "var(--color-bg-subtle)", borderBottom: "1px solid var(--color-border)" }}>
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "var(--color-win-close)" }} />
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "var(--color-win-min)" }} />
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "var(--color-win-max)" }} />
+          <p style={{ position: "absolute", left: 0, right: 0, textAlign: "center", fontSize: "0.72rem", fontWeight: 600, color: "var(--color-text-muted)", pointerEvents: "none" }}>
+            Harbourline Plumbing — Quoting
+          </p>
         </div>
 
-        {/* Chat */}
-        <div ref={scrollRef} style={{ flex: 1, overflowY: "auto", padding: "0.9rem 0.85rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <AnimatePresence initial={false}>
-            {log.map((m, i) => {
-              const isAgent = m.role === "agent";
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.26, ease: [0.32, 0.72, 0, 1] }}
-                  style={{ alignSelf: isAgent ? "flex-start" : "flex-end", maxWidth: "85%" }}
-                >
-                  <div
-                    style={{
-                      background: isAgent ? "var(--color-bg-subtle)" : "var(--color-accent)",
-                      border: isAgent ? "1px solid var(--color-border)" : "none",
-                      color: isAgent ? "var(--color-text)" : "var(--color-on-accent)",
-                      borderRadius: "0.9rem",
-                      borderBottomLeftRadius: isAgent ? "0.25rem" : "0.9rem",
-                      borderBottomRightRadius: isAgent ? "0.9rem" : "0.25rem",
-                      padding: "0.5rem 0.75rem",
-                      fontSize: "0.8rem",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {m.text}
+        {/* Body: sidebar + main */}
+        <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
+          {/* Thin sidebar hint */}
+          <div style={{ width: 46, flexShrink: 0, background: "var(--color-bg-section)", borderRight: "1px solid var(--color-border)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", padding: "0.8rem 0" }}>
+            {[
+              { icon: <ChatText size={16} weight="fill" />, active: true },
+              { icon: <FileText size={16} weight="fill" />, active: false },
+              { icon: <GridFour size={16} weight="fill" />, active: false },
+              { icon: <Gear size={16} weight="fill" />, active: false },
+            ].map((s, i) => (
+              <div key={i} style={{ width: 30, height: 30, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center", background: s.active ? "var(--color-accent-soft)" : "transparent", color: s.active ? "var(--color-accent)" : "var(--color-text-faint)" }}>
+                {s.icon}
+              </div>
+            ))}
+          </div>
+
+          {/* Main column */}
+          <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+            {/* Chat header */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", padding: "0.7rem 0.9rem", borderBottom: "1px solid var(--color-border)" }}>
+              <Monogram size={30} label="HP" />
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--color-text)", lineHeight: 1.1 }}>Harbourline Plumbing</p>
+                <p style={{ fontSize: "0.64rem", color: "var(--color-text-faint)" }}>Quoting assistant</p>
+              </div>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.64rem", color: "var(--color-accent)", fontWeight: 700 }}>
+                <span className="gv-pulse" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--color-accent)", display: "inline-block" }} />
+                online
+              </span>
+            </div>
+
+            {/* Chat (internal scroll) */}
+            <div ref={chat.ref} onScroll={chat.onScroll} style={{ flex: 1, overflowY: "auto", padding: "0.85rem", display: "flex", flexDirection: "column", gap: "0.4rem", background: "var(--color-bg-section)", minHeight: 0 }}>
+              <AnimatePresence initial={false}>
+                {log.map((msg, i) => {
+                  const isAgent = msg.role === "agent";
+                  return (
+                    <motion.div key={i} initial={m.bubble.initial} animate={m.bubble.animate} transition={m.bubble.transition} style={{ alignSelf: isAgent ? "flex-start" : "flex-end", maxWidth: "85%" }}>
+                      <div
+                        style={{
+                          background: isAgent ? "var(--color-bg-card)" : "var(--color-accent)",
+                          border: isAgent ? "1px solid var(--color-border)" : "none",
+                          color: isAgent ? "var(--color-text)" : "var(--color-on-accent)",
+                          borderRadius: "0.9rem",
+                          borderBottomLeftRadius: isAgent ? "0.25rem" : "0.9rem",
+                          borderBottomRightRadius: isAgent ? "0.9rem" : "0.25rem",
+                          padding: "0.5rem 0.75rem",
+                          fontSize: "0.8rem",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {msg.text}
+                      </div>
+                      <p style={{ fontSize: "0.56rem", color: "var(--color-text-faint)", marginTop: "0.15rem", textAlign: isAgent ? "left" : "right", paddingInline: "0.3rem" }}>{msg.at}</p>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+
+              {/* Typing indicator */}
+              {phase === "typing" && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ alignSelf: "flex-start" }}>
+                  <div style={{ display: "flex", gap: "0.25rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "0.9rem", padding: "0.6rem 0.8rem" }}>
+                    {[0, 1, 2].map((d) => (
+                      <motion.span
+                        key={d}
+                        animate={m.reduce ? undefined : { opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1, repeat: Infinity, delay: d * 0.18 }}
+                        style={{ width: 6, height: 6, borderRadius: 999, background: "var(--color-text-faint)", display: "inline-block" }}
+                      />
+                    ))}
                   </div>
                 </motion.div>
-              );
-            })}
-          </AnimatePresence>
+              )}
 
-          {/* Typing indicator */}
-          {phase === "typing" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ alignSelf: "flex-start" }}>
-              <div style={{ display: "flex", gap: "0.25rem", background: "var(--color-bg-subtle)", border: "1px solid var(--color-border)", borderRadius: "0.9rem", padding: "0.6rem 0.8rem" }}>
-                {[0, 1, 2].map((d) => (
-                  <motion.span
-                    key={d}
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: d * 0.18 }}
-                    style={{ width: 6, height: 6, borderRadius: 999, background: "var(--color-text-faint)", display: "inline-block" }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          )}
+              {/* Quote document sheet */}
+              <AnimatePresence>
+                {quote && jobType && variant && (
+                  <motion.div
+                    initial={m.card.initial}
+                    animate={m.card.animate}
+                    transition={m.card.transition}
+                    style={{ alignSelf: "stretch", background: "var(--color-bg-card)", border: "1px solid var(--color-border-strong)", borderRadius: "0.5rem", padding: "1rem 1.05rem", marginTop: "0.3rem", boxShadow: "0 10px 26px var(--color-phone-shadow-soft)" }}
+                  >
+                    {/* Letterhead */}
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem", borderBottom: "1px solid var(--color-border)", paddingBottom: "0.6rem", marginBottom: "0.7rem" }}>
+                      <div>
+                        <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1rem", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.02em", lineHeight: 1.1 }}>Harbourline Plumbing</p>
+                        <p style={{ fontSize: "0.62rem", color: "var(--color-text-faint)", marginTop: "0.1rem" }}>Licensed plumbing services · Sydney</p>
+                      </div>
+                      <span style={{ fontSize: "0.58rem", fontWeight: 800, letterSpacing: "0.1em", color: "var(--color-accent)", border: "1px solid var(--color-accent-border-soft)", borderRadius: "0.4rem", padding: "0.2rem 0.4rem", whiteSpace: "nowrap" }}>QUOTE</span>
+                    </div>
 
-          {/* Quote card */}
-          <AnimatePresence>
-            {quote && jobType && variant && (
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-                style={{ alignSelf: "stretch", background: "var(--gradient-card-featured)", border: "1px solid var(--color-accent-border)", borderRadius: "0.9rem", padding: "0.95rem 1rem", marginTop: "0.3rem" }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.6rem" }}>
-                  <Receipt size={15} weight="fill" style={{ color: "var(--color-accent)" }} />
-                  <p style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)" }}>
-                    {jobType.name} · {variant.name.replace(/\s*\(.*\)\s*$/, "")}
-                  </p>
+                    <p style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--color-text-bright)", marginBottom: "0.5rem" }}>
+                      {jobType.name} · {variant.name.replace(/\s*\(.*\)\s*$/, "")}
+                    </p>
+
+                    {sheetRows.map((r, i) => (
+                      <motion.div
+                        key={r.label}
+                        initial={m.reduce ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.28, delay: m.reduce ? 0 : 0.18 + i * 0.12, ease: [0.32, 0.72, 0, 1] }}
+                        style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "0.22rem 0" }}
+                      >
+                        <span style={{ fontSize: "0.76rem", color: "var(--color-text-muted)" }}>{r.label}</span>
+                        <span style={{ fontSize: "0.8rem", color: "var(--color-text)", fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>{r.value}</span>
+                      </motion.div>
+                    ))}
+
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: m.reduce ? 0 : 0.18 + sheetRows.length * 0.12 }}
+                    >
+                      <div style={{ height: 1, background: "var(--color-border-strong)", margin: "0.6rem 0" }} />
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                        <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)" }}>Total (inc. parts &amp; labour)</span>
+                        <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.5rem", fontWeight: 900, color: "var(--color-accent)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>{formatAud(quote.total)}</span>
+                      </div>
+                      <p style={{ fontSize: "0.6rem", color: "var(--color-text-faint)", marginTop: "0.6rem", lineHeight: 1.5, borderTop: "1px dashed var(--color-border)", paddingTop: "0.5rem" }}>
+                        Prepared by the Harbourline quoting tool · just now
+                      </p>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Option buttons */}
+            <div style={{ borderTop: "1px solid var(--color-border)", padding: "0.7rem 0.85rem", background: "var(--color-bg-card)" }}>
+              {phase === "job" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                  {JOB_TYPES.map((jt) => (
+                    <button key={jt.id} onClick={() => pickJob(jt)} style={optionBtnStyle}>{jt.name}</button>
+                  ))}
                 </div>
-
-                {variant.partCost > 0 && <Row label={variant.itemLabel} value={formatAud(variant.partCost)} />}
-                <Row label={`Labour (${variant.labourHours}h × ${formatAud(LABOUR_RATE)}/h)`} value={formatAud(quote.labourCost)} />
-                <Row label="Call-out fee" value={formatAud(quote.callOut)} />
-                {variant.equipment > 0 && <Row label={variant.equipmentLabel ?? "Equipment"} value={`+${formatAud(variant.equipment)}`} />}
-                {quote.priority > 0 && <Row label="Priority same-day surcharge" value={`+${formatAud(quote.priority)}`} />}
-
-                <div style={{ height: 1, background: "var(--color-accent-border)", margin: "0.55rem 0" }} />
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-text)" }}>Total (inc. parts &amp; labour)</span>
-                  <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.5rem", fontWeight: 900, color: "var(--color-accent)", letterSpacing: "-0.02em" }}>{formatAud(quote.total)}</span>
+              )}
+              {phase === "detail" && jobType && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                  {jobType.variants.map((v) => (
+                    <button key={v.id} onClick={() => pickVariant(v)} style={optionBtnStyle}>{v.name}</button>
+                  ))}
                 </div>
-                <p style={{ fontSize: "0.66rem", color: "var(--color-text-faint)", marginTop: "0.5rem", lineHeight: 1.5 }}>
-                  Illustrative only — prices belong to the fictional demo business.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Option buttons */}
-        <div style={{ borderTop: "1px solid var(--color-border)", padding: "0.75rem 0.85rem" }}>
-          {phase === "job" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              {JOB_TYPES.map((jt) => (
-                <button key={jt.id} onClick={() => pickJob(jt)} style={optionBtnStyle}>{jt.name}</button>
-              ))}
+              )}
+              {phase === "urgency" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                  {URGENCY.map((u) => (
+                    <button key={u.id} onClick={() => pickUrgency(u.id)} style={optionBtnStyle}>{u.name}</button>
+                  ))}
+                </div>
+              )}
+              {phase === "typing" && (
+                <p style={{ fontSize: "0.72rem", color: "var(--color-text-faint)", textAlign: "center", padding: "0.4rem 0" }}>Pricing it up…</p>
+              )}
+              {phase === "quote" && (
+                <button
+                  onClick={restart}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", width: "100%", background: "var(--color-accent)", color: "var(--color-on-accent)", border: "none", borderRadius: "0.7rem", padding: "0.65rem", fontSize: "0.8rem", fontWeight: 700, cursor: "pointer" }}
+                >
+                  <ArrowClockwise size={14} weight="bold" /> Start another quote
+                </button>
+              )}
             </div>
-          )}
-          {phase === "detail" && jobType && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              {jobType.variants.map((v) => (
-                <button key={v.id} onClick={() => pickVariant(v)} style={optionBtnStyle}>{v.name}</button>
-              ))}
-            </div>
-          )}
-          {phase === "urgency" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-              {URGENCY.map((u) => (
-                <button key={u.id} onClick={() => pickUrgency(u.id)} style={optionBtnStyle}>{u.name}</button>
-              ))}
-            </div>
-          )}
-          {phase === "typing" && (
-            <p style={{ fontSize: "0.72rem", color: "var(--color-text-faint)", textAlign: "center", padding: "0.4rem 0" }}>Pricing it up…</p>
-          )}
-          {phase === "quote" && (
-            <button
-              onClick={restart}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.4rem",
-                width: "100%",
-                background: "var(--color-accent)",
-                color: "var(--color-on-accent)",
-                border: "none",
-                borderRadius: "0.7rem",
-                padding: "0.65rem",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              <ArrowClockwise size={14} weight="bold" /> Start another quote
-            </button>
-          )}
+          </div>
         </div>
       </div>
 
@@ -350,13 +396,7 @@ export default function QuotingDemo() {
         </button>
         <AnimatePresence initial={false}>
           {showPrices && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              style={{ overflow: "hidden" }}
-            >
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} style={{ overflow: "hidden" }}>
               <div style={{ padding: "0 0.9rem 0.9rem", overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.72rem" }}>
                   <thead>
@@ -394,17 +434,9 @@ export default function QuotingDemo() {
         </AnimatePresence>
       </div>
 
-      <FictionLabel business="Sample Plumbing Co" />
+      {phase === "quote" && <Takeaway>A priced, itemised quote in seconds — while the lead is still on your website.</Takeaway>}
+      <FictionLabel business="Harbourline Plumbing" />
       <AuditCTA prompt="Want instant quoting for YOUR business?" />
-    </div>
-  );
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "0.2rem 0" }}>
-      <span style={{ fontSize: "0.76rem", color: "var(--color-text-muted)" }}>{label}</span>
-      <span style={{ fontSize: "0.8rem", color: "var(--color-text)", fontWeight: 600 }}>{value}</span>
     </div>
   );
 }

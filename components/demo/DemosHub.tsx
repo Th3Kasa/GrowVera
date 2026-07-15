@@ -14,7 +14,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 const DemoSkeleton = () => (
   <div
     style={{
-      minHeight: "440px",
+      minHeight: "36rem",
       borderRadius: "1.25rem",
       background: "var(--color-bg-subtle)",
       border: "1px solid var(--color-border)",
@@ -32,15 +32,15 @@ const SpeedToLeadDemo = dynamic(() => import("./SpeedToLeadDemo"), { ssr: false,
 const QuotingDemo = dynamic(() => import("./QuotingDemo"), { ssr: false, loading: DemoSkeleton });
 
 const CARDS = [
-  { name: "24/7 AI Receptionist", pitch: "Hear it answer a real after-hours call, capture the job, and text the owner.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
-  { name: "Speed-to-Lead Agent", pitch: "Submit a mock enquiry and watch the 20-second callback book the job.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
-  { name: "AI Quoting Agent", pitch: "Build a sample plumbing quote yourself — job type, detail, urgency, itemised total.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
+  { name: "24/7 AI Receptionist", instruction: "Press play and listen to how it answers", pitch: "Hear it answer a real after-hours call, capture the job, and text the owner.", href: "/receptionist", linkLabel: "See the receptionist", Demo: ReceptionistCallDemo },
+  { name: "Speed-to-Lead Agent", instruction: "Type a name, hit submit, watch the callback", pitch: "Submit a mock enquiry and watch the 20-second callback book the job.", href: "/speed-to-lead", linkLabel: "See speed-to-lead", Demo: SpeedToLeadDemo },
+  { name: "AI Quoting Agent", instruction: "Pick a job — get a priced quote in seconds", pitch: "Pick a job and detail — get an itemised, priced quote in seconds.", href: "/quoting", linkLabel: "See quoting", Demo: QuotingDemo },
 ];
 
 export default function DemosHub() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {CARDS.map(({ name, pitch, href, linkLabel, Demo }) => (
+      {CARDS.map(({ name, instruction, pitch, href, linkLabel, Demo }) => (
         <div
           key={name}
           style={{
@@ -59,9 +59,12 @@ export default function DemosHub() {
                 {linkLabel} <ArrowRight size={12} weight="bold" />
               </Link>
             </div>
-            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55, marginTop: "0.4rem" }}>{pitch}</p>
+            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55, marginTop: "0.4rem", minHeight: "2.9rem" }}>{pitch}</p>
+            <p style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.72rem", fontWeight: 700, color: "var(--color-accent)", marginTop: "0.6rem", background: "var(--color-accent-soft)", border: "1px solid var(--color-accent-border-soft)", borderRadius: "2rem", padding: "0.28rem 0.7rem" }}>
+              <ArrowRight size={11} weight="bold" /> {instruction}
+            </p>
           </div>
-          <div style={{ marginTop: "auto" }}>
+          <div>
             <Demo />
           </div>
         </div>

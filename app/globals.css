@@ -91,6 +91,17 @@
   --color-phone-bubble:      #1C1C22;
   --color-phone-shadow:      rgba(0,0,0,0.45);
   --color-phone-shadow-soft: rgba(0,0,0,0.30);
+  --color-phone-notch:       #000000;
+
+  /* demo device chrome — smartphone call pills + desktop/browser window dots.
+     Scoped to the interactive demo frames alongside the phone-shell family. */
+  --color-call-accept:        #16A34A;
+  --color-call-accept-hover:  #128A3E;
+  --color-call-decline:       #E5484D;
+  --color-call-decline-hover: #CE3B40;
+  --color-win-close:          #FF5F57;
+  --color-win-min:            #FEBC2E;
+  --color-win-max:            #28C840;
 
   /* gradients */
   --gradient-cta:           linear-gradient(135deg, #16A34A 0%, #1A5C3A 100%);
@@ -166,6 +177,13 @@ body::before {
   50%      { opacity: 1;   transform: scale(1.15); }
 }
 .gv-pulse { animation: gv-pulse 2.4s ease-in-out infinite; }
+
+/* Respect reduced-motion for the CSS-driven loops (framer-motion handles its
+   own via useReducedMotion in the demos). */
+@media (prefers-reduced-motion: reduce) {
+  .gv-pulse, .animate-marquee { animation: none !important; }
+  html { scroll-behavior: auto; }
+}
 
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
