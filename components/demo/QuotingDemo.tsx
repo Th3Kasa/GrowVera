@@ -94,7 +94,7 @@ type Msg = { role: "agent" | "user"; text: string };
 type Phase = "job" | "detail" | "urgency" | "typing" | "quote";
 
 const INITIAL_LOG: Msg[] = [
-  { role: "agent", text: "G'day! This is the Sample Plumbing Co quoting tool. Tell me a couple of things and I'll price the job on the spot." },
+  { role: "agent", text: "Hi — this is the Sample Plumbing Co quoting tool. Tell me a couple of things and I'll price the job on the spot." },
   { role: "agent", text: "First up — what's the job?" },
 ];
 
