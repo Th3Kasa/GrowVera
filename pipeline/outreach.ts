@@ -20,7 +20,7 @@ import type { Lead, LeadStore } from "./types";
 
 const COMPLIANCE_FOOTER =
   "\n\n—\nGrowVera · Sydney, Australia · ABN 50 329 139 726\nWe sent this because your business may benefit from a better web presence. " +
-  "If you'd rather not hear from us, reply STOP or email admin@growvera.com.au and we'll remove you immediately.";
+  "If you'd rather not hear from us, reply STOP or email contact.basemmorkos@gmail.com and we'll remove you immediately.";
 
 function dailyCap(): number {
   return Math.max(0, parseInt(process.env.DAILY_OUTREACH_CAP || "15", 10));

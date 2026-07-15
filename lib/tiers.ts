@@ -81,7 +81,7 @@ export const TIERS: Tier[] = [
     name: "24/7 AI Receptionist",
     outcome: "Never miss a call — even when you're on the tools.",
     tagline: "Your phone answered 24/7, so no job slips past.",
-    priceMonthly: 500,
+    priceMonthly: 650,
     setupFee: 0,
     setupWaiverNote: "Entry product — no setup fee, sold hard on the audit call",
     pickThisIf: "You miss calls when you're on a job, on a break, or after hours.",
@@ -107,7 +107,7 @@ export const TIERS: Tier[] = [
     ],
     faqs: [
       { q: "Does it replace me or my staff?", a: "No. It only answers when you can't. When you or your team are free, you pick up as normal — it's a safety net, not a replacement." },
-      { q: "What's the commitment?", a: "From $500/mo with no setup fee. Three-month minimum so it has a fair run, then month to month." },
+      { q: "What's the commitment?", a: "From $650/mo with no setup fee. Three-month minimum so it has a fair run, then month to month." },
       { q: "Will callers know it's not a person?", a: "It's upfront and natural. You hear and approve exactly how it answers before it goes live." },
       { q: "What if the system ever goes down?", a: "Calls fall straight back to your phone exactly as they do today. You're never worse off than before." },
     ],

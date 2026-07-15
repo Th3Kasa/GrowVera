@@ -110,7 +110,7 @@ export default function HomePage() {
                   <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>every web lead<br />called back, fast</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$500</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "#F4F4F1", lineHeight: 1, marginBottom: "0.25rem" }}>$650</p>
                   <p style={{ fontSize: "0.75rem", color: "#6E6E72", lineHeight: 1.4 }}>from, per month —<br />no setup fee</p>
                 </div>
               </div>
@@ -340,7 +340,7 @@ export default function HomePage() {
                 We&apos;re a small Sydney outfit and we&apos;d rather earn your trust than dazzle you. Here&apos;s exactly how we keep this safe.
               </p>
               <p style={{ fontSize: "0.85rem", color: "#6E6E72", lineHeight: 1.7 }}>
-                GrowVera · Sydney, Australia · ABN 50 329 139 726 · admin@growvera.com.au
+                GrowVera · Sydney, Australia · ABN 50 329 139 726 · contact.basemmorkos@gmail.com
               </p>
             </ScrollReveal>
 
@@ -409,7 +409,7 @@ export default function HomePage() {
                     "See what missed calls cost you — on the spot",
                     "Your phone answered 24/7, humans first",
                     "You approve everything before it goes live",
-                    "Receptionist from $500/mo, no setup fee",
+                    "Receptionist from $650/mo, no setup fee",
                     "Reversible in 30 seconds, anytime",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid rgba(255,255,255,0.20)" }}>

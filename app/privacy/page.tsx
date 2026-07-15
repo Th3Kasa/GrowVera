@@ -12,7 +12,7 @@ const sections = [
 
 GrowVera is bound by the Australian Privacy Principles (APPs) contained in the Privacy Act 1988 (Cth). This policy is written to be clear and practical, not exhaustive legalese.
 
-If you have questions about this policy or how we handle your information, contact us at admin@growvera.com.au.`,
+If you have questions about this policy or how we handle your information, contact us at contact.basemmorkos@gmail.com.`,
   },
   {
     title: "2. What Personal Information We Collect",
@@ -104,7 +104,7 @@ Where clients provide API credentials for these services, GrowVera stores those 
 
 (d) We review our security practices regularly and apply updates when vulnerabilities are identified.
 
-Despite these measures, no system can guarantee absolute security. If you believe your personal information held by GrowVera has been compromised, contact us immediately at admin@growvera.com.au.
+Despite these measures, no system can guarantee absolute security. If you believe your personal information held by GrowVera has been compromised, contact us immediately at contact.basemmorkos@gmail.com.
 
 In the event of an eligible data breach under the Notifiable Data Breaches scheme (Part IIIC of the Privacy Act), we will notify the Office of the Australian Information Commissioner and affected individuals in accordance with our legal obligations.`,
   },
@@ -132,9 +132,9 @@ When data is no longer required, we securely delete or anonymise it.`,
 
 (c) Deletion. You may request deletion of personal information we hold about you. We will comply where we are not required by law to retain it and where deletion does not affect our ability to deliver contracted services.
 
-(d) Complaints. If you believe we have handled your personal information in a way that does not comply with the Privacy Act, you may lodge a complaint by emailing admin@growvera.com.au. We will investigate and respond within 30 days. If you are not satisfied with our response, you may lodge a complaint with the Office of the Australian Information Commissioner (OAIC) at oaic.gov.au.
+(d) Complaints. If you believe we have handled your personal information in a way that does not comply with the Privacy Act, you may lodge a complaint by emailing contact.basemmorkos@gmail.com. We will investigate and respond within 30 days. If you are not satisfied with our response, you may lodge a complaint with the Office of the Australian Information Commissioner (OAIC) at oaic.gov.au.
 
-To exercise any of these rights, contact us at admin@growvera.com.au. We may need to verify your identity before responding.`,
+To exercise any of these rights, contact us at contact.basemmorkos@gmail.com. We may need to verify your identity before responding.`,
   },
   {
     title: "11. Cookies and Website Tracking",
@@ -162,7 +162,7 @@ Continued use of our services or website after a policy update constitutes accep
     title: "14. Contact Us",
     content: `For any privacy-related queries, access requests, correction requests, or complaints:
 
-Email: admin@growvera.com.au
+Email: contact.basemmorkos@gmail.com
 Business name: GrowVera
 ABN: 50 329 139 726
 Location: Sydney, New South Wales, Australia

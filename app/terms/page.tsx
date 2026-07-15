@@ -88,7 +88,7 @@ In providing the services, GrowVera may process personal data on behalf of the C
   },
   {
     title: "9. Cancellation and Termination",
-    content: `(a) Client Cancellation. You may cancel the monthly retainer at any time by providing 30 days written notice to admin@growvera.com.au. The retainer will continue to be charged during the notice period. No refunds are provided for unused portions of a prepaid month.
+    content: `(a) Client Cancellation. You may cancel the monthly retainer at any time by providing 30 days written notice to contact.basemmorkos@gmail.com. The retainer will continue to be charged during the notice period. No refunds are provided for unused portions of a prepaid month.
 
 (b) Setup Fee. The setup fee is non-refundable once development work has commenced. If a Client cancels prior to commencement of development, GrowVera may retain a reasonable portion of the setup fee to cover scoping and preparatory work completed to that point.
 
@@ -142,7 +142,7 @@ Except as expressly stated in these Terms, all other warranties, conditions, and
 
 (d) Assignment. You may not assign or transfer your rights or obligations under these Terms without GrowVera's prior written consent. GrowVera may assign its rights to a related entity or in connection with a business sale.
 
-(e) Contact. For all Terms-related queries: admin@growvera.com.au`,
+(e) Contact. For all Terms-related queries: contact.basemmorkos@gmail.com`,
   },
 ];
 

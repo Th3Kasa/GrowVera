@@ -120,7 +120,7 @@ export default function Navbar() {
               ))}
             </div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="pb-10 text-center">
-              <p className="text-sm" style={{ color: "#A2A2A0" }}>admin@growvera.com.au</p>
+              <p className="text-sm" style={{ color: "#A2A2A0" }}>contact.basemmorkos@gmail.com</p>
             </motion.div>
           </motion.div>
         )}

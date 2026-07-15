@@ -43,6 +43,6 @@ export async function sendEmail(to: string, subject: string, text: string): Prom
 
 /** Notify the founder (internal alerts: bookings, run summaries). */
 export async function notifyFounder(subject: string, text: string): Promise<void> {
-  const to = process.env.NOTIFY_TO || "admin@growvera.com.au";
+  const to = process.env.NOTIFY_TO || "contact.basemmorkos@gmail.com";
   await sendEmail(to, subject, text);
 }
