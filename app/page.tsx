@@ -66,7 +66,7 @@ const alsoAvailable = ADDONS.map((a) => ({
   icon: addonIcons[a.name] ?? Star,
   name: a.name,
   desc: a.desc,
-  price: `${formatAud(a.setupFee)} setup + from ${formatAud(a.priceMonthly)}/mo`,
+  price: a.setupFee > 0 ? `${formatAud(a.setupFee)} setup + from ${formatAud(a.priceMonthly)}/mo` : `from ${formatAud(a.priceMonthly)}/mo — no setup fee`,
 }));
 
 export default function HomePage() {
@@ -109,8 +109,8 @@ export default function HomePage() {
                   <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>every web lead rung back<br />before it goes cold</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>$650</p>
-                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>from, per month +<br />one-off setup</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>$1,000</p>
+                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>from, per month —<br />no setup fee</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -436,7 +436,7 @@ export default function HomePage() {
                     "See what missed calls cost you — on the spot",
                     "Answers only when you can't — you're first to pick up",
                     "You approve everything before it goes live",
-                    "Receptionist from $990 setup + $650/mo",
+                    "Receptionist from $1,000/mo — no setup fee",
                     "Reversible in 30 seconds, anytime",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid var(--color-on-dark-20)" }}>

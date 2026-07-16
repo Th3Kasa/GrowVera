@@ -67,7 +67,7 @@ export interface Tier {
   highlight?: boolean;
   /** Detailed inclusions (used on landing pages / pricing). */
   features: string[];
-  /** Short price note shown under the price (e.g. "$990 one-off setup"). */
+  /** Short price note shown under the price (e.g. "No setup fee · month to month"). */
   priceNote: string;
 }
 
@@ -92,16 +92,16 @@ export const ADDONS: Addon[] = [
   {
     name: "Google Review Agent",
     desc: "After every job it asks your happy customers for a review — then pings you the second a low one lands, so you fix it before the suburb sees it.",
-    setupFee: 490,
+    setupFee: 1000,
     priceMonthly: 500,
-    priceNote: "$490 one-off setup · month to month",
+    priceNote: "$1,000 one-off setup · month to month",
   },
   {
     name: "Lead Reactivation Agent",
     desc: "Works back through your dead lead list and wakes the ones still worth a job — revenue you already paid to get, sitting there cold.",
-    setupFee: 990,
+    setupFee: 0,
     priceMonthly: 1000,
-    priceNote: "$990 one-off setup · month to month",
+    priceNote: "No setup fee · month to month",
   },
 ];
 
@@ -112,9 +112,9 @@ export const TIERS: Tier[] = [
     name: "24/7 AI Receptionist",
     outcome: "Never miss a call — even when you're on the tools.",
     tagline: "Answered when you can't get to it — so no job slips past.",
-    priceMonthly: 650,
-    setupFee: 990,
-    setupWaiverNote: "Entry product — $990 setup, waivable as a closing lever for founding clients on the audit call",
+    priceMonthly: 1000,
+    setupFee: 0,
+    setupWaiverNote: "Retainer-only per Kirk model — no setup fee is the trust play; month-one retainer covers the freelancer build",
     pickThisIf: "You miss calls when you're on a job, on a break, or after hours.",
     forWho: [
       "Your hands are full on a job — you physically can't get to the phone.",
@@ -138,7 +138,7 @@ export const TIERS: Tier[] = [
     ],
     faqs: [
       { q: "Does it replace me or my staff?", a: "No — and that's the point. It only answers when you can't. The moment you or your team are free, you pick up as normal. It's a safety net under the calls you'd otherwise drop, not a replacement for anyone." },
-      { q: "What's the commitment?", a: "$990 one-off setup, then from $650/mo. Three-month minimum so it gets a fair run, then month to month. No lock-in past that." },
+      { q: "What's the commitment?", a: "From $1,000/mo with no setup fee. Three-month minimum so it gets a fair run, then month to month. No lock-in past that." },
       { q: "Will my customers know it's not a person?", a: "It's upfront that it's an assistant — and it sounds natural, not robotic. You hear exactly how it answers and approve every word before it goes live. Prefer it to only ever take a message? It'll do that too." },
       { q: "What if the system ever goes down?", a: "Calls fall straight back to your phone, exactly as they do today. There's no scenario where a customer can't reach you because of us — you're never worse off than before." },
     ],
@@ -153,7 +153,7 @@ export const TIERS: Tier[] = [
       "You approve the script and voice before go-live",
       "Set up in days — no new phone, no new number",
     ],
-    priceNote: "$990 one-off setup · 3-month minimum, then month to month",
+    priceNote: "No setup fee · 3-month minimum, then month to month",
   },
   {
     id: "pro",
@@ -162,7 +162,7 @@ export const TIERS: Tier[] = [
     outcome: "Call every web lead back in 20 seconds — before they call anyone else.",
     tagline: "Beat the other quote to the phone, every time.",
     priceMonthly: 2000,
-    setupFee: 1490,
+    setupFee: 0,
     setupWaiverNote: "Bundle discount available on the audit call if paired with Receptionist",
     pickThisIf: "You get website or form enquiries but don't always ring them back fast enough.",
     forWho: [
@@ -204,7 +204,7 @@ export const TIERS: Tier[] = [
       "Connects to your existing form and calendar",
       "Script written for you — you approve before go-live",
     ],
-    priceNote: "$1,490 one-off setup · 3-month minimum, then month to month",
+    priceNote: "No setup fee · 3-month minimum, then month to month",
   },
   {
     id: "agency",
@@ -213,7 +213,7 @@ export const TIERS: Tier[] = [
     outcome: "Quotes that took 15 minutes, done in seconds.",
     tagline: "Your price lists and rates, built into a quoting tool your team runs in-house.",
     priceMonthly: 1500,
-    setupFee: 10000,
+    setupFee: 12000,
     setupWaiverNote: "Flagship build — priced per business on the audit call",
     pickThisIf: "You quote a lot, and putting each one together eats your evenings.",
     forWho: [
@@ -238,7 +238,7 @@ export const TIERS: Tier[] = [
       { label: "Harvard Business Review — The Short Life of Online Sales Leads", url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
     ],
     faqs: [
-      { q: "How is this priced?", a: "It's a custom build — from $10,000 setup to wire it to your price lists and rules, then monthly care to keep it accurate. We scope the exact number with you on the audit call, so there are no surprises." },
+      { q: "How is this priced?", a: "It's a custom build — from $12,000 setup to wire it to your price lists and rules, then monthly care to keep it accurate. We scope the exact number with you on the audit call, so there are no surprises." },
       { q: "Will it get my prices wrong?", a: "It's built on your actual price lists, labour rates, and margin rules — not a generic calculator. And your team reviews every quote before it's sent, so nothing goes out that you haven't checked." },
       { q: "Do my customers have to deal with AI?", a: "No. This one's internal — only your staff use it. Your customers get the same quote from the same people as always, just faster. If you ever want to put quoting in front of customers directly, that's your call to make later." },
       { q: "How long does the build take?", a: "It depends on how your pricing is structured. We map it all out on the audit call and give you a clear timeline before you commit to anything." },
@@ -252,9 +252,9 @@ export const TIERS: Tier[] = [
       "Internal tool — only your team uses it",
       "Uses your margins and your rules, not a template",
       "Your team reviews and sends — quotes stay yours",
-      "Custom build from $10,000 setup, plus ongoing care to keep pricing accurate",
+      "Custom build from $12,000 setup, plus ongoing care to keep pricing accurate",
     ],
-    priceNote: "Custom build from $10,000 setup + monthly care",
+    priceNote: "Custom build from $12,000 setup + monthly care",
   },
 ];
 
