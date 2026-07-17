@@ -24,10 +24,12 @@ import { useDemoMotion, useChatAutoScroll, callLength, clockAt, mmss } from "./m
 /**
  * Advanced Strata — PRIVATE personalised prospect demo.
  * Adapted from ReceptionistCallDemo: same phone frame, useCallPlayback engine,
- * waveform, internal scroll and fixed FRAME_H. A 7:40pm buyer on a Thursday
- * cooling-off deadline calls; the assistant answers, quotes the real published
- * price/turnaround, captures the strata plan number, flags the deadline as a
- * priority, and texts a PRIORITY summary to Matthew.
+ * waveform, internal scroll and fixed FRAME_H. A 7:40pm first-time buyer,
+ * partway through cooling-off, calls not knowing what a strata report is; the
+ * assistant explains plainly, quotes the real urgent tier, removes friction on
+ * the missing SP number (auto-lookup), honestly escalates the special-levy
+ * question to the inspector + Matthew, captures the lead, and texts a PRIORITY
+ * summary to Matthew.
  *
  * No audit CTA — this is a private link. Cues: ADVANCED_STRATA_CUES carry the
  * exact startSec/dur measured from the generated MP3; LINES + buildCues() is the
@@ -37,19 +39,25 @@ import { useDemoMotion, useChatAutoScroll, callLength, clockAt, mmss } from "./m
 const AUDIO_SRC = "/demos/advanced-strata-call.mp3";
 
 const LINES: CueLine[] = [
-  { speaker: "ai", text: "Good evening, you've reached Advanced Strata's assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. How can I help?" },
-  { speaker: "caller", text: "Oh hi — yeah, I'm buying a unit down in Wollongong and the agent said I should get a strata report done. Thing is, my cooling-off ends Thursday." },
-  { speaker: "ai", text: "No problem — with a Thursday deadline you'd want the urgent report: three hundred and sixty dollars plus GST, and it's back within forty-eight hours. Let me grab the details — what's the property address?" },
-  { speaker: "caller", text: "Unit five, twelve Corrimal Street, Wollongong." },
-  { speaker: "ai", text: "Unit five, twelve Corrimal Street, Wollongong — got it. Do you have the strata plan number handy? It's on the front of the contract — usually starts with S-P." },
-  { speaker: "caller", text: "Ah — hang on… yeah, S-P four two one seven." },
-  { speaker: "ai", text: "S-P four two one seven, thanks. And your name and best number?" },
-  { speaker: "caller", text: "Daniel — oh four nine one… five seven oh… one five seven." },
-  { speaker: "ai", text: "Just confirming — oh four nine one, five seven oh, one five seven is the right number for the confirmation text?" },
-  { speaker: "caller", text: "Yep, that's it." },
-  { speaker: "ai", text: "Perfect. I've flagged your Thursday deadline, so this goes through as a priority. You'll get a text now with the order link, and I'll send all these notes straight to Matthew so he can lock the inspection in first thing." },
-  { speaker: "caller", text: "Oh — okay, that was easier than I expected. Thanks so much." },
-  { speaker: "ai", text: "No worries at all, Daniel. We'll take it from here — good luck with the unit. Bye now." },
+  { speaker: "ai", text: "Good evening, you've reached Advanced Strata's assistant — quick heads up, this call's recorded for training; if you'd rather it wasn't, just let me know. What can I help with?" },
+  { speaker: "caller", text: "Yeah, hi — so, um, I'm buying my first apartment down in Wollongong, and the agent said I need a strata report before I sign. I'll be honest, I don't really know what that is." },
+  { speaker: "ai", text: "You're in the right place — that's exactly what we do. In plain terms it's a health check on the building before you buy: the finances, any special levies coming up, past defects and repairs, the by-laws and insurance — so you know what you're walking into. Have you got a deadline you're working to?" },
+  { speaker: "caller", text: "Oh — right, okay. Yeah, my cooling-off ends Thursday, so it's pretty tight." },
+  { speaker: "ai", text: "Thursday's doable — for that we'd do the urgent report: three hundred and sixty dollars plus GST, back within forty-eight hours. Can I grab the property address?" },
+  { speaker: "caller", text: "Yeah, it's, um — unit five, twelve Corrimal Street, Wollongong." },
+  { speaker: "ai", text: "Unit five, twelve Corrimal Street — got it. Do you have the strata plan number? It's on the contract, usually starts with S-P." },
+  { speaker: "caller", text: "Ahh — I don't think I've got that in front of me, sorry." },
+  { speaker: "ai", text: "No stress at all — we can pull that from the address on our end. One less thing for you to chase down." },
+  { speaker: "caller", text: "Oh, good. Um — can I ask, the agent mentioned there might be a special levy coming up. Is that something you'd pick up?" },
+  { speaker: "ai", text: "Good question — I can't put a figure on that myself, but it's exactly what the report digs into. I'll flag it so the inspector checks the meeting minutes and the building's finances for anything coming up, and Matthew can walk you through what he finds." },
+  { speaker: "caller", text: "Yeah — that'd be great, thanks." },
+  { speaker: "ai", text: "Easy. And your name and the best number for the confirmation text?" },
+  { speaker: "caller", text: "Daniel — oh four nine one, five seven oh, one five seven." },
+  { speaker: "ai", text: "Perfect, Daniel — and that's oh four nine one, five seven oh, one five seven?" },
+  { speaker: "caller", text: "That's it." },
+  { speaker: "ai", text: "Beautiful. I've marked your Thursday deadline as priority and noted the levy question for the inspector. You'll get a text with the order link now, and I'll send all of this to Matthew so he can book the inspection first thing." },
+  { speaker: "caller", text: "Honestly — that was so much easier than I expected. Thanks so much." },
+  { speaker: "ai", text: "My pleasure. Good luck with the apartment — we'll be in touch soon. Bye now." },
 ];
 
 const CUES = ADVANCED_STRATA_CUES?.length ? ADVANCED_STRATA_CUES : buildCues(LINES);
@@ -177,9 +185,14 @@ export default function AdvancedStrataCallDemo() {
                     <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "var(--color-on-dark-danger-text)", lineHeight: 1.3 }}>New enquiry — PRIORITY · cooling-off ends Thursday</span>
                   </div>
                   <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55 }}>Daniel · 0491 570 157 (confirmed)</p>
-                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Unit 5/12 Corrimal St, Wollongong · SP 4217</p>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Unit 5/12 Corrimal St, Wollongong · SP: auto-lookup from address</p>
                   <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-text-bright)", lineHeight: 1.55, marginTop: "0.2rem" }}>Urgent 48-hr report — $396 incl. GST · order link sent</p>
-                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-danger)", fontWeight: 600, lineHeight: 1.55, marginTop: "0.2rem" }}>Notes flagged for first-thing booking.</p>
+                  {/* Special-levy flag — inspector to verify. Styled like the PRIORITY banner. */}
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: "0.4rem", background: "var(--color-on-dark-danger-soft)", border: "1px solid var(--color-on-dark-danger-border)", borderRadius: "0.6rem", padding: "0.4rem 0.55rem", marginTop: "0.45rem" }}>
+                    <Warning size={13} weight="fill" style={{ color: "var(--color-on-dark-danger)", flexShrink: 0, marginTop: "0.1rem" }} />
+                    <span style={{ fontSize: "0.68rem", fontWeight: 600, color: "var(--color-on-dark-danger-text)", lineHeight: 1.35 }}>Buyer flagged possible upcoming special levy — inspector to check minutes + finances</span>
+                  </div>
+                  <p style={{ fontSize: "0.72rem", color: "var(--color-on-dark-danger)", fontWeight: 600, lineHeight: 1.55, marginTop: "0.45rem" }}>Notes sent to Matthew for first-thing booking</p>
                 </motion.div>
               )}
             </AnimatePresence>

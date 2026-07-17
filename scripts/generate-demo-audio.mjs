@@ -291,66 +291,92 @@ const DIALOGUES = [
   {
     id: "advstrata",
     out: "advanced-strata-call.mp3",
-    // Personalised prospect demo (Advanced Strata). Fable-drafted D3:
-    // 7:40pm buyer on a Thursday cooling-off deadline; recording disclosure,
-    // real price ($320+GST) and turnaround (1–3 business days) from their live
-    // site, strata plan number capture + readback, number confirmation,
-    // deadline flagged as priority, notes routed to Matthew by name.
+    // Personalised prospect demo (Advanced Strata) — REALISTIC v2 (Basem-approved,
+    // 2026-07-17). A nervous first-time buyer, partway through cooling-off, calls
+    // not knowing what a strata report is. The assistant explains plainly, quotes
+    // the real urgent tier ($360+GST / 48hr), removes friction when he can't find
+    // the SP number (auto-lookup from address), honestly ESCALATES the special-levy
+    // question (refuses to guess a figure → flags it for the inspector + Matthew),
+    // captures the lead and routes a PRIORITY note to Matthew. 19 lines.
     // Voices: Sarah (AI, role A) + Charlie (caller, role B1 — anxious→relief arc).
+    // Spoken text only; all inter-line gaps 300ms.
     lines: [
-      // 1
+      // 1: recording disclosure.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Good evening, you've reached Advanced Strata's assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. How can I help?" },
+        { text: "Good evening, you've reached Advanced Strata's assistant — quick heads up, this call's recorded for training; if you'd rather it wasn't, just let me know. What can I help with?" },
       ] },
-      // 2
+      // 2: first-time buyer, unsure what a strata report is.
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Oh hi — yeah, I'm buying a unit down in Wollongong and the agent said I should get a strata report done. Thing is, my cooling-off ends Thursday." },
+        { text: "Yeah, hi — so, um, I'm buying my first apartment down in Wollongong, and the agent said I need a strata report before I sign. I'll be honest, I don't really know what that is." },
       ] },
-      // 3: recommends the urgent tier for the Thursday deadline (0.4s pause
-      // before "Let me grab"). (Fable script correction 2026-07-17.)
+      // 3: explains simply, then moves to the deadline.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "No problem — with a Thursday deadline you'd want the urgent report: three hundred and sixty dollars plus GST, and it's back within forty-eight hours.", pauseAfterMs: 400 },
-        { text: "Let me grab the details — what's the property address?" },
+        { text: "You're in the right place — that's exactly what we do. In plain terms it's a health check on the building before you buy: the finances, any special levies coming up, past defects and repairs, the by-laws and insurance — so you know what you're walking into. Have you got a deadline you're working to?" },
       ] },
-      // 4
+      // 4: deadline pressure.
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Unit five, twelve Corrimal Street, Wollongong." },
+        { text: "Oh — right, okay. Yeah, my cooling-off ends Thursday, so it's pretty tight." },
       ] },
-      // 5
+      // 5: recommends the urgent tier — real price/turnaround as words.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Unit five, twelve Corrimal Street, Wollongong — got it. Do you have the strata plan number handy? It's on the front of the contract — usually starts with S-P." },
+        { text: "Thursday's doable — for that we'd do the urgent report: three hundred and sixty dollars plus GST, back within forty-eight hours. Can I grab the property address?" },
       ] },
-      // 6
+      // 6: caller gives address (CACHED — identical spoken text reused).
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Ah — hang on… yeah, S-P four two one seven." },
+        { text: "Yeah, it's, um — unit five, twelve Corrimal Street, Wollongong." },
       ] },
-      // 7
+      // 7: readback; asks SP, explains where.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "S-P four two one seven, thanks. And your name and best number?" },
+        { text: "Unit five, twelve Corrimal Street — got it. Do you have the strata plan number? It's on the contract, usually starts with S-P." },
       ] },
-      // 8
+      // 8: FUMBLE — realistic; doesn't have it.
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Daniel — oh four nine one… five seven oh… one five seven." },
+        { text: "Ahh — I don't think I've got that in front of me, sorry." },
       ] },
-      // 9
+      // 9: removes friction instead of demanding info.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Just confirming — oh four nine one, five seven oh, one five seven is the right number for the confirmation text?" },
+        { text: "No stress at all — we can pull that from the address on our end. One less thing for you to chase down." },
       ] },
-      // 10
+      // 10: sets up the escalation — a specific levy question.
       { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
-        { text: "Yep, that's it." },
+        { text: "Oh, good. Um — can I ask, the agent mentioned there might be a special levy coming up. Is that something you'd pick up?" },
       ] },
-      // 11: the money moment — deadline flagged, notes to Matthew by name.
+      // 11: THE MONEY BEAT — refuses to guess a figure (guardrail), knows the
+      // report covers it, escalates to inspector + Matthew.
       { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
-        { text: "Perfect. I've flagged your Thursday deadline, so this goes through as a priority. You'll get a text now with the order link, and I'll send all these notes straight to Matthew so he can lock the inspection in first thing." },
+        { text: "Good question — I can't put a figure on that myself, but it's exactly what the report digs into. I'll flag it so the inspector checks the meeting minutes and the building's finances for anything coming up, and Matthew can walk you through what he finds." },
       ] },
-      // 12: relief lands.
+      // 12: reassured.
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Yeah — that'd be great, thanks." },
+      ] },
+      // 13: capture.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Easy. And your name and the best number for the confirmation text?" },
+      ] },
+      // 14: name + number as words (CACHED — identical spoken text reused).
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Daniel — oh four nine one, five seven oh, one five seven." },
+      ] },
+      // 15: number confirmation; AI name-use #1.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Perfect, Daniel — and that's oh four nine one, five seven oh, one five seven?" },
+      ] },
+      // 16: confirms.
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "That's it." },
+      ] },
+      // 17: money moment — priority + levy note + order link + notes to Matthew.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Beautiful. I've marked your Thursday deadline as priority and noted the levy question for the inspector. You'll get a text with the order link now, and I'll send all of this to Matthew so he can book the inspection first thing." },
+      ] },
+      // 18: relief — the arc lands.
       { speaker: "caller", role: "B1", gapAfterMs: BEAT, parts: [
-        { text: "Oh — okay, that was easier than I expected. Thanks so much." },
+        { text: "Honestly — that was so much easier than I expected. Thanks so much." },
       ] },
-      // 13
+      // 19: warm, professional signoff. NO "mate". AI name-use total = 1.
       { speaker: "ai", role: "A", gapAfterMs: 0, parts: [
-        { text: "No worries at all, Daniel. We'll take it from here — good luck with the unit. Bye now." },
+        { text: "My pleasure. Good luck with the apartment — we'll be in touch soon. Bye now." },
       ] },
     ],
   },
@@ -558,6 +584,22 @@ async function safeText(res) {
 let apiCallCount = 0;
 let charsBilled = 0;
 
+function cachePathFor(voiceId, text, settings) {
+  // NOTE: separator is a NUL byte ("\0") — must match the original inline hash
+  // exactly so cache hits are preserved across runs.
+  const hash = createHash("sha1")
+    .update([voiceId, MODEL_ID, OUTPUT_FORMAT, JSON.stringify(settings), text].join("\0"))
+    .digest("hex")
+    .slice(0, 16);
+  return path.join(CACHE_DIR, `${hash}.mp3`);
+}
+
+/** Is this exact (voice + settings + text) clip already cached (non-empty)? */
+function isCached(voiceId, text, settings) {
+  const file = cachePathFor(voiceId, text, settings);
+  return fs.existsSync(file) && fs.statSync(file).size > 0;
+}
+
 async function ttsPart(key, voiceId, text, settings) {
   const hash = createHash("sha1")
     .update([voiceId, MODEL_ID, OUTPUT_FORMAT, JSON.stringify(settings), text].join(" "))
@@ -720,7 +762,10 @@ import type { Cue } from "./useCallPlayback";
     const name = CUE_EXPORT[r.id];
     if (!name) continue;
     const block = `\nexport const ${name}: Cue[] = [\n${serialize(r.cues)}\n];\n`;
-    const re = new RegExp(`\\nexport const ${name}: Cue\\[\\] = \\[[\\s\\S]*?\\n\\];\\n`);
+    // CRLF-tolerant: the generated file may be checked out with \r\n endings on
+    // Windows. Matching only \n would fail, silently appending a DUPLICATE block
+    // (a redeclared const → build error), so allow an optional \r before each \n.
+    const re = new RegExp(`\\r?\\nexport const ${name}: Cue\\[\\] = \\[[\\s\\S]*?\\r?\\n\\];\\r?\\n`);
     body = re.test(body) ? body.replace(re, block) : body.replace(/\s*$/, "\n") + block;
   }
 
@@ -772,6 +817,41 @@ async function main() {
   const onlyIds = onlyArg ? onlyArg.split(",").map((s) => s.trim()).filter(Boolean) : null;
   const dialogues = onlyIds ? DIALOGUES.filter((d) => onlyIds.includes(d.id)) : DIALOGUES;
   if (onlyIds) console.log(`\nBuilding only: ${dialogues.map((d) => d.id).join(", ")}`);
+
+  // ── QUOTA GUARD ──────────────────────────────────────────────────────────
+  // Only NEW (uncached) parts bill against the monthly ElevenLabs quota. Sum
+  // their character lengths BEFORE any TTS call, print the estimate, and ABORT
+  // if it exceeds a safety ceiling — so we never partially bill into a quota
+  // we can't complete. Ceiling is below the real remaining balance as a buffer.
+  const QUOTA_CEILING = 2600;
+  let estBillChars = 0;
+  let estCachedParts = 0;
+  const guardRows = [];
+  for (const dlg of dialogues) {
+    for (let li = 0; li < dlg.lines.length; li++) {
+      const line = dlg.lines[li];
+      const voiceId = line.role === "A" ? voices.female.voice_id : voices.male.voice_id;
+      const settings = SETTINGS[line.role];
+      for (const part of line.parts) {
+        const cached = isCached(voiceId, part.text, settings);
+        if (cached) estCachedParts++;
+        else estBillChars += part.text.length;
+        guardRows.push({ id: dlg.id, li: li + 1, cached, len: part.text.length, text: part.text });
+      }
+    }
+  }
+  console.log("\n──────── QUOTA PRE-FLIGHT ────────");
+  for (const r of guardRows) {
+    console.log(`  ${r.id.padEnd(12)} [${String(r.li).padStart(2)}] ${r.cached ? "cache" : "BILL "} ${String(r.len).padStart(4)}  ${r.text.slice(0, 46)}`);
+  }
+  console.log(`Cached parts (no charge): ${estCachedParts}`);
+  console.log(`Estimated NEW characters to bill this run: ${estBillChars}`);
+  console.log(`Safety ceiling: ${QUOTA_CEILING}`);
+  if (estBillChars > QUOTA_CEILING) {
+    throw new Error(
+      `Estimated ${estBillChars} new chars exceeds the ${QUOTA_CEILING} safety ceiling — ABORTING before any TTS call. No characters were billed.`
+    );
+  }
 
   const results = [];
   for (const dlg of dialogues) {
