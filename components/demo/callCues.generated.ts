@@ -55,3 +55,19 @@ export const SPEEDTOLEAD_CUES: Cue[] = [
   { speaker: "ai", startSec: 89.06, dur: 6.36, text: "Perfect. I'll text the confirmation now and send these notes to the assigned plumber who'll be visiting you. Talk soon." },
   { speaker: "caller", startSec: 95.72, dur: 1.11, text: "Great, thanks!" },
 ];
+
+export const ADVANCED_STRATA_CUES: Cue[] = [
+  { speaker: "ai", startSec: 0, dur: 9.98, text: "Good evening, you've reached Advanced Strata's assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. How can I help?" },
+  { speaker: "caller", startSec: 10.28, dur: 9.61, text: "Oh hi — yeah, I'm buying a unit down in Wollongong and the agent said I should get a strata report done. Thing is, my cooling-off ends Thursday." },
+  { speaker: "ai", startSec: 20.2, dur: 12.57, text: "No problem — with a Thursday deadline you'd want the urgent report: three hundred and sixty dollars plus GST, and it's back within forty-eight hours. Let me grab the details — what's the property address?" },
+  { speaker: "caller", startSec: 33.06, dur: 2.6, text: "Unit five, twelve Corrimal Street, Wollongong." },
+  { speaker: "ai", startSec: 35.97, dur: 9.06, text: "Unit five, twelve Corrimal Street, Wollongong — got it. Do you have the strata plan number handy? It's on the front of the contract — usually starts with S-P." },
+  { speaker: "caller", startSec: 45.32, dur: 3.16, text: "Ah — hang on… yeah, S-P four two one seven." },
+  { speaker: "ai", startSec: 48.78, dur: 3.85, text: "S-P four two one seven, thanks. And your name and best number?" },
+  { speaker: "caller", startSec: 52.93, dur: 3.95, text: "Daniel — oh four nine one… five seven oh… one five seven." },
+  { speaker: "ai", startSec: 57.18, dur: 5.85, text: "Just confirming — oh four nine one, five seven oh, one five seven is the right number for the confirmation text?" },
+  { speaker: "caller", startSec: 63.33, dur: 1.02, text: "Yep, that's it." },
+  { speaker: "ai", startSec: 64.65, dur: 11.15, text: "Perfect. I've flagged your Thursday deadline, so this goes through as a priority. You'll get a text now with the order link, and I'll send all these notes straight to Matthew so he can lock the inspection in first thing." },
+  { speaker: "caller", startSec: 76.1, dur: 3.48, text: "Oh — okay, that was easier than I expected. Thanks so much." },
+  { speaker: "ai", startSec: 80.08, dur: 4.27, text: "No worries at all, Daniel. We'll take it from here — good luck with the unit. Bye now." },
+];

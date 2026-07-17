@@ -288,6 +288,72 @@ const DIALOGUES = [
       ] },
     ],
   },
+  {
+    id: "advstrata",
+    out: "advanced-strata-call.mp3",
+    // Personalised prospect demo (Advanced Strata). Fable-drafted D3:
+    // 7:40pm buyer on a Thursday cooling-off deadline; recording disclosure,
+    // real price ($320+GST) and turnaround (1–3 business days) from their live
+    // site, strata plan number capture + readback, number confirmation,
+    // deadline flagged as priority, notes routed to Matthew by name.
+    // Voices: Sarah (AI, role A) + Charlie (caller, role B1 — anxious→relief arc).
+    lines: [
+      // 1
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Good evening, you've reached Advanced Strata's assistant — just letting you know this call's recorded for training purposes; if you'd rather it wasn't, just say so. How can I help?" },
+      ] },
+      // 2
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Oh hi — yeah, I'm buying a unit down in Wollongong and the agent said I should get a strata report done. Thing is, my cooling-off ends Thursday." },
+      ] },
+      // 3: recommends the urgent tier for the Thursday deadline (0.4s pause
+      // before "Let me grab"). (Fable script correction 2026-07-17.)
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "No problem — with a Thursday deadline you'd want the urgent report: three hundred and sixty dollars plus GST, and it's back within forty-eight hours.", pauseAfterMs: 400 },
+        { text: "Let me grab the details — what's the property address?" },
+      ] },
+      // 4
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Unit five, twelve Corrimal Street, Wollongong." },
+      ] },
+      // 5
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Unit five, twelve Corrimal Street, Wollongong — got it. Do you have the strata plan number handy? It's on the front of the contract — usually starts with S-P." },
+      ] },
+      // 6
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Ah — hang on… yeah, S-P four two one seven." },
+      ] },
+      // 7
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "S-P four two one seven, thanks. And your name and best number?" },
+      ] },
+      // 8
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Daniel — oh four nine one… five seven oh… one five seven." },
+      ] },
+      // 9
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Just confirming — oh four nine one, five seven oh, one five seven is the right number for the confirmation text?" },
+      ] },
+      // 10
+      { speaker: "caller", role: "B1", gapAfterMs: GAP, parts: [
+        { text: "Yep, that's it." },
+      ] },
+      // 11: the money moment — deadline flagged, notes to Matthew by name.
+      { speaker: "ai", role: "A", gapAfterMs: GAP, parts: [
+        { text: "Perfect. I've flagged your Thursday deadline, so this goes through as a priority. You'll get a text now with the order link, and I'll send all these notes straight to Matthew so he can lock the inspection in first thing." },
+      ] },
+      // 12: relief lands.
+      { speaker: "caller", role: "B1", gapAfterMs: BEAT, parts: [
+        { text: "Oh — okay, that was easier than I expected. Thanks so much." },
+      ] },
+      // 13
+      { speaker: "ai", role: "A", gapAfterMs: 0, parts: [
+        { text: "No worries at all, Daniel. We'll take it from here — good luck with the unit. Bye now." },
+      ] },
+    ],
+  },
 ];
 
 /** Full spoken text of a line (for the transcript cue) = parts joined by a space. */
@@ -613,8 +679,20 @@ async function buildDialogue(key, dlg, voices) {
 
 /* ─────────────────────────── emit generated cues ────────────────────────── */
 
+/** dialogue id -> exported cue const name in callCues.generated.ts. */
+const CUE_EXPORT = {
+  receptionist: "RECEPTIONIST_CUES",
+  speedtolead: "SPEEDTOLEAD_CUES",
+  advstrata: "ADVANCED_STRATA_CUES",
+};
+
+/**
+ * Additive emit: only the blocks for dialogues built THIS run are (re)written;
+ * any other existing cue block in the file is preserved byte-for-byte. This lets
+ * `--only=advstrata` append ADVANCED_STRATA_CUES without touching the existing
+ * RECEPTIONIST_CUES / SPEEDTOLEAD_CUES.
+ */
 function emitGenerated(results) {
-  const byId = Object.fromEntries(results.map((r) => [r.id, r]));
   const serialize = (cues) =>
     cues
       .map((c) => `  { speaker: ${JSON.stringify(c.speaker)}, startSec: ${c.startSec}, dur: ${c.dur}, text: ${JSON.stringify(c.text)} },`)
@@ -630,12 +708,24 @@ function emitGenerated(results) {
 import type { Cue } from "./useCallPlayback";
 `;
 
-  const body =
-    `\nexport const RECEPTIONIST_CUES: Cue[] = [\n${serialize(byId.receptionist.cues)}\n];\n` +
-    `\nexport const SPEEDTOLEAD_CUES: Cue[] = [\n${serialize(byId.speedtolead.cues)}\n];\n`;
+  let body = "";
+  try {
+    body = fs.readFileSync(GEN_FILE, "utf8");
+  } catch {
+    /* fresh file */
+  }
+  if (!body.trim()) body = header;
 
-  fs.writeFileSync(GEN_FILE, header + body);
-  console.log(`\nWrote ${path.relative(REPO_ROOT, GEN_FILE)}`);
+  for (const r of results) {
+    const name = CUE_EXPORT[r.id];
+    if (!name) continue;
+    const block = `\nexport const ${name}: Cue[] = [\n${serialize(r.cues)}\n];\n`;
+    const re = new RegExp(`\\nexport const ${name}: Cue\\[\\] = \\[[\\s\\S]*?\\n\\];\\n`);
+    body = re.test(body) ? body.replace(re, block) : body.replace(/\s*$/, "\n") + block;
+  }
+
+  fs.writeFileSync(GEN_FILE, body);
+  console.log(`\nWrote ${path.relative(REPO_ROOT, GEN_FILE)} (blocks: ${results.map((r) => CUE_EXPORT[r.id]).join(", ")})`);
 }
 
 /* ─────────────────────────── quota reporting ────────────────────────────── */
@@ -676,8 +766,15 @@ async function main() {
   console.log(`  Male   (B1/B2):    ${voices.male.name}  [${voices.male.source}]`);
   voices.notes.forEach((n) => console.log(`  - ${n}`));
 
+  // Optional `--only=id[,id]` filter — build a subset (used to add a new
+  // dialogue without re-stitching / re-cueing the existing ones).
+  const onlyArg = (process.argv.find((a) => a.startsWith("--only=")) || "").split("=")[1];
+  const onlyIds = onlyArg ? onlyArg.split(",").map((s) => s.trim()).filter(Boolean) : null;
+  const dialogues = onlyIds ? DIALOGUES.filter((d) => onlyIds.includes(d.id)) : DIALOGUES;
+  if (onlyIds) console.log(`\nBuilding only: ${dialogues.map((d) => d.id).join(", ")}`);
+
   const results = [];
-  for (const dlg of DIALOGUES) {
+  for (const dlg of dialogues) {
     results.push(await buildDialogue(key, dlg, voices));
   }
 
