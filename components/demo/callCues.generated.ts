@@ -77,3 +77,12 @@ export const ADVANCED_STRATA_CUES: Cue[] = [
   { speaker: "caller", startSec: 127.05, dur: 4.64, text: "Honestly — that was so much easier than I expected. Thanks so much." },
   { speaker: "ai", startSec: 132.2, dur: 4.41, text: "My pleasure. Good luck with the apartment — we'll be in touch soon. Bye now." },
 ];
+
+// Advanced Strata — Speed-to-Lead upsell demo (via MuAPI dialogue).
+// Placeholder: audio generation was DEFERRED (the MuAPI
+// elevenlabs-text-to-dialogue-v3 endpoint was failing — see
+// scripts/generate-muapi-dialogue.mjs). While this is empty the component uses
+// its buildCues(LINES) transcript-only fallback and plays silently. Re-running
+// the script once the endpoint is healthy overwrites this block in place with
+// real cue timings measured from the generated MP3.
+export const AS_SPEEDTOLEAD_CUES: Cue[] = [];
