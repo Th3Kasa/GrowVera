@@ -78,11 +78,25 @@ export const ADVANCED_STRATA_CUES: Cue[] = [
   { speaker: "ai", startSec: 132.2, dur: 4.41, text: "My pleasure. Good luck with the apartment — we'll be in touch soon. Bye now." },
 ];
 
-// Advanced Strata — Speed-to-Lead upsell demo (via MuAPI dialogue).
-// Placeholder: audio generation was DEFERRED (the MuAPI
-// elevenlabs-text-to-dialogue-v3 endpoint was failing — see
-// scripts/generate-muapi-dialogue.mjs). While this is empty the component uses
-// its buildCues(LINES) transcript-only fallback and plays silently. Re-running
-// the script once the endpoint is healthy overwrites this block in place with
-// real cue timings measured from the generated MP3.
-export const AS_SPEEDTOLEAD_CUES: Cue[] = [];
+// Advanced Strata — Speed-to-Lead upsell demo.
+// Per-line MiniMax TTS (MuAPI) stitched by scripts/generate-minimax-audio.mjs.
+// Voices differ from the receptionist demo by design (dialogue endpoint was down).
+// Cues are EXACT — measured per clip with ffprobe plus the inter-line gaps.
+export const AS_SPEEDTOLEAD_CUES: Cue[] = [
+  { speaker: "ai", startSec: 0, dur: 18.1, text: "Hi, it's the assistant from Advanced Strata — you just popped in an enquiry on our site about a strata report. Quick heads up, this call's recorded for training; happy to switch that off if you'd prefer. Have I caught you at an okay time?" },
+  { speaker: "caller", startSec: 18.65, dur: 4.44, text: "Oh — wow, that was quick. I literally just submitted the form." },
+  { speaker: "ai", startSec: 23.38, dur: 8.7, text: "We like to be quick — the sooner we get your report moving, the better, especially if there's a deadline. Which property's it for?" },
+  { speaker: "caller", startSec: 32.38, dur: 4.34, text: "Yeah, um — it's an apartment in Wollongong I'm looking at buying." },
+  { speaker: "ai", startSec: 37.02, dur: 4.47, text: "Lovely. And is there a cooling-off date you're working towards?" },
+  { speaker: "caller", startSec: 41.79, dur: 3.15, text: "Yeah, it ends Friday, so it's a bit tight." },
+  { speaker: "ai", startSec: 45.23, dur: 12.97, text: "Friday's doable — for that we'd do the urgent report: three hundred and sixty dollars plus GST, back within forty-eight hours. Did the agent give you a strata plan number, or just the address?" },
+  { speaker: "caller", startSec: 58.5, dur: 3.83, text: "Ah — just the address, I think. I don't have a plan number on me." },
+  { speaker: "ai", startSec: 62.63, dur: 4.77, text: "No problem at all — we can pull that from the address. What's the address?" },
+  { speaker: "caller", startSec: 67.71, dur: 3.88, text: "It's unit eight, forty Crown Street, Wollongong." },
+  { speaker: "ai", startSec: 71.88, dur: 16.29, text: "Unit eight, forty Crown Street — got it. I'll text you the order link now so you can lock it in, and I'll flag your Friday deadline as priority for Matthew. Is this the best number for the text — the one you're on?" },
+  { speaker: "caller", startSec: 88.47, dur: 1.57, text: "Yeah, this one's good." },
+  { speaker: "ai", startSec: 90.34, dur: 9.72, text: "Perfect. You'll have the link in a moment, and Matthew will make sure the inspection's booked in time for Friday. Anything else I can help with?" },
+  { speaker: "caller", startSec: 100.36, dur: 3.96, text: "No, that's great — honestly, that was so easy. Thanks so much." },
+  { speaker: "ai", startSec: 104.62, dur: 4.39, text: "My pleasure. Good luck with the apartment — bye for now." },
+];
+
