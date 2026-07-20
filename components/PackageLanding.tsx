@@ -113,7 +113,10 @@ export default function PackageLanding({ tier, demo }: { tier: Tier; demo?: Reac
                 Priced to your business
               </h3>
               <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "34rem", margin: "0 auto 1.5rem" }}>
-                Every business is different, so we price it on your free AI audit call — scaled to what you actually need. No setup fee, three-month minimum, then month to month.
+                Every business is different, so we price it on your free AI audit call — scaled to what you actually need.{" "}
+                {tier.setupFee > 0
+                  ? "It's a custom build, so we scope it with you on the call — no surprises."
+                  : "No setup fee, three-month minimum, then month to month."}
               </p>
               <a
                 href="/audit"
