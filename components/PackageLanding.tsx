@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { CheckCircle, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import ScrollReveal from "@/components/ScrollReveal";
 import WithWithout from "@/components/WithWithout";
-import { formatAud, type Tier } from "@/lib/tiers";
+import { type Tier } from "@/lib/tiers";
 
 /**
  * Shared template for the three package landing pages (/presence, /engine,
@@ -26,7 +26,7 @@ export default function PackageLanding({ tier, demo }: { tier: Tier; demo?: Reac
               {tier.outcome}
             </h1>
             <p style={{ color: "var(--color-text-muted)", fontSize: "1.0625rem", lineHeight: 1.7, maxWidth: "520px", margin: "0 auto 2rem" }}>
-              {tier.pickThisIf} We build it for you — from {formatAud(tier.priceMonthly)}/month.
+              {tier.pickThisIf} We build it around how you work.
             </p>
             <a
               href="/audit"
@@ -109,13 +109,11 @@ export default function PackageLanding({ tier, demo }: { tier: Tier; demo?: Reac
         <ScrollReveal>
           <section style={{ marginBottom: "clamp(2.5rem, 5vw, 4rem)" }}>
             <div style={{ background: "var(--gradient-card-featured)", border: "1px solid var(--color-accent-border)", borderRadius: "1.25rem", padding: "clamp(1.75rem, 4vw, 2.5rem)", textAlign: "center" }}>
-              <p style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginBottom: "0.4rem" }}>From</p>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.35rem", marginBottom: "0.4rem" }}>
-                <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "3rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, letterSpacing: "-0.03em" }}>{formatAud(tier.priceMonthly)}</span>
-                <span style={{ fontSize: "0.9rem", color: "var(--color-text-faint)" }}>/month</span>
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", marginBottom: "1.5rem" }}>
-                Prices in AUD · {tier.priceNote}
+              <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.5rem, 3.5vw, 2.1rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "0.9rem" }}>
+                Priced to your business
+              </h3>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "34rem", margin: "0 auto 1.5rem" }}>
+                Every business is different, so we price it on your free AI audit call — scaled to what you actually need. No setup fee, three-month minimum, then month to month.
               </p>
               <a
                 href="/audit"

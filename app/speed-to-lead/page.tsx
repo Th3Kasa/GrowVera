@@ -8,7 +8,7 @@ const tier = getTierBySlug("speed-to-lead")!;
 export const metadata: Metadata = {
   title: "Speed-to-Lead Agent — call every web lead back in 20 seconds | GrowVera",
   description:
-    "GrowVera's Speed-to-Lead Agent rings every website enquiry back in about 20 seconds — before the other quote even sees it. It qualifies the lead and books the job. From $2,000/mo — no setup fee.",
+    "GrowVera's Speed-to-Lead Agent rings every website enquiry back in about 20 seconds — before the other quote even sees it. It qualifies the lead and books the job. Priced to your business on a free AI audit call.",
 };
 
 export default function SpeedToLeadPage() {

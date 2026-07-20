@@ -94,7 +94,7 @@ export const ADDONS: Addon[] = [
     desc: "After every job it asks your happy customers for a review — then pings you the second a low one lands, so you fix it before the suburb sees it.",
     setupFee: 1000,
     priceMonthly: 500,
-    priceNote: "$1,000 one-off setup · month to month",
+    priceNote: "Priced on your free audit call · month to month",
   },
   {
     name: "Lead Reactivation Agent",
@@ -138,7 +138,7 @@ export const TIERS: Tier[] = [
     ],
     faqs: [
       { q: "Does it replace me or my staff?", a: "No — and that's the point. It only answers when you can't. The moment you or your team are free, you pick up as normal. It's a safety net under the calls you'd otherwise drop, not a replacement for anyone." },
-      { q: "What's the commitment?", a: "From $1,000/mo with no setup fee. Three-month minimum so it gets a fair run, then month to month. No lock-in past that." },
+      { q: "What's the commitment?", a: "We price it on your free audit call, scaled to your business. No setup fee, three-month minimum so it gets a fair run, then month to month — no lock-in past that." },
       { q: "Will my customers know it's not a person?", a: "It's upfront that it's an assistant — and it sounds natural, not robotic. You hear exactly how it answers and approve every word before it goes live. Prefer it to only ever take a message? It'll do that too." },
       { q: "What if the system ever goes down?", a: "Calls fall straight back to your phone, exactly as they do today. There's no scenario where a customer can't reach you because of us — you're never worse off than before." },
     ],
@@ -189,7 +189,7 @@ export const TIERS: Tier[] = [
     faqs: [
       { q: "How fast does it actually call?", a: "Within about 20 seconds of the lead hitting your form — while they're still on your website with your name in front of them. That's the window where most buyers go with whoever answers first." },
       { q: "What does it say to my customer?", a: "A short, friendly qualifying call in your business's voice — we write the script, you approve every line before it goes live. Nothing goes out that you haven't signed off." },
-      { q: "What's the commitment?", a: "From $2,000/mo. Three-month minimum so it has time to prove itself, then month to month." },
+      { q: "What's the commitment?", a: "We price it on your free audit call, scaled to your business. No setup fee, three-month minimum so it has time to prove itself, then month to month." },
       { q: "Do I need new software for this?", a: "No. We wire it into the website form and calendar you already use. Nothing for you to install, nothing to learn." },
     ],
     stripePriceIdEnv: "STRIPE_PRICE_ID_PRO",
@@ -238,7 +238,7 @@ export const TIERS: Tier[] = [
       { label: "Harvard Business Review — The Short Life of Online Sales Leads", url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
     ],
     faqs: [
-      { q: "How is this priced?", a: "It's a custom build — from $12,000 setup to wire it to your price lists and rules, then monthly care to keep it accurate. We scope the exact number with you on the audit call, so there are no surprises." },
+      { q: "How is this priced?", a: "It's a custom build, scoped to how your pricing actually works. We work out the exact number with you on your free audit call — so there are no surprises, and you approve it before anything starts." },
       { q: "Will it get my prices wrong?", a: "It's built on your actual price lists, labour rates, and margin rules — not a generic calculator. And your team reviews every quote before it's sent, so nothing goes out that you haven't checked." },
       { q: "Do my customers have to deal with AI?", a: "No. This one's internal — only your staff use it. Your customers get the same quote from the same people as always, just faster. If you ever want to put quoting in front of customers directly, that's your call to make later." },
       { q: "How long does the build take?", a: "It depends on how your pricing is structured. We map it all out on the audit call and give you a clear timeline before you commit to anything." },
@@ -252,9 +252,9 @@ export const TIERS: Tier[] = [
       "Internal tool — only your team uses it",
       "Uses your margins and your rules, not a template",
       "Your team reviews and sends — quotes stay yours",
-      "Custom build from $12,000 setup, plus ongoing care to keep pricing accurate",
+      "Custom build scoped to your pricing, plus ongoing care to keep it accurate",
     ],
-    priceNote: "Custom build from $12,000 setup + monthly care",
+    priceNote: "Priced to your business on your free audit call",
   },
 ];
 

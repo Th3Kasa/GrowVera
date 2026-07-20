@@ -15,7 +15,6 @@ import Link from "next/link";
 import Marquee from "@/components/Marquee";
 import ScrollReveal from "@/components/ScrollReveal";
 import HeroButtons from "@/components/HeroButtons";
-import Pricing from "@/components/Pricing";
 import WithWithout from "@/components/WithWithout";
 import DemosHub from "@/components/demo/DemosHub";
 import { TIERS, ADDONS, formatAud } from "@/lib/tiers";
@@ -66,7 +65,6 @@ const alsoAvailable = ADDONS.map((a) => ({
   icon: addonIcons[a.name] ?? Star,
   name: a.name,
   desc: a.desc,
-  price: a.setupFee > 0 ? `${formatAud(a.setupFee)} setup + from ${formatAud(a.priceMonthly)}/mo` : `from ${formatAud(a.priceMonthly)}/mo — no setup fee`,
 }));
 
 export default function HomePage() {
@@ -109,8 +107,8 @@ export default function HomePage() {
                   <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>every web lead rung back<br />before it goes cold</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>$1,000</p>
-                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>from, per month —<br />no setup fee</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>Free</p>
+                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>audit shows what<br />you&apos;re losing</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -223,7 +221,7 @@ export default function HomePage() {
                         <span style={{ color: "var(--color-accent)", fontWeight: 600 }}>Pick this if:</span> {tier.pickThisIf}
                       </p>
                       <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontSize: "0.85rem", color: "var(--color-text-faint)" }}>from <span style={{ color: "var(--color-text)", fontWeight: 700 }}>{formatAud(tier.priceMonthly)}</span>/mo</span>
+                        <span style={{ fontSize: "0.85rem", color: "var(--color-text-faint)" }}>Priced to your business</span>
                         <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "var(--color-accent)", fontSize: "0.82rem", fontWeight: 600 }}>See how it works <ArrowRight size={13} weight="bold" /></span>
                       </div>
                     </div>
@@ -247,7 +245,7 @@ export default function HomePage() {
                     <div style={{ minWidth: 0 }}>
                       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0.25rem 0.75rem", marginBottom: "0.3rem" }}>
                         <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text)" }}>{a.name}</h3>
-                        <span style={{ fontSize: "0.78rem", color: "var(--color-text-faint)", whiteSpace: "nowrap" }}>{a.price}</span>
+                        <span style={{ fontSize: "0.78rem", color: "var(--color-accent-muted)", whiteSpace: "nowrap", fontWeight: 600 }}>Add it on your audit call</span>
                       </div>
                       <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.6 }}>{a.desc}</p>
                     </div>
@@ -398,9 +396,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRICING */}
-      <Pricing />
-
       {/* CTA */}
       <section style={{ background: "var(--color-bg)", paddingTop: "clamp(4rem, 9vw, 9rem)", paddingBottom: "clamp(4rem, 9vw, 9rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -436,7 +431,7 @@ export default function HomePage() {
                     "See what missed calls cost you — on the spot",
                     "Answers only when you can't — you're first to pick up",
                     "You approve everything before it goes live",
-                    "Receptionist from $1,000/mo — no setup fee",
+                    "Priced to your business — you see the number on your free audit",
                     "Reversible in 30 seconds, anytime",
                   ].map((item) => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.25rem 0", borderTop: "1px solid var(--color-on-dark-20)" }}>

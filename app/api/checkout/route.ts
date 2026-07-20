@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       },
       metadata: { tier: t.id },
       success_url: `${base}/buy/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}/#pricing`,
+      cancel_url: `${base}/#services`,
     });
 
     return NextResponse.json({ url: session.url });
