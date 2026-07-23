@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   ArrowUUpLeft,
   PhoneDisconnect,
-  Calculator,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import Marquee from "@/components/Marquee";
@@ -27,24 +26,24 @@ const marqueeItems = [
 const steps = [
   {
     step: "01",
-    name: "Free AI audit",
-    icon: Calculator,
-    title: "We show you what missed calls are costing you",
-    desc: "Put in a few numbers — calls you miss, your average job value — and see, on the spot, roughly what's walking past your phone each year. Most owners guess low; the audit shows your real number in two minutes. No jargon, no pressure.",
+    name: "Catch",
+    icon: Phone,
+    title: "It answers only the calls you can't get to",
+    desc: "In your business's name — while you're on the tools, after hours, or already on another call. You still pick up whenever you're free; this only catches what would otherwise ring out.",
   },
   {
     step: "02",
-    name: "We build it",
-    icon: ShieldCheck,
-    title: "We set it up for your business — you approve every bit",
-    desc: "We build your receptionist around how you actually work — your jobs, your area, your rates. The quoting tool your team runs stays in-house; your customers never talk to AI unless you choose that later. You hear exactly how it sounds and sign off before anything switches on.",
+    name: "Capture",
+    icon: Receipt,
+    title: "It gets the job, the details, and the urgency",
+    desc: "It never guesses. If it doesn't know something, it takes a proper message rather than making something up — so what lands on your phone is accurate, not invented.",
   },
   {
     step: "03",
-    name: "You approve, then it goes live",
-    icon: Phone,
-    title: "It runs quietly in the background",
-    desc: "Once you're happy, it goes live. Calls get answered, leads get chased, quotes get done — while you stay on the tools. Start with one agent, watch it work for a month, then decide what's next. And if the system's ever down, calls fall straight back to your phone, exactly as before.",
+    name: "Hand-back",
+    icon: ArrowUUpLeft,
+    title: "It texts you the summary and sends them your booking link",
+    desc: "The ball's back in your court with a warm, qualified lead — not phone tag. And if our system's ever down, calls fall straight back to your phone, exactly as today.",
   },
 ];
 
@@ -61,11 +60,29 @@ const addonIcons: Record<string, typeof Phone> = {
   "Lead Reactivation Agent": ArrowCounterClockwise,
 };
 
-const alsoAvailable = ADDONS.map((a) => ({
-  icon: addonIcons[a.name] ?? Star,
-  name: a.name,
-  desc: a.desc,
-}));
+// The ascension ladder — everything after the receptionist wedge. Same card
+// treatment for all four so Lead Reactivation finally gets parity instead of
+// being an orphan card with no section of its own.
+const ladderItems = [
+  ...TIERS.filter((t) => t.slug !== "receptionist").map((t) => ({
+    key: t.id,
+    icon: productIcons[t.slug] ?? Star,
+    name: t.name,
+    desc: `${t.outcome} ${t.pickThisIf}`,
+    href: `/${t.slug}`,
+    cta: "See how it works",
+  })),
+  ...ADDONS.map((a) => ({
+    key: a.name,
+    icon: addonIcons[a.name] ?? Star,
+    name: a.name,
+    desc: a.desc,
+    href: "/audit",
+    cta: "Add it on your audit call",
+  })),
+];
+
+const receptionistTier = TIERS.find((t) => t.slug === "receptionist")!;
 
 export default function HomePage() {
   return (
@@ -92,7 +109,7 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={0.14}>
               <p style={{ fontSize: "1.15rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "40rem", marginBottom: "2rem" }}>
-                An AI receptionist that only answers when you can&apos;t &mdash; plus quoting your team runs in-house. You still pick up when you&apos;re free, and your customers never talk to a machine unless you decide they should. This just catches the jobs you&apos;d have lost.
+                You didn&apos;t start your business to be chained to your phone. The Missed-Call Safety Net catches the calls you can&apos;t get to, books the job, and texts you the summary &mdash; so you stay on the tools and still win the work. Your customers never talk to a machine unless you decide they should.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.18}>
@@ -103,8 +120,8 @@ export default function HomePage() {
                   <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>the calls you can&apos;t get to,<br />answered day or night</p>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>20s</p>
-                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>every web lead rung back<br />before it goes cold</p>
+                  <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>80%</p>
+                  <p style={{ fontSize: "0.75rem", color: "var(--color-text-faint)", lineHeight: 1.4 }}>of callers who hit voicemail<br />just ring the next tradie</p>
                 </div>
                 <div>
                   <p style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "2.5rem", fontWeight: 900, color: "var(--color-text)", lineHeight: 1, marginBottom: "0.25rem" }}>Free</p>
@@ -155,12 +172,12 @@ export default function HomePage() {
       <section id="how-it-works" style={{ background: "var(--color-bg-section)", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "0.75rem" }}>How it works</p>
-            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "30rem", marginBottom: "1.25rem" }}>
-              Three steps.<br />You approve before anything goes live.
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "0.75rem" }}>The named mechanism</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: "34rem", marginBottom: "1.25rem" }}>
+              Meet The Missed-Call Safety Net.
             </h2>
-            <p style={{ fontSize: "0.975rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "34rem", marginBottom: "4rem" }}>
-              We do the setup. You stay in control the whole way — nothing switches on until you&apos;ve heard it and said yes.
+            <p style={{ fontSize: "0.975rem", color: "var(--color-text-muted)", lineHeight: 1.7, maxWidth: "36rem", marginBottom: "4rem" }}>
+              It&apos;s not a call centre and it&apos;s not an always-on bot. It stays silent while you handle your own calls, and only ever steps in on the ones that would otherwise ring out. We call that <strong style={{ color: "var(--color-text)" }}>Answers-Only-When-You-Can&apos;t</strong> &mdash; it&apos;s not a replacement for you, it&apos;s the safety net under you.
             </p>
           </ScrollReveal>
 
@@ -191,38 +208,83 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRODUCTS */}
-      <section id="services" style={{ background: "var(--color-bg)", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+      {/* THE WEDGE — 24/7 AI Receptionist, the single hero offer */}
+      <section id="services" style={{ background: "var(--color-bg)", paddingTop: "clamp(3rem, 7vw, 8rem)", paddingBottom: "clamp(2rem, 4vw, 3rem)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "1rem" }}>What we build</p>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "1rem" }}>Start here</p>
             <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 900, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1.25rem" }}>
-              Three ways to stop<br />losing jobs.
+              Every client starts<br />with the phone.
             </h2>
-            <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3.5rem", maxWidth: "36rem" }}>
-              Start with the receptionist so no call goes unanswered. Add speed-to-lead and instant quoting when you&apos;re ready &mdash; one step at a time, no fifty-grand overhaul. Pick what&apos;s costing you most right now.
+            <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3rem", maxWidth: "36rem" }}>
+              This is the wedge &mdash; the one thing that has to work before anything else is worth adding. Get the phone handled first.
             </p>
           </ScrollReveal>
 
-          <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))" }}>
-            {TIERS.map((tier, i) => {
-              const Icon = productIcons[tier.slug] ?? Phone;
-              const featured = !!tier.highlight;
+          <ScrollReveal delay={0.06}>
+            <Link href={`/${receptionistTier.slug}`} style={{ display: "block", textDecoration: "none" }}>
+              <div style={{ background: "var(--gradient-card-featured)", border: "1px solid var(--color-accent-border-strong)", borderRadius: "1.5rem", padding: "clamp(2rem, 5vw, 3.5rem)", display: "grid", gap: "2.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))", alignItems: "center" }}>
+                <div>
+                  <div style={{ width: 48, height: 48, background: "var(--color-accent-soft)", borderRadius: "0.85rem", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
+                    <Phone size={24} weight="bold" style={{ color: "var(--color-accent)" }} />
+                  </div>
+                  <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, color: "var(--color-accent)", marginBottom: "0.75rem" }}>{receptionistTier.name}</p>
+                  <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.5rem, 3.5vw, 2.1rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: "0.9rem" }}>
+                    {receptionistTier.outcome}
+                  </h3>
+                  <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.5rem", maxWidth: "34rem" }}>
+                    {receptionistTier.tagline}
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "var(--color-accent)", color: "var(--color-on-accent)", padding: "0.85rem 1.6rem", borderRadius: "2rem", fontSize: "0.88rem", fontWeight: 700 }}>
+                      See exactly how it works <ArrowRight size={14} weight="bold" />
+                    </span>
+                    <span style={{ fontSize: "0.85rem", color: "var(--color-text-faint)" }}>Priced to your business on your free audit</span>
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+                  {steps.map((s) => (
+                    <div key={s.step} style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "0.85rem", padding: "0.9rem 1.1rem" }}>
+                      <span style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontWeight: 900, fontSize: "0.85rem", color: "var(--color-accent)", flexShrink: 0, paddingTop: "0.15rem" }}>{s.name}</span>
+                      <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.5 }}>{s.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ASCENSION LADDER — everything after the phone's handled */}
+      <section id="ladder" style={{ background: "var(--color-bg)", paddingTop: "clamp(2rem, 4vw, 3rem)", paddingBottom: "clamp(3rem, 7vw, 8rem)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <p style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 600, color: "var(--color-accent)", marginBottom: "1rem" }}>Once your phone&apos;s handled</p>
+            <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", fontWeight: 800, color: "var(--color-text)", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.25rem" }}>
+              Here&apos;s what&apos;s next.
+            </h2>
+            <p style={{ fontSize: "0.975rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "3rem", maxWidth: "36rem" }}>
+              These four are the ladder you climb after the receptionist &mdash; add one at a time, whenever you&apos;re ready. No fifty-grand overhaul, just the next thing that&apos;s costing you the most.
+            </p>
+          </ScrollReveal>
+
+          <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))" }}>
+            {ladderItems.map((item, i) => {
+              const Icon = item.icon;
               return (
-                <ScrollReveal key={tier.id} delay={i * 0.07}>
-                  <Link href={`/${tier.slug}`} style={{ display: "block", height: "100%", textDecoration: "none" }}>
-                    <div style={{ background: featured ? "var(--gradient-card-featured)" : "var(--color-bg-card)", border: featured ? "1px solid var(--color-accent-border-strong)" : "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "2rem", height: "100%", display: "flex", flexDirection: "column" }}>
-                      <div style={{ width: 44, height: 44, background: "var(--color-accent-soft)", borderRadius: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
-                        <Icon size={22} weight="bold" style={{ color: "var(--color-accent)" }} />
+                <ScrollReveal key={item.key} delay={i * 0.06}>
+                  <Link href={item.href} style={{ display: "block", height: "100%", textDecoration: "none" }}>
+                    <div style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "1.75rem", height: "100%", display: "flex", gap: "1.1rem", alignItems: "flex-start" }}>
+                      <div style={{ width: 40, height: 40, background: "var(--color-accent-soft)", borderRadius: "0.6rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <Icon size={19} weight="bold" style={{ color: "var(--color-accent)" }} />
                       </div>
-                      <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.25rem", fontWeight: 800, color: "var(--color-text)", marginBottom: "0.5rem", letterSpacing: "-0.02em" }}>{tier.name}</h3>
-                      <p style={{ fontSize: "0.95rem", color: "var(--color-text-bright)", lineHeight: 1.5, fontWeight: 600, marginBottom: "0.75rem" }}>{tier.outcome}</p>
-                      <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.6, marginBottom: "1.4rem" }}>
-                        <span style={{ color: "var(--color-accent)", fontWeight: 600 }}>Pick this if:</span> {tier.pickThisIf}
-                      </p>
-                      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontSize: "0.85rem", color: "var(--color-text-faint)" }}>Priced to your business</span>
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: "var(--color-accent)", fontSize: "0.82rem", fontWeight: 600 }}>See how it works <ArrowRight size={13} weight="bold" /></span>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0.25rem 0.75rem", marginBottom: "0.3rem" }}>
+                          <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text)" }}>{item.name}</h3>
+                          <span style={{ fontSize: "0.78rem", color: "var(--color-accent-muted)", whiteSpace: "nowrap", fontWeight: 600 }}>{item.cta}</span>
+                        </div>
+                        <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.6 }}>{item.desc}</p>
                       </div>
                     </div>
                   </Link>
@@ -230,30 +292,6 @@ export default function HomePage() {
               );
             })}
           </div>
-
-          {/* Also available */}
-          <ScrollReveal delay={0.15}>
-            <p style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 700, color: "var(--color-text-faint)", marginTop: "3.5rem", marginBottom: "1.25rem" }}>Also available</p>
-            <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))" }}>
-              {alsoAvailable.map((a) => {
-                const Icon = a.icon;
-                return (
-                  <div key={a.name} style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "1.25rem", padding: "1.75rem", display: "flex", gap: "1.1rem", alignItems: "flex-start" }}>
-                    <div style={{ width: 40, height: 40, background: "var(--color-accent-soft)", borderRadius: "0.6rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <Icon size={19} weight="bold" style={{ color: "var(--color-accent)" }} />
-                    </div>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "0.25rem 0.75rem", marginBottom: "0.3rem" }}>
-                        <h3 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text)" }}>{a.name}</h3>
-                        <span style={{ fontSize: "0.78rem", color: "var(--color-accent-muted)", whiteSpace: "nowrap", fontWeight: 600 }}>Add it on your audit call</span>
-                      </div>
-                      <p style={{ fontSize: "0.88rem", color: "var(--color-text-muted)", lineHeight: 1.6 }}>{a.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -364,6 +402,9 @@ export default function HomePage() {
               <p style={{ fontSize: "1rem", color: "var(--color-text-muted)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
                 We&apos;re a small Sydney outfit, and we&apos;d rather earn your trust than dazzle you. Here&apos;s the honest version &mdash; what it costs, what it doesn&apos;t do, and what happens if it ever breaks.
               </p>
+              <p style={{ fontSize: "0.95rem", color: "var(--color-text-bright)", lineHeight: 1.7, fontWeight: 600, marginBottom: "1.5rem" }}>
+                You&apos;re one of our first clients and we genuinely need this to work for you &mdash; you&apos;ll get more attention, not less.
+              </p>
               <p style={{ fontSize: "0.85rem", color: "var(--color-text-faint)", lineHeight: 1.7 }}>
                 GrowVera · Sydney, Australia · ABN 50 329 139 726 · contact.basemmorkos@gmail.com
               </p>
@@ -414,8 +455,11 @@ export default function HomePage() {
                 <h2 style={{ fontFamily: "var(--font-cabinet), Outfit, sans-serif", fontSize: "clamp(2.25rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.98, marginBottom: "1.5rem" }}>
                   See what you&apos;re<br />losing. Free.
                 </h2>
-                <p style={{ fontSize: "1.05rem", color: "var(--color-on-dark-80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "2.25rem" }}>
+                <p style={{ fontSize: "1.05rem", color: "var(--color-on-dark-80)", lineHeight: 1.7, maxWidth: "30rem", marginBottom: "1.5rem" }}>
                   Two minutes with the audit shows you the number. A quick call shows you how to stop it. Start with one agent and keep the rest &mdash; no obligation, no jargon.
+                </p>
+                <p style={{ fontSize: "0.85rem", color: "var(--color-on-dark-60)", lineHeight: 1.6, maxWidth: "28rem", marginBottom: "2.25rem", fontStyle: "italic" }}>
+                  This is for trades already busy enough to be missing calls. If your phone isn&apos;t ringing yet, we&apos;re not your fix &mdash; and we&apos;d tell you.
                 </p>
                 <a
                   href="/audit"

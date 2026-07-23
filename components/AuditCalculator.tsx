@@ -196,6 +196,9 @@ export default function AuditCalculator() {
           <p style={{ fontSize: "0.82rem", color: "var(--color-accent-muted)", lineHeight: 1.6, marginTop: "1.25rem", maxWidth: "34rem", marginInline: "auto" }}>
             This is only an estimate from the numbers you put in ({missedNum} missed calls/week × {closeRate}% won × {formatAud(jobNum)} × 52 weeks). It&apos;s not a promise — we&apos;ll work out your real numbers together on the audit call. An AI receptionist catches the calls behind a figure like this{otherTradeDisplay ? ` for a ${otherTradeDisplay} business` : ""}.
           </p>
+          <p style={{ fontSize: "0.82rem", color: "var(--color-text-faint)", lineHeight: 1.6, marginTop: "0.85rem", maxWidth: "34rem", marginInline: "auto", fontStyle: "italic" }}>
+            Every one of those missed calls is a job the tradie down the road is quoting this week — and you&apos;ll likely never know it happened.
+          </p>
         </div>
       )}
     </div>
