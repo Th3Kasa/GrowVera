@@ -269,7 +269,7 @@ export default function HomePage() {
             </p>
           </ScrollReveal>
 
-          <div style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {ladderItems.map((item, i) => {
               const Icon = item.icon;
               return (
